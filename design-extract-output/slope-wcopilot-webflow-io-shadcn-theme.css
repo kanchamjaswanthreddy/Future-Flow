@@ -1,0 +1,19 @@
+/* shadcn/ui Theme — extracted from https://slope-wcopilot.webflow.io/home-1 */
+/* Paste into your globals.css */
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+    --primary: 235 100% 63%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 21 100% 87%;
+    --secondary-foreground: 0 0% 0%;
+    --accent: 163 70% 88%;
+    --accent-foreground: 0 0% 0%;
+    --muted: 0 0% 92%;
+    --muted-foreground: 0 0% 5%;
+    --border: 0 0% 20%;
+    --radius: 9px;
+  }
+}

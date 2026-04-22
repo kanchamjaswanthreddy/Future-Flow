@@ -1,0 +1,110 @@
+{
+  "tone": "neutral",
+  "pronoun": "you-only",
+  "headingStyle": "Sentence case",
+  "headingLengthClass": "balanced",
+  "ctaVerbs": [
+    {
+      "value": "talk",
+      "count": 2
+    },
+    {
+      "value": "discover",
+      "count": 2
+    },
+    {
+      "value": "book",
+      "count": 2
+    },
+    {
+      "value": "view",
+      "count": 2
+    },
+    {
+      "value": "get",
+      "count": 1
+    },
+    {
+      "value": "learn",
+      "count": 1
+    },
+    {
+      "value": "open",
+      "count": 1
+    },
+    {
+      "value": "schedule",
+      "count": 1
+    }
+  ],
+  "buttonPatterns": [
+    {
+      "value": "",
+      "count": 13
+    },
+    {
+      "value": "discover more\n",
+      "count": 2
+    },
+    {
+      "value": "0",
+      "count": 1
+    },
+    {
+      "value": "get started\n",
+      "count": 1
+    },
+    {
+      "value": "let’s talk to an expert\n\nget api keys\n",
+      "count": 1
+    },
+    {
+      "value": "let’s talk to an expert\n",
+      "count": 1
+    },
+    {
+      "value": "learn more\n",
+      "count": 1
+    },
+    {
+      "value": "open an account\n\nbook a demo\n",
+      "count": 1
+    },
+    {
+      "value": "open an account\n",
+      "count": 1
+    },
+    {
+      "value": "book a demo\n",
+      "count": 1
+    },
+    {
+      "value": "schedule a demo\nview pricing",
+      "count": 1
+    },
+    {
+      "value": "schedule a demo",
+      "count": 1
+    },
+    {
+      "value": "view pricing",
+      "count": 1
+    }
+  ],
+  "sampleHeadings": [
+    "Simplify, Secure, Succeed.",
+    "Start with banking basics that just work",
+    "Our intuitive interface, user-friendly design, and responsive customer support make navigating our platform effortless.",
+    "Financial transactions should be more than just a mundane task.",
+    "Scale your business with credit card",
+    "Setting up Apple Pay made easy",
+    "Grow your business with our payment methood",
+    "Discover the possibilities with our card",
+    "Send, Receive, Swap.\nAll in one place.",
+    "A modern banking for modern companies"
+  ],
+  "stats": {
+    "buttons": 26,
+    "headings": 10
+  }
+}

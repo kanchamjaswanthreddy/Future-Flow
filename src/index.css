@@ -1,0 +1,283 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Lato:wght@300;400;700;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary:      #4353ff;
+  --lavender:     #d5c9f8;
+  --mint:         #ccf6ea;
+  --peach:        #ffd5bf;
+  --amber:        #f69c20;
+  --dark:         #0e0e0e;
+  --dark-2:       #333333;
+  --dark-3:       #555555;
+  --muted:        #9a9a9a;
+  --white:        #ffffff;
+  --light-grey:   #fafafa;
+  --border:       #e8e8e8;
+}
+
+@layer base {
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--white);
+    color: var(--dark);
+    font-family: 'Lato', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  #root { width: 100%; text-align: left; }
+  h1, h2, h3, h4, h5, h6 { font-family: 'Manrope', sans-serif; font-weight: 600; }
+}
+
+@layer components {
+
+  /* ─── Pill buttons ─── */
+  .btn-dark {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--dark); color: var(--white);
+    font-family: 'Lato', sans-serif; font-size: 17px; font-weight: 600;
+    padding: 13px 30px; border-radius: 50px; border: 1.5px solid var(--dark);
+    cursor: pointer; text-decoration: none; white-space: nowrap;
+    transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+  }
+  .btn-dark:hover { background: #1c1c1c; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+
+  .btn-outline-dark {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; color: var(--dark);
+    font-family: 'Lato', sans-serif; font-size: 17px; font-weight: 600;
+    padding: 13px 30px; border-radius: 50px; border: 1.5px solid rgba(0,0,0,0.25);
+    cursor: pointer; text-decoration: none; white-space: nowrap;
+    transition: background 0.25s, border-color 0.25s, transform 0.2s;
+  }
+  .btn-outline-dark:hover { background: rgba(0,0,0,0.04); border-color: var(--dark); transform: translateY(-1px); }
+
+  .btn-white {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--white); color: var(--dark);
+    font-family: 'Lato', sans-serif; font-size: 17px; font-weight: 700;
+    padding: 13px 30px; border-radius: 50px; border: 1.5px solid var(--white);
+    cursor: pointer; text-decoration: none; white-space: nowrap;
+    transition: box-shadow 0.25s, transform 0.2s;
+  }
+  .btn-white:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.18); transform: translateY(-1px); }
+
+  .btn-outline-white {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; color: var(--white);
+    font-family: 'Lato', sans-serif; font-size: 17px; font-weight: 600;
+    padding: 13px 30px; border-radius: 50px; border: 1.5px solid rgba(255,255,255,0.45);
+    cursor: pointer; text-decoration: none; white-space: nowrap;
+    transition: background 0.25s, border-color 0.25s, transform 0.2s;
+  }
+  .btn-outline-white:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.7); transform: translateY(-1px); }
+
+  .btn-text {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: transparent; color: var(--dark);
+    font-family: 'Lato', sans-serif; font-size: 17px; font-weight: 600;
+    border: none; cursor: pointer; text-decoration: none; padding: 0;
+    transition: gap 0.2s, opacity 0.2s;
+  }
+  .btn-text:hover { gap: 10px; opacity: 0.75; }
+
+  /* ─── Badges ─── */
+  .ff-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--primary); color: var(--white);
+    font-family: 'Lato', sans-serif; font-size: 11px; font-weight: 700;
+    padding: 5px 14px; border-radius: 4px; letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .ff-badge-lavender {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--lavender); color: var(--dark);
+    font-family: 'Lato', sans-serif; font-size: 11px; font-weight: 700;
+    padding: 5px 14px; border-radius: 4px; letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .ff-badge-mint {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--mint); color: var(--dark);
+    font-family: 'Lato', sans-serif; font-size: 11px; font-weight: 700;
+    padding: 5px 14px; border-radius: 4px; letter-spacing: 0.04em; text-transform: uppercase;
+  }
+
+  /* ─── Cards ─── */
+  .ff-card {
+    background: var(--white); border-radius: 16px;
+    border: 1px solid rgba(0,0,0,0.07);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04), 0 8px 32px rgba(0,0,0,0.04);
+    transition: box-shadow 0.3s, transform 0.3s, border-color 0.3s;
+  }
+  .ff-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06), 0 16px 48px rgba(0,0,0,0.07);
+    transform: translateY(-2px);
+    border-color: rgba(67,83,255,0.15);
+  }
+
+  .ff-card-dark {
+    background: rgba(255,255,255,0.04); border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: background 0.3s, transform 0.3s;
+  }
+  .ff-card-dark:hover { background: rgba(255,255,255,0.07); transform: translateY(-2px); }
+
+  /* ─── Container ─── */
+  .ff-container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+  @media (max-width: 640px) { .ff-container { padding: 0 20px; } }
+
+  /* ─── Divider ─── */
+  .ff-divider { height: 1px; background: var(--border); }
+
+  /* ─── Legal sidebar layout ─── */
+  .legal-layout { display: grid; gap: 48px; align-items: start; grid-template-columns: 1fr; }
+  @media (min-width: 1024px) { .legal-layout { grid-template-columns: 220px 1fr; } }
+
+  /* ─── Feature bento grid ─── */
+  .ff-bento { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .ff-bento-2 { grid-column: span 2; }
+  @media (max-width: 860px) {
+    .ff-bento { grid-template-columns: 1fr 1fr; }
+    .ff-bento-2 { grid-column: span 2; }
+  }
+  @media (max-width: 560px) {
+    .ff-bento { grid-template-columns: 1fr; }
+    .ff-bento-2 { grid-column: span 1; }
+  }
+}
+
+/* ─── Marquee animation ─── */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  animation: marquee 28s linear infinite;
+  width: max-content;
+}
+
+/* ─── Legal prose ─── */
+.legal-prose h2 {
+  font-family: 'Manrope', sans-serif; font-size: 21px; font-weight: 800;
+  color: var(--dark); margin-top: 44px; margin-bottom: 14px;
+  padding-bottom: 10px; border-bottom: 1px solid var(--border);
+}
+.legal-prose h3 {
+  font-family: 'Manrope', sans-serif; font-size: 16px; font-weight: 700;
+  color: var(--dark); margin-top: 28px; margin-bottom: 10px;
+}
+.legal-prose p { font-size: 15px; line-height: 1.85; color: var(--dark-2); margin-bottom: 16px; }
+.legal-prose ul { list-style: none; padding: 0; margin-bottom: 16px; }
+.legal-prose li {
+  font-size: 15px; line-height: 1.8; color: var(--dark-2); margin-bottom: 10px;
+  padding-left: 20px; position: relative;
+}
+.legal-prose li::before {
+  content: ''; position: absolute; left: 0; top: 10px;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--primary);
+}
+.legal-prose a { color: var(--primary); text-decoration: underline; }
+.legal-prose strong { color: var(--dark); font-weight: 700; }
+.legal-prose .highlight-box {
+  background: rgba(67,83,255,0.05); border: 1px solid rgba(67,83,255,0.15);
+  border-radius: 10px; padding: 16px 20px; margin-bottom: 20px;
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--light-grey); }
+::-webkit-scrollbar-thumb { background: #d0d0d0; border-radius: 3px; }
+::selection { background: var(--lavender); color: var(--dark); }
+
+/* ─── CSS Variables for section padding ─── */
+:root {
+  --sp: 100px;
+}
+@media (max-width: 768px) {
+  :root { --sp: 64px; }
+}
+
+/* ─── Navbar responsive ─── */
+.ff-nav-desktop { display: flex !important; }
+.ff-hamburger   { display: none !important; }
+@media (max-width: 860px) {
+  .ff-nav-desktop { display: none !important; }
+  .ff-hamburger   { display: flex !important; }
+}
+
+/* ─── Footer responsive grid ─── */
+.ff-footer-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 2fr) repeat(3, 1fr);
+  gap: 0 60px;
+  margin-bottom: 60px;
+}
+@media (max-width: 900px) {
+  .ff-footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+}
+@media (max-width: 560px) {
+  .ff-footer-grid { grid-template-columns: 1fr; gap: 36px; margin-bottom: 40px; }
+}
+
+/* ─── Blog post article layout ─── */
+.ff-post-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 64px;
+  align-items: start;
+}
+@media (max-width: 960px) {
+  .ff-post-layout { grid-template-columns: 1fr; gap: 40px; }
+  .ff-post-sidebar { display: none !important; }
+}
+
+/* ─── Footer CTA strip ─── */
+@media (max-width: 640px) {
+  .ff-footer-cta { flex-direction: column !important; align-items: flex-start !important; }
+}
+
+/* ─── Bento responsive fixes ─── */
+@media (max-width: 860px) {
+  .ff-bento { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .ff-bento { grid-template-columns: 1fr; }
+}
+
+/* ─── Problem stats on very small screens ─── */
+@media (max-width: 480px) {
+  .ff-stats-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ─── Pricing highlight card no-scale on mobile ─── */
+@media (max-width: 640px) {
+  .ff-plan-highlight { transform: scale(1) !important; }
+}
+
+/* ─── Comparison table mobile scroll ─── */
+.ff-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 16px; border: 1px solid rgba(255,255,255,0.07); }
+
+/* ─── Legal layout full width on mobile ─── */
+@media (max-width: 1023px) {
+  .legal-layout { grid-template-columns: 1fr !important; }
+}
+
+/* ─── Contact options equal height fix ─── */
+@media (max-width: 768px) {
+  .ff-contact-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ─── Blog featured post mobile ─── */
+@media (max-width: 640px) {
+  .ff-featured-post { padding: 28px 24px !important; }
+}
+
+/* ─── General hero padding on mobile ─── */
+@media (max-width: 768px) {
+  .ff-hero-inner { padding-top: 120px !important; padding-bottom: 64px !important; }
+}

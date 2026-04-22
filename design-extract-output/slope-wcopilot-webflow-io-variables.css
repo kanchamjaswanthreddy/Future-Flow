@@ -1,0 +1,97 @@
+:root {
+  /* Colors — Primary */
+  --color-primary: #4353ff;
+  --color-secondary: #ffd5bf;
+  --color-accent: #ccf6ea;
+
+  /* Colors — Neutrals */
+  --color-neutral-50: #0e0e0e;
+  --color-neutral-100: #222222;
+  --color-neutral-200: #ffffff;
+  --color-neutral-300: #000000;
+  --color-neutral-400: #333333;
+  --color-neutral-500: #9a9a9a;
+  --color-neutral-600: #eaeaea;
+
+  /* Colors — Backgrounds */
+  --color-bg: #ffffff;
+  --color-bg-1: #0e0e0e;
+  --color-bg-2: #ccf6ea;
+  --color-bg-3: #d5c9f8;
+  --color-bg-4: #ffd5bf;
+  --color-bg-5: #fafafa;
+
+  /* Colors — Text */
+  --color-text: #000000;
+  --color-text-1: #0e0e0e;
+  --color-text-2: #333333;
+  --color-text-3: #222222;
+  --color-text-4: #d5c9f8;
+
+  /* Typography — Families */
+  --font-sans: 'Manrope', sans-serif;
+  --font-body: 'Lato', sans-serif;
+  --font-font-2: 'sans-serif', sans-serif;
+  --font-body: 'Fa solid 900', sans-serif;
+  --font-body: 'webflow-icons', sans-serif;
+  --font-body: 'system-ui', sans-serif;
+  --font-body: 'Arial', sans-serif;
+  --font-body: 'Fa brands 400', sans-serif;
+  --font-body: 'Poppins', sans-serif;
+
+  /* Typography — Scale */
+  --font-size-60: 60px;
+  --font-size-50: 50px;
+  --font-size-40: 40px;
+  --font-size-27: 27px;
+  --font-size-24: 24px;
+  --font-size-22: 22px;
+  --font-size-20: 20px;
+  --font-size-18: 18px;
+  --font-size-16: 16px;
+  --font-size-14: 14px;
+  --font-size-12: 12px;
+  --font-size-11: 11px;
+
+  /* Spacing */
+  --spacing-5: 5px;
+  --spacing-24: 24px;
+  --spacing-30: 30px;
+  --spacing-40: 40px;
+  --spacing-50: 50px;
+  --spacing-70: 70px;
+  --spacing-80: 80px;
+  --spacing-100: 100px;
+  --spacing-128: 128px;
+  --spacing-140: 140px;
+  --spacing-395: 395px;
+
+  /* Border Radius */
+  --radius-xs: 2px;
+  --radius-md: 9px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 50px;
+
+  /* Box Shadows */
+  --shadow-lg: rgba(0, 0, 0, 0.25) 0px 5px 25px 0px;
+  --shadow-lg: rgba(0, 0, 0, 0.33) 0px 0px 30px 0px;
+  --shadow-xl: rgba(0, 0, 0, 0.05) 0px 0px 35px 0px;
+
+  /* Original Site Variables */
+  /* — colors — */
+  --primary: #d5c9f8;
+  --primary-light: #ccf6ea;
+  --light-grey-bg: #fafafa;
+  /* — other — */
+  --gray: #9a9a9a;
+  --white: white;
+  --orange: #ffd5bf;
+  --1d1d1b: #0e0e0e;
+  /* — semantic — */
+  success: [object Object];
+  warning: [object Object];
+  error: [object Object];
+  info: [object Object];
+
+}

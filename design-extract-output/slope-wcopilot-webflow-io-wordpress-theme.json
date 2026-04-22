@@ -1,0 +1,217 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "slug": "primary",
+          "color": "#4353ff",
+          "name": "Primary"
+        },
+        {
+          "slug": "secondary",
+          "color": "#ffd5bf",
+          "name": "Secondary"
+        },
+        {
+          "slug": "accent",
+          "color": "#ccf6ea",
+          "name": "Accent"
+        },
+        {
+          "slug": "neutral-1",
+          "color": "#0e0e0e",
+          "name": "Neutral 1"
+        },
+        {
+          "slug": "neutral-2",
+          "color": "#222222",
+          "name": "Neutral 2"
+        },
+        {
+          "slug": "neutral-3",
+          "color": "#ffffff",
+          "name": "Neutral 3"
+        },
+        {
+          "slug": "neutral-4",
+          "color": "#000000",
+          "name": "Neutral 4"
+        },
+        {
+          "slug": "neutral-5",
+          "color": "#333333",
+          "name": "Neutral 5"
+        },
+        {
+          "slug": "bg-ffffff",
+          "color": "#ffffff",
+          "name": "Background #ffffff"
+        },
+        {
+          "slug": "bg-0e0e0e",
+          "color": "#0e0e0e",
+          "name": "Background #0e0e0e"
+        },
+        {
+          "slug": "bg-ccf6ea",
+          "color": "#ccf6ea",
+          "name": "Background #ccf6ea"
+        }
+      ],
+      "gradients": []
+    },
+    "typography": {
+      "fontFamilies": [
+        {
+          "fontFamily": "Manrope",
+          "slug": "manrope",
+          "name": "Manrope"
+        },
+        {
+          "fontFamily": "Lato",
+          "slug": "lato",
+          "name": "Lato"
+        },
+        {
+          "fontFamily": "sans-serif",
+          "slug": "sans-serif",
+          "name": "sans-serif"
+        },
+        {
+          "fontFamily": "Fa solid 900",
+          "slug": "fa-solid-900",
+          "name": "Fa solid 900"
+        },
+        {
+          "fontFamily": "webflow-icons",
+          "slug": "webflow-icons",
+          "name": "webflow-icons"
+        },
+        {
+          "fontFamily": "system-ui",
+          "slug": "system-ui",
+          "name": "system-ui"
+        },
+        {
+          "fontFamily": "Arial",
+          "slug": "arial",
+          "name": "Arial"
+        },
+        {
+          "fontFamily": "Fa brands 400",
+          "slug": "fa-brands-400",
+          "name": "Fa brands 400"
+        },
+        {
+          "fontFamily": "Poppins",
+          "slug": "poppins",
+          "name": "Poppins"
+        }
+      ],
+      "fontSizes": [
+        {
+          "size": "60px",
+          "slug": "size-60",
+          "name": "60px"
+        },
+        {
+          "size": "50px",
+          "slug": "size-50",
+          "name": "50px"
+        },
+        {
+          "size": "40px",
+          "slug": "size-40",
+          "name": "40px"
+        },
+        {
+          "size": "27px",
+          "slug": "size-27",
+          "name": "27px"
+        },
+        {
+          "size": "24px",
+          "slug": "size-24",
+          "name": "24px"
+        },
+        {
+          "size": "22px",
+          "slug": "size-22",
+          "name": "22px"
+        },
+        {
+          "size": "20px",
+          "slug": "size-20",
+          "name": "20px"
+        },
+        {
+          "size": "18px",
+          "slug": "size-18",
+          "name": "18px"
+        }
+      ]
+    },
+    "spacing": {
+      "spacingSizes": [
+        {
+          "size": "5px",
+          "slug": "spacing-5",
+          "name": "5px"
+        },
+        {
+          "size": "24px",
+          "slug": "spacing-24",
+          "name": "24px"
+        },
+        {
+          "size": "30px",
+          "slug": "spacing-30",
+          "name": "30px"
+        },
+        {
+          "size": "40px",
+          "slug": "spacing-40",
+          "name": "40px"
+        },
+        {
+          "size": "50px",
+          "slug": "spacing-50",
+          "name": "50px"
+        },
+        {
+          "size": "70px",
+          "slug": "spacing-70",
+          "name": "70px"
+        },
+        {
+          "size": "80px",
+          "slug": "spacing-80",
+          "name": "80px"
+        },
+        {
+          "size": "100px",
+          "slug": "spacing-100",
+          "name": "100px"
+        }
+      ]
+    },
+    "layout": {
+      "contentSize": "1200px",
+      "wideSize": "1400px"
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "#ffffff",
+      "text": "#000000"
+    },
+    "typography": {
+      "fontSize": "16px",
+      "lineHeight": "normal",
+      "fontFamily": "Manrope"
+    },
+    "spacing": {}
+  }
+}
