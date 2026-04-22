@@ -40,7 +40,7 @@ const plans = [
     cta: 'Get Started Free',
   },
   {
-    name: 'Premium',
+    name: 'Pro',
     price: '$9.99',
     period: '/month',
     desc: 'The complete FutureFlow experience. Everything you need to win financially.',
@@ -66,21 +66,28 @@ const plans = [
     cta: 'Start 30-Day Free Trial',
   },
   {
-    name: 'Premium+',
-    price: '$19.99',
+    name: 'Household',
+    price: '$14.99',
     period: '/month',
-    desc: 'Maximum automation, tax optimization, and white-glove support.',
+    desc: 'Designed for couples and households. Every signup brings a partner — built-in viral loop.',
     color: '#f69c20',
     highlight: false,
     features: [
-      'Everything in Premium',
-      'Bill negotiation AI',
+      'Everything in Pro',
+      'Unlimited connected accounts',
+      'Couples / household mode',
       'Fraud-proof bill splitting ★',
+      'Shared savings goals',
+      'Joint cash flow forecasting',
+      'Household net worth tracker',
+      'Bill & due date alerts',
+      'Investment tracking',
+      'Email + Plaid Sub Radar ★',
+      'Free trial ending alerts ★',
+      'Portfolio health radar ★',
       'Autonomous tax engine ★',
       '50-state tax guidance ★',
-      'Dedicated financial advisor',
-      'Phone + chat support',
-      'Early access to new features',
+      'Priority support',
     ],
     cta: 'Start 30-Day Free Trial',
   },
@@ -120,6 +127,7 @@ export default function PricingPage() {
           </motion.p>
         </div>
       </section>
+
 
       {/* Plans */}
       <section style={{ padding: '64px 0 100px', background: 'var(--light-grey)' }}>

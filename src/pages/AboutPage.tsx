@@ -35,11 +35,11 @@ const values = [
 ]
 
 const gaps = [
-  { tool: 'Mint',         had: 'Expense tracking',      missing: 'Subscription management, tax help, debt payoff planning' },
-  { tool: 'Rocket Money', had: 'Subscription canceling', missing: 'Net worth tracking, tax engine, investment insights' },
-  { tool: 'YNAB',         had: 'Budgeting discipline',  missing: 'Everything outside manual budgeting — AI, tax, investments' },
-  { tool: 'Copilot',      had: 'Beautiful UI',           missing: 'Tax planning, bill negotiation, credit monitoring' },
-  { tool: 'Personal Cap.', had: 'Investment tracking',   missing: 'Subscription radar, bill negotiation, AI budgeting coach' },
+  { tool: 'Monarch Money', had: 'Full-featured tracking',  missing: 'Tax engine, AI automation, subscription radar' },
+  { tool: 'Rocket Money',  had: 'Subscription canceling',  missing: 'Net worth tracking, tax engine, investment insights' },
+  { tool: 'YNAB',          had: 'Budgeting discipline',    missing: 'Everything outside manual budgeting — AI, tax, investments' },
+  { tool: 'Copilot',       had: 'Beautiful UI',            missing: 'Tax planning, bill negotiation, credit monitoring' },
+  { tool: 'Personal Cap.', had: 'Investment tracking',     missing: 'Subscription radar, bill negotiation, AI budgeting coach' },
 ]
 
 const timeline = [
@@ -116,7 +116,7 @@ export default function AboutPage() {
                 A simple "what if" in Boston, 2026.
               </h2>
               <p style={{ fontFamily: 'Lato', fontSize: 16, color: 'rgba(255,255,255,0.6)', lineHeight: 1.85, marginBottom: 18 }}>
-                It started with the kind of frustration that's easy to ignore but hard to shake. Using Mint for spending, Rocket Money to cancel subscriptions, YNAB to stay on budget, and still not really knowing where the money was going.
+                It started with the kind of frustration that's easy to ignore but hard to shake. Using Rocket Money to cancel subscriptions, YNAB to stay on budget, Copilot for a clean UI — and still not really knowing where the money was going.
               </p>
               <p style={{ fontFamily: 'Lato', fontSize: 16, color: 'rgba(255,255,255,0.6)', lineHeight: 1.85, marginBottom: 18 }}>
                 The question wasn't complicated: <em style={{ color: 'rgba(255,255,255,0.85)' }}>what if everything these apps do individually existed in one place — and it was actually intelligent?</em>
@@ -258,7 +258,7 @@ export default function AboutPage() {
               </p>
             </div>
           </FadeIn>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 24 }}>
+          <div className="ff-security-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 360px))', gap: 24, justifyContent: 'center' }}>
             {[
               { Icon: Lock,   title: '256-bit AES Encryption',  desc: 'All data encrypted at rest and in transit using bank-grade AES-256 encryption and TLS 1.3.' },
               { Icon: Eye,    title: 'Read-Only Access',         desc: 'Plaid connection is strictly read-only. FutureFlow can never move, transfer, or modify your funds.' },

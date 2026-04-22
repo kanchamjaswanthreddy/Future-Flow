@@ -45,10 +45,26 @@ function FadeIn({
 
 // ─── Problem stat cards ───────────────────────────────────────────────────────
 const problems = [
-  { stat: '$312',   unit: '/mo', label: 'lost monthly to forgotten subscriptions', color: '#4353ff' },
-  { stat: '$6,200', unit: '',    label: 'lost per person from wrong debt payoff order', color: '#f69c20' },
-  { stat: '6+',     unit: ' apps', label: 'juggled by the average American with no clarity', color: '#2db37d' },
-  { stat: '78%',    unit: '',    label: 'of high earners still live paycheck-to-paycheck', color: '#9b59b6' },
+  {
+    stat: '52%', unit: '', color: '#e05c5c',
+    title: 'Money Is Americans\' #1 Stress',
+    label: '52% rank money as their #1 source of stress. Financial anxiety costs productivity, health, and relationships every day.',
+  },
+  {
+    stat: '$460B', unit: '', color: '#f69c20',
+    title: 'Wasted on Forgotten Subscriptions',
+    label: '$460 billion evaporates annually from forgotten subscriptions and unchecked auto-renewals. People don\'t know what they\'re paying for.',
+  },
+  {
+    stat: '51%', unit: '', color: '#4353ff',
+    title: 'Live Paycheck to Paycheck',
+    label: '51% of Americans live paycheck to paycheck — it\'s not just a low-income problem. High earners lack tools to predict, plan, and act.',
+  },
+  {
+    stat: null, unit: '', color: '#2db37d',
+    title: 'Existing Apps Track. They Don\'t Act.',
+    label: 'Mint, YNAB, Rocket Money — all show charts of what already happened. None predict problems, prevent mistakes, or act on your behalf.',
+  },
 ]
 
 // ─── Dark bento data ──────────────────────────────────────────────────────────
@@ -351,7 +367,7 @@ export default function Home() {
                     background: 'var(--white)', borderRadius: 16,
                     border: '1px solid var(--border)',
                     borderLeft: `4px solid ${p.color}`,
-                    padding: '28px 22px',
+                    padding: '24px 22px',
                     boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
                     transition: 'transform 0.3s, box-shadow 0.3s',
                     height: '100%', display: 'flex', flexDirection: 'column',
@@ -359,15 +375,41 @@ export default function Home() {
                     onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-3px)'; (e.currentTarget as HTMLElement).style.boxShadow = `0 12px 32px ${p.color}22` }}
                     onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 12px rgba(0,0,0,0.04)' }}
                   >
-                    <p style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 34, color: 'var(--dark)', letterSpacing: '-1.5px', lineHeight: 1 }}>
-                      {p.stat}<span style={{ fontSize: 16, fontWeight: 600, color: p.color }}>{p.unit}</span>
+                    {p.stat && (
+                      <p style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 32, color: p.color, letterSpacing: '-1.5px', lineHeight: 1, marginBottom: 6 }}>
+                        {p.stat}
+                      </p>
+                    )}
+                    <p style={{ fontFamily: 'Manrope', fontWeight: 700, fontSize: 14, color: 'var(--dark)', lineHeight: 1.35, marginBottom: 10 }}>
+                      {p.title}
                     </p>
-                    <p style={{ fontFamily: 'Lato', fontSize: 13, color: 'var(--dark-3)', lineHeight: 1.6, marginTop: 10 }}>{p.label}</p>
+                    <p style={{ fontFamily: 'Lato', fontSize: 13, color: 'var(--dark-3)', lineHeight: 1.65, flex: 1 }}>{p.label}</p>
                   </div>
                 </FadeIn>
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ── PROBLEM TICKER ── */}
+      <section style={{ background: 'var(--dark)', padding: '14px 0', overflow: 'hidden' }}>
+        <div className="marquee-track">
+          {[...Array(3)].flatMap(() => [
+            'Mint shut down Jan 2024',
+            '3.6M users left without a home',
+            'Monarch grew 20x',
+            'The market is actively searching for an AI-first replacement',
+          ]).map((t, i) => (
+            <span key={i} style={{
+              fontFamily: 'Manrope', fontWeight: 600, fontSize: 13,
+              color: i % 2 === 0 ? 'rgba(255,255,255,0.85)' : '#2db37d',
+              flexShrink: 0, paddingRight: 52,
+              letterSpacing: '0.02em',
+            }}>
+              · {t}
+            </span>
+          ))}
         </div>
       </section>
 
@@ -402,8 +444,14 @@ export default function Home() {
                   onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'none'; (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.04)' }}
                 >
                   <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 16 }}>
-                    <div style={{ width: 44, height: 44, borderRadius: 12, background: `${card.color}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <card.Icon size={20} color={card.color} strokeWidth={1.8} />
+                    <div style={{
+                      width: 48, height: 48, borderRadius: '50%', flexShrink: 0,
+                      background: `radial-gradient(circle at 35% 35%, ${card.color}38 0%, ${card.color}0a 100%)`,
+                      border: `1px solid ${card.color}40`,
+                      boxShadow: `0 0 20px ${card.color}28, inset 0 1px 0 rgba(255,255,255,0.1)`,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    }}>
+                      <card.Icon size={22} color={card.color} strokeWidth={1.7} />
                     </div>
                     <span style={{ fontFamily: 'Lato', fontSize: 10, fontWeight: 700, padding: '4px 10px', borderRadius: 4, letterSpacing: '0.05em', background: `${card.color}14`, color: card.color }}>
                       {card.tag}
@@ -456,8 +504,14 @@ export default function Home() {
                     fontFamily: 'Manrope', fontWeight: 800, fontSize: 56,
                     color: `${s.color}0d`, lineHeight: 1, letterSpacing: '-2px', userSelect: 'none',
                   }}>{s.num}</span>
-                  <div style={{ width: 52, height: 52, borderRadius: 14, background: `${s.color}12`, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}>
-                    <s.Icon size={22} color={s.color} strokeWidth={1.7} />
+                  <div style={{
+                    width: 54, height: 54, borderRadius: '50%', marginBottom: 20,
+                    background: `radial-gradient(circle at 35% 35%, ${s.color}30 0%, ${s.color}08 100%)`,
+                    border: `1px solid ${s.color}35`,
+                    boxShadow: `0 4px 20px ${s.color}25`,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  }}>
+                    <s.Icon size={24} color={s.color} strokeWidth={1.7} />
                   </div>
                   <p style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 12, color: s.color, letterSpacing: '0.08em', marginBottom: 12, textTransform: 'uppercase' }}>Step {s.num}</p>
                   <h3 style={{ fontFamily: 'Manrope', fontWeight: 700, fontSize: 19, color: 'var(--dark)', marginBottom: 12 }}>{s.title}</h3>

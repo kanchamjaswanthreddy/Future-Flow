@@ -4,7 +4,7 @@ import { motion, useInView } from 'framer-motion'
 import { useIsMobile } from '../hooks/useIsMobile'
 import {
   ArrowRight, Check, X, Minus,
-  TrendingUp, DollarSign, Bell, CreditCard,
+  TrendingUp, DollarSign, CreditCard,
   Shield, FileText, PieChart,
 } from 'lucide-react'
 
@@ -36,76 +36,83 @@ function FadeIn({
 const bento = [
   {
     span: 2, color: '#4353ff', bg: 'rgba(67,83,255,0.05)', border: 'rgba(67,83,255,0.12)',
-    Icon: TrendingUp, tag: 'Core', title: 'AI Spend Tracking',
-    desc: 'Every transaction across all accounts auto-categorised in real time. Zero manual tagging — ever.',
+    Icon: TrendingUp, tag: 'Pillar 1', title: 'Connect Everything',
+    desc: 'Banks, email & brokerage accounts unified in one real-time dashboard via Plaid (12,000+ institutions). Zero manual setup.',
     visual: 'bars',
   },
   {
     span: 1, color: '#f69c20', bg: 'rgba(246,156,32,0.05)', border: 'rgba(246,156,32,0.12)',
-    Icon: CreditCard, tag: 'Exclusive', title: 'Subscription Manager',
-    desc: 'Finds every recurring charge across bank AND email. Cancels wasteful ones in one tap.',
-    visual: 'subs',
+    Icon: CreditCard, tag: 'Pillar 2', title: 'Predict Problems',
+    desc: 'AI forecasts cash flow 30 days ahead, flags risks before they happen, and spots hidden savings automatically.',
+    visual: null,
   },
   {
     span: 1, color: '#9b59b6', bg: 'rgba(155,89,182,0.05)', border: 'rgba(155,89,182,0.12)',
-    Icon: DollarSign, tag: 'Premium', title: 'Debt Payoff Planner',
-    desc: 'Optimal avalanche or snowball plan, tracking daily progress to your debt-free date.',
+    Icon: DollarSign, tag: 'Pillar 3', title: 'Act Automatically',
+    desc: 'Cancels subscriptions, executes savings, files taxes, splits bills — FutureFlow does it for you.',
     visual: null,
   },
   {
     span: 2, color: '#2db37d', bg: 'rgba(45,179,125,0.05)', border: 'rgba(45,179,125,0.12)',
-    Icon: FileText, tag: 'Exclusive', title: 'Autonomous Tax Engine',
-    desc: 'Tracks every deductible expense year-round across all 50 states. Tax season becomes effortless.',
-    visual: 'tax',
+    Icon: FileText, tag: 'Pillar 4 · Exclusive', title: 'Subscription Radar',
+    desc: 'Detects every subscription via Plaid + email. Alerts before charges. One-tap AI cancellation — no phone calls needed.',
+    visual: 'subs',
   },
   {
     span: 1, color: '#e05c5c', bg: 'rgba(224,92,92,0.05)', border: 'rgba(224,92,92,0.12)',
-    Icon: Shield, tag: 'Premium+', title: 'Bill Negotiation AI',
-    desc: 'Our AI calls your providers to negotiate lower rates. You only pay if we succeed.',
-    visual: null,
-  },
-  {
-    span: 1, color: '#f69c20', bg: 'rgba(246,156,32,0.05)', border: 'rgba(246,156,32,0.12)',
-    Icon: Bell, tag: 'Exclusive', title: 'Free Trial Radar',
-    desc: 'Never get surprise-charged again. Alerts you before any trial converts to paid.',
+    Icon: Shield, tag: 'Pillar 5 · Exclusive', title: 'AI Financial Assistant + Tax Engine',
+    desc: 'Proactive cash-flow predictions, anomaly detection, goal tracking + autonomous tax harvesting & filing across all 50 states.',
     visual: null,
   },
   {
     span: 1, color: '#4353ff', bg: 'rgba(67,83,255,0.05)', border: 'rgba(67,83,255,0.12)',
-    Icon: PieChart, tag: 'Premium', title: 'Financial Health Score',
-    desc: 'A real-time 0–850 score for your entire financial life with a personalised action plan.',
+    Icon: PieChart, tag: 'Pillar 6 · Exclusive', title: 'Portfolio & Bill Splitting',
+    desc: 'Portfolio Health Radar links investments to real cash flow. Fraud-proof Bill Splitting uses real bank transactions — no manual entry.',
     visual: null,
   },
 ]
 
 // ─── Comparison table data ────────────────────────────────────────────────────
 type CellVal = boolean | 'partial'
-const competitors = ['Monarch', 'Rocket Money', 'Copilot', 'YNAB', 'PocketGuard', 'FutureFlow']
+const competitors = ['Monarch Money', 'Rocket Money', 'Copilot Money', 'YNAB', 'PocketGuard', 'FutureFlow']
 const rows: { name: string; values: CellVal[] }[] = [
-  { name: 'Spending Analytics',           values: [true,  true,  true,  true,    true,      true] },
-  { name: 'Auto Categorisation',          values: [true,  true,  true,  true,    true,      true] },
-  { name: 'Flexible Budgeting',           values: [true,  true,  true,  true,    true,      true] },
-  { name: 'Bill & Due Date Alerts',       values: [true,  true,  true,  'partial',true,     true] },
-  { name: 'Net Worth Tracker',            values: [true,  true,  true,  true,    true,      true] },
-  { name: 'Cash Flow Forecasting',        values: [true,  false, true,  true,    'partial', true] },
-  { name: 'Investment Tracking',          values: [true,  'partial', true, true, 'partial', true] },
-  { name: 'Subscription Manager',         values: [true,  true,  true,  true,    true,      true] },
-  { name: 'Bill Negotiation',             values: [false, true,  false, false,   false,     true] },
-  { name: 'Credit Score Monitor',         values: [true,  true,  true,  true,    true,      true] },
-  { name: 'No Ads / No Data Sales',       values: [true,  false, true,  true,    false,     true] },
-  { name: 'Free Tier Available',          values: [false, false, false, false,   'partial', true] },
-  { name: '★ Email + Plaid Sub Radar',    values: [false, false, false, false,   false,     true] },
-  { name: '★ Free Trial Ending Alerts',   values: [false, false, false, false,   false,     true] },
-  { name: '★ Fraud-Proof Bill Splitting', values: [false, false, false, false,   false,     true] },
-  { name: '★ Portfolio Health Radar',     values: [false, false, false, false,   false,     true] },
-  { name: '★ Autonomous Tax Engine',      values: [false, false, false, false,   false,     true] },
-  { name: '★ 50-State Tax Guidance',      values: [false, false, false, false,   false,     true] },
+  { name: 'Spending Analytics',              values: [true,     true,     true,     true,     true,     true] },
+  { name: 'Auto Categorisation',             values: [true,     true,     true,     true,     true,     true] },
+  { name: 'Flexible Budgeting',              values: [true,     true,     true,     true,     true,     true] },
+  { name: 'Bill & Due Date Alerts',          values: [true,     true,     true,     'partial',true,     true] },
+  { name: 'Savings Goals',                   values: [true,     true,     true,     true,     true,     true] },
+  { name: 'Net Worth Tracker',               values: [true,     true,     true,     false,    true,     true] },
+  { name: 'Subscription Manager',            values: [true,     true,     true,     false,    true,     true] },
+  { name: 'Cash Flow Forecasting',           values: [true,     false,    true,     false,    'partial',true] },
+  { name: 'Investment Tracking',             values: [true,     'partial',true,     false,    'partial',true] },
+  { name: 'Credit Score Monitor',            values: [true,     true,     false,    false,    false,    true] },
+  { name: 'Debt Payoff Tracker',             values: [true,     true,     false,    true,     true,     true] },
+  { name: 'Couples / Household Mode',        values: [true,     false,    false,    false,    false,    true] },
+  { name: 'Bill Negotiation',                values: [false,    true,     false,    false,    true,     false] },
+  { name: 'No Ads / No Data Sales',          values: [true,     false,    true,     true,     true,     true] },
+  { name: 'Free Tier Available',             values: [false,    true,     false,    false,    'partial',true] },
+  { name: 'Financial Advisor Mode',          values: [true,     false,    false,    false,    false,    false] },
+  { name: 'Real-Time Bank Sync',             values: [true,     true,     'partial',true,     true,     true] },
+  { name: 'Multi-Currency Support',          values: [false,    false,    false,    false,    false,    'partial'] },
+  { name: 'Dark Mode',                       values: [true,     true,     true,     false,    true,     true] },
+  { name: 'Data Export (CSV/PDF)',            values: [true,     'partial',true,     true,     false,    true] },
+  { name: 'Recurring Payment Detection',     values: [true,     true,     true,     'partial',true,     true] },
+  { name: 'AI Chatbot / Assistant',          values: [true,     false,    'partial',false,    false,    true] },
+  { name: 'Customisable Categories',         values: [true,     true,     true,     true,     true,     true] },
+  { name: 'Shared Goals (Couples)',          values: [true,     false,    false,    false,    false,    true] },
+  { name: 'Panic-Sell Prevention',           values: [false,    false,    false,    false,    false,    true] },
+  { name: '★ Email + Plaid Sub Radar',       values: [false,    false,    false,    false,    false,    true] },
+  { name: '★ Free Trial Ending Alerts',      values: [false,    false,    false,    false,    false,    true] },
+  { name: '★ Fraud-Proof Bill Splitting',    values: [false,    false,    false,    false,    false,    true] },
+  { name: '★ Portfolio Health Radar',        values: [false,    false,    false,    false,    false,    true] },
+  { name: '★ Autonomous Tax Engine',         values: [false,    false,    false,    false,    false,    true] },
+  { name: '★ 50-State Tax Guidance',         values: [false,    false,    false,    false,    false,    true] },
 ]
 
 function Cell({ val, isFF }: { val: CellVal; isFF: boolean }) {
   if (val === true)      return <Check  size={16} color={isFF ? '#4353ff' : '#2db37d'} strokeWidth={2.5} />
   if (val === 'partial') return <Minus  size={16} color="#f69c20" strokeWidth={2.5} />
-  return                        <X      size={16} color="rgba(255,255,255,0.2)" strokeWidth={2} />
+  return                        <X      size={16} color="#e05c5c" strokeWidth={2} />
 }
 
 // ─── Bento mini-visuals ───────────────────────────────────────────────────────
@@ -345,10 +352,10 @@ export default function FeaturesPage() {
                 fontSize: 'clamp(28px, 3.5vw, 48px)',
                 letterSpacing: '-1.5px', color: 'var(--dark)', marginTop: 14,
               }}>
-                Powerful features, beautiful simplicity.
+                Six Pillars. One Platform.
               </h2>
               <p style={{ fontFamily: 'Lato', fontSize: 17, color: 'var(--dark-3)', marginTop: 14, maxWidth: 480, margin: '14px auto 0' }}>
-                From AI budgeting to autonomous tax tracking — FutureFlow replaces six apps with one.
+                The AI-first personal finance app that connects, predicts, and acts on your entire financial life.
               </p>
             </div>
           </FadeIn>
@@ -376,11 +383,13 @@ export default function FeaturesPage() {
                 >
                   <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 16 }}>
                     <div style={{
-                      width: 44, height: 44, borderRadius: 12,
-                      background: `${card.color}18`,
-                      display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+                      width: 48, height: 48, borderRadius: '50%', flexShrink: 0,
+                      background: `radial-gradient(circle at 35% 35%, ${card.color}30 0%, ${card.color}08 100%)`,
+                      border: `1px solid ${card.color}35`,
+                      boxShadow: `0 4px 20px ${card.color}22`,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
                     }}>
-                      <card.Icon size={20} color={card.color} strokeWidth={1.8} />
+                      <card.Icon size={22} color={card.color} strokeWidth={1.7} />
                     </div>
                     <span style={{
                       fontFamily: 'Lato', fontSize: 11, fontWeight: 700,
