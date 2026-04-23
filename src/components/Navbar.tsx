@@ -54,14 +54,13 @@ export default function Navbar() {
       {/* Top bar */}
       <div className="ff-container" style={{ height: 72, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
-        {/* Wordmark */}
-        <Link to="/" style={{ textDecoration: 'none', flexShrink: 0 }}>
-          <span style={{
-            fontFamily: 'Manrope', fontWeight: 800, fontSize: 26,
-            letterSpacing: '-1px', lineHeight: 1,
-            background: 'linear-gradient(135deg, #0e0e0e 0%, #4353ff 100%)',
-            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-          }}>FutureFlow</span>
+        {/* Logo */}
+        <Link to="/" style={{ textDecoration: 'none', flexShrink: 0, display: 'flex', alignItems: 'center' }}>
+          <img
+            src="/futureflow-logo.svg"
+            alt="FutureFlow"
+            style={{ height: 150, width: 'auto', display: 'block' }}
+          />
         </Link>
 
         {/* Desktop nav links */}

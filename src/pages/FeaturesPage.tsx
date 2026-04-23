@@ -3,16 +3,8 @@ import { Link } from 'react-router-dom'
 import { motion, useInView } from 'framer-motion'
 import { useIsMobile } from '../hooks/useIsMobile'
 import {
-  ArrowRight, Check, X, Minus,
-  TrendingUp, DollarSign, CreditCard,
-  Shield, FileText, PieChart,
+  ArrowRight, Check, X, Minus, AlertTriangle,
 } from 'lucide-react'
-
-const HERO_BG = `
-  radial-gradient(ellipse 80% 60% at 10% 40%, rgba(204,246,234,0.62) 0%, transparent 60%),
-  radial-gradient(ellipse 60% 60% at 90% 20%, rgba(213,201,248,0.55) 0%, transparent 60%),
-  #ffffff
-`
 
 function FadeIn({
   children, delay = 0, style = {}, x = 0,
@@ -35,40 +27,52 @@ function FadeIn({
 // ─── Bento data ───────────────────────────────────────────────────────────────
 const bento = [
   {
-    span: 2, color: '#4353ff', bg: 'rgba(67,83,255,0.05)', border: 'rgba(67,83,255,0.12)',
-    Icon: TrendingUp, tag: 'Pillar 1', title: 'Connect Everything',
-    desc: 'Banks, email & brokerage accounts unified in one real-time dashboard via Plaid (12,000+ institutions). Zero manual setup.',
-    visual: 'bars',
+    span: 2, color: '#4353ff',
+    bg: 'linear-gradient(145deg, #eef0ff 0%, #f2f4ff 100%)',
+    tag: 'Pillar 1', title: 'Connect Everything',
+    heroStat: '12,000+', heroLabel: 'institutions connected',
+    desc: 'Banks, email & brokerage accounts unified in one real-time dashboard via Plaid. Zero manual setup.',
+    visual: 'connect',
   },
   {
-    span: 1, color: '#f69c20', bg: 'rgba(246,156,32,0.05)', border: 'rgba(246,156,32,0.12)',
-    Icon: CreditCard, tag: 'Pillar 2', title: 'Predict Problems',
-    desc: 'AI forecasts cash flow 30 days ahead, flags risks before they happen, and spots hidden savings automatically.',
-    visual: null,
+    span: 1, color: '#f69c20',
+    bg: 'linear-gradient(145deg, #fff8ee 0%, #fffcf7 100%)',
+    tag: 'Pillar 2', title: 'Predict Problems',
+    heroStat: '30 days', heroLabel: 'ahead of cash flow dips',
+    desc: 'AI forecasts cash flow ahead, flags risks before they happen, and spots hidden savings automatically.',
+    visual: 'predict',
   },
   {
-    span: 1, color: '#9b59b6', bg: 'rgba(155,89,182,0.05)', border: 'rgba(155,89,182,0.12)',
-    Icon: DollarSign, tag: 'Pillar 3', title: 'Act Automatically',
-    desc: 'Cancels subscriptions, executes savings, files taxes, splits bills — FutureFlow does it for you.',
-    visual: null,
+    span: 1, color: '#4353ff',
+    bg: 'linear-gradient(145deg, #eef0ff 0%, #f2f4ff 100%)',
+    tag: 'Pillar 3', title: 'Act Automatically',
+    heroStat: '100%', heroLabel: 'automated, no effort needed',
+    desc: 'Cancels subscriptions, executes savings, files taxes — FutureFlow does it for you.',
+    visual: 'act',
   },
   {
-    span: 2, color: '#2db37d', bg: 'rgba(45,179,125,0.05)', border: 'rgba(45,179,125,0.12)',
-    Icon: FileText, tag: 'Pillar 4 · Exclusive', title: 'Subscription Radar',
-    desc: 'Detects every subscription via Plaid + email. Alerts before charges. One-tap AI cancellation — no phone calls needed.',
-    visual: 'subs',
+    span: 2, color: '#10b981',
+    bg: 'linear-gradient(145deg, #edfff5 0%, #f2fff8 100%)',
+    tag: 'Pillar 4 · Exclusive', title: 'Subscription Radar',
+    heroStat: '$312/mo', heroLabel: 'in hidden subscriptions found',
+    desc: 'Detects every subscription via Plaid + email. Alerts before charges. One-tap AI cancellation — no phone calls.',
+    visual: 'radar',
   },
   {
-    span: 1, color: '#e05c5c', bg: 'rgba(224,92,92,0.05)', border: 'rgba(224,92,92,0.12)',
-    Icon: Shield, tag: 'Pillar 5 · Exclusive', title: 'AI Financial Assistant + Tax Engine',
-    desc: 'Proactive cash-flow predictions, anomaly detection, goal tracking + autonomous tax harvesting & filing across all 50 states.',
-    visual: null,
+    span: 1, color: '#fb7185',
+    bg: 'linear-gradient(145deg, #fff0f0 0%, #fff5f5 100%)',
+    tag: 'Pillar 5 · Exclusive', title: 'AI Tax Engine',
+    heroStat: 'All 50', heroLabel: 'US states covered',
+    desc: 'Proactive cash-flow predictions, anomaly detection + autonomous tax harvesting & filing across all 50 states.',
+    visual: 'taxengine',
   },
   {
-    span: 1, color: '#4353ff', bg: 'rgba(67,83,255,0.05)', border: 'rgba(67,83,255,0.12)',
-    Icon: PieChart, tag: 'Pillar 6 · Exclusive', title: 'Portfolio & Bill Splitting',
-    desc: 'Portfolio Health Radar links investments to real cash flow. Fraud-proof Bill Splitting uses real bank transactions — no manual entry.',
-    visual: null,
+    span: 1, color: '#4353ff',
+    bg: 'linear-gradient(145deg, #f0f4ff 0%, #f5f7ff 100%)',
+    tag: 'Pillar 6 · Exclusive', title: 'Portfolio & Bill Splitting',
+    heroStat: '+2.4%', heroLabel: 'portfolio this week',
+    desc: 'Portfolio Health Radar links investments to real cash flow. Fraud-proof Bill Splitting uses real bank transactions.',
+    visual: 'portfolio',
   },
 ]
 
@@ -110,71 +114,130 @@ const rows: { name: string; values: CellVal[] }[] = [
 ]
 
 function Cell({ val, isFF }: { val: CellVal; isFF: boolean }) {
-  if (val === true)      return <Check  size={16} color={isFF ? '#4353ff' : '#2db37d'} strokeWidth={2.5} />
+  if (val === true)      return <Check  size={16} color={isFF ? '#4353ff' : '#10b981'} strokeWidth={2.5} />
   if (val === 'partial') return <Minus  size={16} color="#f69c20" strokeWidth={2.5} />
-  return                        <X      size={16} color="#e05c5c" strokeWidth={2} />
+  return                        <X      size={16} color="#fb7185" strokeWidth={2} />
 }
 
 // ─── Bento mini-visuals ───────────────────────────────────────────────────────
-function BarsVisual() {
-  const heights = [38, 55, 42, 72, 50, 88, 65]
+// Connect Everything (span 2) — staggered bank pills
+function ConnectVisual() {
+  const banks = ['Chase', 'Wells Fargo', 'Robinhood', 'Vanguard', 'Coinbase', 'Fidelity', 'Bank of America', 'Schwab']
   return (
-    <div style={{ display: 'flex', alignItems: 'flex-end', gap: 7, marginTop: 24, height: 70 }}>
-      {heights.map((h, i) => (
-        <div key={i} style={{
-          flex: 1, height: h, borderRadius: 5,
-          background: i === 5 ? '#4353ff' : `rgba(67,83,255,${0.12 + i * 0.04})`,
-          transition: 'height 0.4s',
-        }} />
-      ))}
+    <div style={{ marginTop: 'auto', paddingTop: 18 }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+        {banks.map((bank, i) => (
+          <motion.span
+            key={i}
+            initial={{ opacity: 0, scale: 0.85 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.07, duration: 0.3, ease: 'easeOut' }}
+            style={{
+              fontFamily: 'Lato', fontSize: 12, fontWeight: 600,
+              padding: '5px 13px', borderRadius: 24,
+              background: 'rgba(67,83,255,0.07)',
+              border: '1px solid rgba(67,83,255,0.18)',
+              color: '#4353ff',
+              display: 'inline-flex', alignItems: 'center', gap: 5,
+            }}
+          >
+            <Check size={9} color="#10b981" strokeWidth={3} /> {bank}
+          </motion.span>
+        ))}
+        <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'var(--muted)', padding: '5px 13px', background: 'rgba(0,0,0,0.04)', borderRadius: 20 }}>
+          +11,992 more
+        </span>
+      </div>
     </div>
   )
 }
 
-function TaxVisual() {
-  const items = [
-    { label: 'Home Office', amt: '$3,240' },
-    { label: 'Business Travel', amt: '$1,870' },
-    { label: 'Software & Tools', amt: '$840' },
-  ]
+// Predict Problems (span 1) — mini sparkline SVG with forecast marker
+function PredictVisual() {
+  const points = [42,38,45,41,50,44,48,43,40,35,38,42,30]
+  const max = 55, min = 25, w = 200, h = 60
+  const toX = (i: number) => (i / (points.length - 1)) * w
+  const toY = (v: number) => h - ((v - min) / (max - min)) * h
+  const d = points.map((v, i) => `${i === 0 ? 'M' : 'L'}${toX(i)},${toY(v)}`).join(' ')
+  const forecastX = toX(10)
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 20 }}>
-      {items.map((item, i) => (
-        <div key={i} style={{
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          padding: '8px 12px', background: 'rgba(45,179,125,0.1)', borderRadius: 8,
-          border: '1px solid rgba(45,179,125,0.15)',
-        }}>
-          <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'var(--dark-2)' }}>{item.label}</span>
-          <span style={{ fontFamily: 'Manrope', fontSize: 13, fontWeight: 800, color: '#2db37d' }}>{item.amt}</span>
+    <div style={{ marginTop: 'auto', paddingTop: 18 }}>
+      <div style={{ position: 'relative' }}>
+        <svg width="100%" viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" style={{ height: 60, display: 'block' }}>
+          <defs>
+            <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#4353ff"/>
+              <stop offset={`${(10/12)*100}%`} stopColor="#4353ff"/>
+              <stop offset={`${(10/12)*100}%`} stopColor="#fb7185"/>
+              <stop offset="100%" stopColor="#fb7185"/>
+            </linearGradient>
+          </defs>
+          <path d={d} fill="none" stroke="url(#lineGrad)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <line x1={forecastX} y1="0" x2={forecastX} y2={h} stroke="rgba(0,0,0,0.1)" strokeWidth="1" strokeDasharray="3,3"/>
+        </svg>
+        <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', background: 'rgba(251,113,133,0.08)', borderRadius: 8, border: '1px solid rgba(251,113,133,0.2)' }}>
+          <AlertTriangle size={13} color="#fb7185" strokeWidth={2} />
+          <span style={{ fontFamily: 'Lato', fontSize: 12, color: '#fb7185', fontWeight: 600 }}>Cash flow dip predicted May 3rd</span>
         </div>
+      </div>
+    </div>
+  )
+}
+
+// Act Automatically (span 1) — AI action feed
+function ActVisual() {
+  const actions = [
+    { msg: 'Netflix cancelled', amt: '−$17.99/mo', color: '#10b981', time: '2m ago' },
+    { msg: 'Savings transfer', amt: '+$200',       color: '#4353ff', time: '1h ago' },
+    { msg: 'Tax deduction logged', amt: '$840',    color: '#f69c20', time: '3h ago' },
+  ]
+  return (
+    <div style={{ marginTop: 'auto', paddingTop: 16, display: 'flex', flexDirection: 'column', gap: 7 }}>
+      {actions.map((a, i) => (
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, x: 10 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: i * 0.12, duration: 0.4 }}
+          style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', background: 'rgba(255,255,255,0.5)', borderRadius: 8, border: '1px solid rgba(0,0,0,0.06)' }}
+        >
+          <div>
+            <p style={{ fontFamily: 'Lato', fontSize: 12, color: 'var(--dark-2)', margin: 0 }}>{a.msg}</p>
+            <p style={{ fontFamily: 'Lato', fontSize: 10, color: 'var(--muted)', margin: 0, marginTop: 1 }}>{a.time}</p>
+          </div>
+          <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: a.color }}>{a.amt}</span>
+        </motion.div>
       ))}
     </div>
   )
 }
 
-function SubsVisual() {
+// Subscription Radar (span 2) — scan results
+function RadarVisual() {
   const subs = [
-    { name: 'Netflix', price: '$17.99', cancel: true },
-    { name: 'Adobe CC', price: '$59.99', cancel: true },
-    { name: 'Spotify', price: '$9.99', cancel: false },
+    { name: 'Netflix',              amt: '$17.99/mo', action: 'Cancel', ac: '#fb7185', abg: 'rgba(251,113,133,0.1)' },
+    { name: 'Adobe Creative Cloud', amt: '$59.99/mo', action: 'Cancel', ac: '#fb7185', abg: 'rgba(251,113,133,0.1)' },
+    { name: 'Spotify',              amt: '$9.99/mo',  action: 'Keep',   ac: '#10b981', abg: 'rgba(16,185,129,0.1)' },
+    { name: 'Peloton',              amt: '$44.00/mo', action: 'Review', ac: '#f69c20', abg: 'rgba(246,156,32,0.1)' },
   ]
   return (
-    <div style={{ marginTop: 18 }}>
+    <div style={{ marginTop: 'auto', paddingTop: 18 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
+        <span style={{ fontFamily: 'Lato', fontSize: 11, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Scanned 847 txns + 2,340 emails</span>
+        <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 800, color: 'var(--primary)' }}>12 found</span>
+      </div>
       {subs.map((s, i) => (
         <div key={i} style={{
           display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          padding: '7px 0', borderBottom: i < 2 ? '1px solid var(--border)' : 'none',
+          padding: '9px 12px', background: i % 2 === 0 ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.3)',
+          borderRadius: 8, marginBottom: 5, border: '1px solid rgba(0,0,0,0.05)'
         }}>
-          <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'var(--dark)' }}>{s.name}</span>
-          <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-            <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: 'var(--dark-2)' }}>{s.price}</span>
-            <span style={{
-              fontFamily: 'Lato', fontSize: 10, fontWeight: 700,
-              padding: '2px 8px', borderRadius: 4,
-              background: s.cancel ? 'rgba(224,92,92,0.1)' : 'rgba(45,179,125,0.1)',
-              color: s.cancel ? '#e05c5c' : '#2db37d',
-            }}>{s.cancel ? 'Cancel' : 'Keep'}</span>
+          <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'var(--dark)' }}>{s.name}</span>
+          <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+            <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: 'var(--dark-3)' }}>{s.amt}</span>
+            <span style={{ fontFamily: 'Lato', fontSize: 11, fontWeight: 700, padding: '3px 10px', borderRadius: 5, background: s.abg, color: s.ac }}>{s.action}</span>
           </div>
         </div>
       ))}
@@ -182,21 +245,81 @@ function SubsVisual() {
   )
 }
 
+// AI Tax Engine (span 1) — deduction tracker
+function TaxEngineVisual() {
+  const items = [
+    { label: 'Home Office',  amt: '$3,240', pct: 78 },
+    { label: 'Travel',       amt: '$1,870', pct: 62 },
+    { label: 'Software',     amt: '$840',   pct: 44 },
+  ]
+  return (
+    <div style={{ marginTop: 'auto', paddingTop: 16 }}>
+      {items.map((item, i) => (
+        <div key={i} style={{ marginBottom: 10 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+            <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'var(--dark-2)' }}>{item.label}</span>
+            <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: '#10b981' }}>{item.amt}</span>
+          </div>
+          <div style={{ height: 4, borderRadius: 99, background: 'rgba(16,185,129,0.12)' }}>
+            <motion.div
+              initial={{ width: 0 }}
+              whileInView={{ width: `${item.pct}%` }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, delay: i * 0.12, ease: 'easeOut' }}
+              style={{ height: '100%', borderRadius: 99, background: 'linear-gradient(90deg,#10b981,#10b98188)' }}
+            />
+          </div>
+        </div>
+      ))}
+      <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 10, borderTop: '1px solid rgba(0,0,0,0.07)', marginTop: 4 }}>
+        <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'var(--muted)' }}>Est. tax savings</span>
+        <span style={{ fontFamily: 'Manrope', fontSize: 14, fontWeight: 800, color: '#10b981' }}>$1,593</span>
+      </div>
+    </div>
+  )
+}
+
+// Portfolio & Bill Splitting (span 1) — two mini panels
+function PortfolioVisual() {
+  return (
+    <div style={{ marginTop: 'auto', paddingTop: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
+      <div style={{ padding: '10px 12px', background: 'rgba(67,83,255,0.06)', borderRadius: 10, border: '1px solid rgba(67,83,255,0.12)' }}>
+        <p style={{ fontFamily: 'Lato', fontSize: 10, color: 'var(--muted)', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Portfolio</p>
+        {[{ label: 'Stocks', val: '+2.4%', color: '#10b981' }, { label: 'ETFs', val: '+1.2%', color: '#4353ff' }, { label: 'Crypto', val: '-0.8%', color: '#fb7185' }].map((r, i) => (
+          <div key={i} style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'var(--dark-2)' }}>{r.label}</span>
+            <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: r.color }}>{r.val}</span>
+          </div>
+        ))}
+      </div>
+      <div style={{ padding: '10px 12px', background: 'rgba(246,156,32,0.06)', borderRadius: 10, border: '1px solid rgba(246,156,32,0.12)' }}>
+        <p style={{ fontFamily: 'Lato', fontSize: 10, color: 'var(--muted)', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Bill Split · Dinner</p>
+        {['You', 'Alex', 'Sam'].map((name, i) => (
+          <div key={i} style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'var(--dark-2)' }}>{name}</span>
+            <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: '#f69c20' }}>$28.00</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 // ─── Spotlight mock UIs ───────────────────────────────────────────────────────
 function SubSpotlightMock() {
   const subs = [
-    { name: 'Netflix', amt: '$17.99/mo', action: 'Cancel', ac: '#e05c5c', abg: 'rgba(224,92,92,0.15)' },
-    { name: 'Adobe Creative Cloud', amt: '$59.99/mo', action: 'Cancel', ac: '#e05c5c', abg: 'rgba(224,92,92,0.15)' },
-    { name: 'Spotify', amt: '$9.99/mo', action: 'Keep', ac: '#2db37d', abg: 'rgba(45,179,125,0.15)' },
+    { name: 'Netflix', amt: '$17.99/mo', action: 'Cancel', ac: '#fb7185', abg: 'rgba(251,113,133,0.15)' },
+    { name: 'Adobe Creative Cloud', amt: '$59.99/mo', action: 'Cancel', ac: '#fb7185', abg: 'rgba(251,113,133,0.15)' },
+    { name: 'Spotify', amt: '$9.99/mo', action: 'Keep', ac: '#10b981', abg: 'rgba(16,185,129,0.15)' },
     { name: 'Peloton', amt: '$44.00/mo', action: 'Review', ac: '#f69c20', abg: 'rgba(246,156,32,0.15)' },
-    { name: 'Hulu', amt: '$7.99/mo', action: 'Keep', ac: '#2db37d', abg: 'rgba(45,179,125,0.15)' },
+    { name: 'Hulu', amt: '$7.99/mo', action: 'Keep', ac: '#10b981', abg: 'rgba(16,185,129,0.15)' },
   ]
   return (
     <motion.div
       animate={{ y: [0, -8, 0] }}
       transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
       style={{
-        background: 'rgba(255,255,255,0.05)', borderRadius: 20,
+        background: 'rgba(255,255,255,0.05)', borderRadius: 24,
         border: '1px solid rgba(255,255,255,0.1)',
         backdropFilter: 'blur(16px)', overflow: 'hidden',
         boxShadow: '0 32px 80px rgba(0,0,0,0.4)',
@@ -208,7 +331,7 @@ function SubSpotlightMock() {
           <span style={{
             fontFamily: 'Manrope', fontSize: 12, fontWeight: 800,
             background: 'var(--primary)', color: '#fff',
-            padding: '3px 10px', borderRadius: 20,
+            padding: '3px 10px', borderRadius: 24,
           }}>12</span>
         </div>
         <p style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.4)', marginTop: 4 }}>
@@ -239,7 +362,7 @@ function SubSpotlightMock() {
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
       }}>
         <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(255,255,255,0.45)' }}>Potential monthly savings</span>
-        <span style={{ fontFamily: 'Manrope', fontSize: 18, fontWeight: 800, color: '#2db37d' }}>$121.98</span>
+        <span style={{ fontFamily: 'Manrope', fontSize: 18, fontWeight: 800, color: '#10b981' }}>$121.98</span>
       </div>
     </motion.div>
   )
@@ -262,7 +385,7 @@ function TaxSpotlightMock() {
     >
       <div style={{
         padding: '20px 24px', borderBottom: '1px solid var(--border)',
-        background: 'linear-gradient(135deg, rgba(45,179,125,0.06) 0%, rgba(67,83,255,0.04) 100%)',
+        background: 'linear-gradient(135deg, rgba(16,185,129,0.06) 0%, rgba(67,83,255,0.04) 100%)',
       }}>
         <span style={{ fontFamily: 'Manrope', fontSize: 15, fontWeight: 700, color: 'var(--dark)' }}>
           2026 Deductions Tracked
@@ -276,14 +399,14 @@ function TaxSpotlightMock() {
           <div key={i} style={{ padding: '10px 24px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
               <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'var(--dark-2)' }}>{item.label}</span>
-              <span style={{ fontFamily: 'Manrope', fontSize: 13, fontWeight: 700, color: '#2db37d' }}>{item.amt}</span>
+              <span style={{ fontFamily: 'Manrope', fontSize: 13, fontWeight: 700, color: '#10b981' }}>{item.amt}</span>
             </div>
             <div style={{ height: 4, borderRadius: 99, background: 'var(--border)' }}>
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${item.pct}%` }}
                 transition={{ duration: 1, delay: i * 0.15, ease: 'easeOut' }}
-                style={{ height: '100%', borderRadius: 99, background: '#2db37d' }}
+                style={{ height: '100%', borderRadius: 99, background: '#10b981' }}
               />
             </div>
           </div>
@@ -292,10 +415,10 @@ function TaxSpotlightMock() {
       <div style={{
         padding: '16px 24px', borderTop: '1px solid var(--border)',
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        background: 'rgba(45,179,125,0.04)',
+        background: 'rgba(16,185,129,0.04)',
       }}>
         <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'var(--dark-2)' }}>Estimated tax savings</span>
-        <span style={{ fontFamily: 'Manrope', fontSize: 20, fontWeight: 800, color: '#2db37d' }}>$1,593</span>
+        <span style={{ fontFamily: 'Manrope', fontSize: 20, fontWeight: 800, color: '#10b981' }}>$1,593</span>
       </div>
     </motion.div>
   )
@@ -307,8 +430,18 @@ export default function FeaturesPage() {
   return (
     <div style={{ paddingTop: 72 }}>
 
+      {/* ── HERO + SIX PILLARS — unified gradient background ── */}
+      <div style={{
+        background: `
+          radial-gradient(ellipse 80% 55% at 8% 25%, rgba(16,185,129,0.25) 0%, transparent 58%),
+          radial-gradient(ellipse 65% 55% at 92% 10%, rgba(213,201,248,0.82) 0%, transparent 58%),
+          radial-gradient(ellipse 55% 40% at 85% 82%, rgba(67,83,255,0.12) 0%, transparent 52%),
+          #f5f5f7
+        `,
+      }}>
+
       {/* ── HERO ── */}
-      <section style={{ background: HERO_BG, padding: '100px 0 80px' }}>
+      <section style={{ padding: '100px 0 80px' }}>
         <div className="ff-container">
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}>
             <span className="ff-badge" style={{ marginBottom: 24, display: 'inline-flex' }}>Complete Feature Set</span>
@@ -341,12 +474,16 @@ export default function FeaturesPage() {
         </div>
       </section>
 
-      {/* ── BENTO GRID ── */}
-      <section style={{ padding: 'var(--sp) 0', background: 'var(--white)' }}>
-        <div className="ff-container">
+      {/* ── BENTO GRID — Six Pillars ── */}
+      <section style={{ padding: 'var(--sp) 0', position: 'relative', overflow: 'hidden' }}>
+        {/* Subtle mid-section depth blobs */}
+        <div className="ff-blob" style={{ top: '10%', right: '5%', width: 300, height: 300, background: 'rgba(67,83,255,0.05)', filter: 'blur(80px)' }} />
+        <div className="ff-blob" style={{ bottom: '5%', left: '8%', width: 280, height: 280, background: 'rgba(16,185,129,0.06)', filter: 'blur(80px)' }} />
+
+        <div className="ff-container" style={{ position: 'relative' }}>
           <FadeIn>
             <div style={{ textAlign: 'center', marginBottom: 64 }}>
-              <span className="ff-badge-lavender" style={{ marginBottom: 16, display: 'inline-flex' }}>Features</span>
+              <span className="ff-badge" style={{ marginBottom: 16, display: 'inline-flex' }}>Features</span>
               <h2 style={{
                 fontFamily: 'Manrope', fontWeight: 800,
                 fontSize: 'clamp(28px, 3.5vw, 48px)',
@@ -360,62 +497,77 @@ export default function FeaturesPage() {
             </div>
           </FadeIn>
 
-          <div className="ff-bento">
+          <div className="ff-grid-3" style={{ gap: 20 }}>
             {bento.map((card, i) => (
-              <FadeIn key={i} delay={i * 0.06} style={{ gridColumn: card.span === 2 && !isMobileBento ? 'span 2' : undefined, height: '100%' }}>
-                <div
+              <FadeIn key={i} delay={i * 0.06} style={{ height: '100%' }}>
+                <motion.div
+                  whileHover={{ y: -4, scale: 1.012 }}
+                  transition={{ duration: 0.25, ease: 'easeOut' }}
                   style={{
                     background: card.bg,
-                    border: `1px solid ${card.border}`,
-                    borderRadius: 20, padding: '32px 30px',
+                    borderRadius: 24,
+                    padding: '32px 28px',
                     height: '100%', display: 'flex', flexDirection: 'column',
-                    transition: 'transform 0.3s, box-shadow 0.3s',
+                    position: 'relative', overflow: 'hidden',
                     cursor: 'default',
-                  }}
-                  onMouseEnter={e => {
-                    (e.currentTarget as HTMLElement).style.transform = 'translateY(-3px)'
-                    ;(e.currentTarget as HTMLElement).style.boxShadow = `0 16px 48px ${card.border}`
-                  }}
-                  onMouseLeave={e => {
-                    (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'
-                    ;(e.currentTarget as HTMLElement).style.boxShadow = 'none'
+                    border: `1px solid ${card.color}18`,
+                    boxShadow: `0 2px 12px rgba(0,0,0,0.04), 0 8px 32px ${card.color}08`,
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 16 }}>
-                    <div style={{
-                      width: 48, height: 48, borderRadius: '50%', flexShrink: 0,
-                      background: `radial-gradient(circle at 35% 35%, ${card.color}30 0%, ${card.color}08 100%)`,
-                      border: `1px solid ${card.color}35`,
-                      boxShadow: `0 4px 20px ${card.color}22`,
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    }}>
-                      <card.Icon size={22} color={card.color} strokeWidth={1.7} />
-                    </div>
-                    <span style={{
-                      fontFamily: 'Lato', fontSize: 11, fontWeight: 700,
-                      padding: '4px 10px', borderRadius: 4, letterSpacing: '0.05em',
-                      background: `${card.color}14`, color: card.color,
-                    }}>
-                      {card.tag}
-                    </span>
+                  {/* Subtle radial glow — no top line */}
+                  <div style={{
+                    position: 'absolute', top: -60, right: -60,
+                    width: 200, height: 200, borderRadius: '50%',
+                    background: `radial-gradient(circle, ${card.color}10 0%, transparent 70%)`,
+                    pointerEvents: 'none',
+                  }} />
+
+                  {/* Tag */}
+                  <span style={{
+                    fontFamily: 'Lato', fontSize: 10, fontWeight: 700,
+                    color: card.color, letterSpacing: '0.08em',
+                    textTransform: 'uppercase', display: 'inline-block', marginBottom: 16,
+                  }}>
+                    {card.tag}
+                  </span>
+
+                  {/* Hero stat */}
+                  <div style={{
+                    fontFamily: 'Manrope', fontWeight: 800,
+                    fontSize: 'clamp(36px, 3.2vw, 48px)',
+                    color: card.color, letterSpacing: '-2px', lineHeight: 1,
+                    marginBottom: 6,
+                  }}>
+                    {card.heroStat}
+                  </div>
+                  <div style={{ fontFamily: 'Lato', fontSize: 12, fontWeight: 600, color: `${card.color}80`, marginBottom: 20 }}>
+                    {card.heroLabel}
                   </div>
 
-                  <h3 style={{ fontFamily: 'Manrope', fontWeight: 700, fontSize: card.span === 2 ? 22 : 17, color: 'var(--dark)', marginBottom: 10 }}>
+                  {/* Divider */}
+                  <div style={{ height: 1, background: `${card.color}14`, marginBottom: 18 }} />
+
+                  <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 17, color: 'var(--dark)', marginBottom: 8, lineHeight: 1.25 }}>
                     {card.title}
                   </h3>
-                  <p style={{ fontFamily: 'Lato', fontSize: 14, color: 'var(--dark-3)', lineHeight: 1.7, flex: 1 }}>
+                  <p style={{ fontFamily: 'Lato', fontSize: 13, color: 'var(--dark-3)', lineHeight: 1.7, flex: 1 }}>
                     {card.desc}
                   </p>
 
-                  {card.visual === 'bars' && <BarsVisual />}
-                  {card.visual === 'tax'  && <TaxVisual />}
-                  {card.visual === 'subs' && <SubsVisual />}
-                </div>
+                  {card.visual === 'connect'   && <ConnectVisual />}
+                  {card.visual === 'predict'   && <PredictVisual />}
+                  {card.visual === 'act'       && <ActVisual />}
+                  {card.visual === 'radar'     && <RadarVisual />}
+                  {card.visual === 'taxengine' && <TaxEngineVisual />}
+                  {card.visual === 'portfolio' && <PortfolioVisual />}
+                </motion.div>
               </FadeIn>
             ))}
           </div>
         </div>
       </section>
+
+      </div>{/* end unified gradient wrapper */}
 
       {/* ── SPOTLIGHT 1: SUBSCRIPTION MANAGER (dark) ── */}
       <section style={{ padding: 'var(--sp) 0', background: 'var(--dark)' }}>
@@ -474,7 +626,7 @@ export default function FeaturesPage() {
       </section>
 
       {/* ── SPOTLIGHT 2: TAX ENGINE (light) ── */}
-      <section style={{ padding: 'var(--sp) 0', background: 'var(--light-grey)' }}>
+      <section style={{ padding: 'var(--sp) 0', background: '#f5f5f7' }}>
         <div className="ff-container">
           <div style={{
             display: 'grid', alignItems: 'center', gap: 72,
@@ -489,7 +641,7 @@ export default function FeaturesPage() {
             <FadeIn x={30}>
               <span style={{
                 display: 'inline-flex', alignItems: 'center', gap: 6,
-                background: 'rgba(45,179,125,0.12)', color: '#2db37d',
+                background: 'rgba(16,185,129,0.12)', color: '#10b981',
                 fontFamily: 'Lato', fontSize: 11, fontWeight: 700,
                 padding: '5px 14px', borderRadius: 4, letterSpacing: '0.06em',
                 marginBottom: 24, textTransform: 'uppercase',
@@ -514,8 +666,8 @@ export default function FeaturesPage() {
                   'Year-round tracking means no scramble at tax time',
                 ].map((pt, i) => (
                   <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-                    <div style={{ width: 20, height: 20, borderRadius: '50%', background: 'rgba(45,179,125,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 }}>
-                      <Check size={11} color="#2db37d" strokeWidth={2.5} />
+                    <div style={{ width: 20, height: 20, borderRadius: '50%', background: 'rgba(16,185,129,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 }}>
+                      <Check size={11} color="#10b981" strokeWidth={2.5} />
                     </div>
                     <span style={{ fontFamily: 'Lato', fontSize: 15, color: 'var(--dark-2)', lineHeight: 1.6 }}>{pt}</span>
                   </div>
@@ -561,7 +713,7 @@ export default function FeaturesPage() {
                       <th key={c} style={{
                         fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, textAlign: 'center',
                         padding: '16px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)',
-                        color: i === 5 ? 'var(--mint)' : 'rgba(255,255,255,0.35)',
+                        color: i === 5 ? 'var(--emerald)' : 'rgba(255,255,255,0.35)',
                         background: i === 5 ? 'rgba(67,83,255,0.14)' : 'transparent',
                         borderLeft: i === 5 ? '1px solid rgba(67,83,255,0.3)' : 'none',
                         borderRight: i === 5 ? '1px solid rgba(67,83,255,0.3)' : 'none',
@@ -602,20 +754,22 @@ export default function FeaturesPage() {
       </section>
 
       {/* ── CTA ── */}
-      <section style={{ padding: '80px 0', background: 'var(--lavender)', textAlign: 'center' }}>
-        <div className="ff-container">
+      <section style={{ padding: '80px 0', background: 'var(--surface)', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+        <div className="ff-blob" style={{ width: 500, height: 280, background: 'rgba(16,185,129,0.07)', top: -60, left: '50%', transform: 'translateX(-50%)' }} />
+        <div className="ff-container" style={{ position: 'relative' }}>
           <FadeIn>
             <h2 style={{
               fontFamily: 'Manrope', fontWeight: 800,
               fontSize: 'clamp(28px, 4vw, 48px)',
-              letterSpacing: '-1.5px', color: 'var(--dark)', marginBottom: 18,
+              letterSpacing: '-1.5px', color: '#ffffff', marginBottom: 18,
             }}>
-              Ready to take control?
+              Ready to{' '}
+              <span style={{ color: 'var(--emerald)' }}>take control?</span>
             </h2>
-            <p style={{ fontFamily: 'Lato', fontSize: 18, color: 'var(--dark-2)', marginBottom: 36 }}>
+            <p style={{ fontFamily: 'Lato', fontSize: 18, color: 'rgba(255,255,255,0.5)', marginBottom: 36 }}>
               Join the waitlist. Free tier available at launch.
             </p>
-            <Link to="/contact" className="btn-dark">Join the Waitlist <ArrowRight size={17} /></Link>
+            <Link to="/contact" className="btn-white">Join the Waitlist <ArrowRight size={17} /></Link>
           </FadeIn>
         </div>
       </section>

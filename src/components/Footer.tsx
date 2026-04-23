@@ -124,12 +124,14 @@ export default function Footer() {
           {/* Brand column */}
           <div style={{ paddingRight: 24 }}>
             <Link to="/" style={{ display: 'inline-block', textDecoration: 'none', marginBottom: 18 }}>
-              <span style={{
-                fontFamily: 'Manrope', fontWeight: 800, fontSize: 24,
-                letterSpacing: '-0.5px', lineHeight: 1,
-                background: 'linear-gradient(135deg, #ffffff 0%, #a8b4ff 100%)',
-                WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-              }}>FutureFlow</span>
+              <img
+                src="/futureflow-logo.svg"
+                alt="FutureFlow"
+                style={{
+                  height: 160, width: 'auto', display: 'block',
+                  filter: 'brightness(0) invert(1)',
+                }}
+              />
             </Link>
 
             <p style={{
