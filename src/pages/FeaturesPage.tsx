@@ -1,7 +1,6 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useInView } from 'framer-motion'
-import { useIsMobile } from '../hooks/useIsMobile'
 import {
   ArrowRight, Check, X, Minus, AlertTriangle,
 } from 'lucide-react'
@@ -426,7 +425,6 @@ function TaxSpotlightMock() {
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function FeaturesPage() {
-  const isMobileBento = useIsMobile(560)
   return (
     <div style={{ paddingTop: 72 }}>
 
