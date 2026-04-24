@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useInView } from 'framer-motion'
-import { ArrowRight, Shield, Lock, Eye, Heart, Zap, Globe, Lightbulb, Puzzle, MapPin, Calendar, CheckCircle, XCircle } from 'lucide-react'
+import { ArrowRight, Shield, Lock, Eye, Lightbulb, Puzzle, MapPin, Calendar, CheckCircle, XCircle } from 'lucide-react'
 
 const HERO_BG = `#f5f5f7`
 
@@ -24,10 +24,10 @@ function FadeIn({
 }
 
 const values = [
-  { Icon: Lock,  color: '#4353ff', title: 'Privacy First',          desc: 'We never sell your data, never show ads, and always give you full control. Our revenue comes only from your subscription.' },
-  { Icon: Zap,   color: '#f69c20', title: 'Simple by Design',       desc: 'Powerful financial intelligence delivered through an interface anyone can pick up in minutes — no finance degree required.' },
-  { Icon: Heart, color: '#fb7185', title: 'Genuinely on Your Side', desc: 'No referral kickbacks from banks. No upsells disguised as features. Just one honest subscription and one clear goal.' },
-  { Icon: Globe, color: '#10b981', title: 'Accessible to All',      desc: 'Financial clarity shouldn\'t be a luxury. Our free tier ensures everyone can access the tools that actually move the needle.' },
+  { accent: '0',    accentSub: 'data ever sold',    color: '#4353ff', title: 'Privacy First',          desc: 'No ads. No data brokering. No referral kickbacks. Our only revenue is your subscription — which means our only job is to make you richer.' },
+  { accent: '5min', accentSub: 'to full clarity',   color: '#f69c20', title: 'Simple by Design',       desc: 'Connect your accounts, see your full financial picture in under five minutes. No spreadsheets. No finance degree. No setup headaches.' },
+  { accent: '$0',   accentSub: 'hidden fees',        color: '#fb7185', title: 'Radically Transparent',  desc: 'One flat subscription. No upsells dressed as features. No partner banks paying us to push their products. What you see is all there is.' },
+  { accent: '100%', accentSub: 'built for everyone', color: '#10b981', title: 'Accessible to All',      desc: 'Financial clarity isn\'t a luxury for the wealthy. Our free tier gives everyone access to the tools that actually move the needle on their money.' },
 ]
 
 const gaps = [
@@ -86,7 +86,7 @@ export default function AboutPage() {
               { label: 'Headquarters',     val: 'Boston, MA',    Icon: MapPin,   highlight: false },
               { label: 'Banks Supported',  val: '12,000+',       Icon: null,     highlight: false },
               { label: 'States Covered',   val: 'All 50',        Icon: null,     highlight: false },
-              { label: 'Built by',         val: 'First-timers',  Icon: null,     highlight: false },
+              { label: 'Built by',         val: 'Indie Founders', Icon: null,     highlight: false },
               { label: 'Launch Status',    val: 'Coming Soon',   Icon: null,     highlight: true  },
             ].map((s, i) => (
               <div key={i} style={{
@@ -178,61 +178,45 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── Mission — neutral light ── */}
+      {/* ── Mission + Values — merged section ── */}
       <section style={{ padding: 'var(--sp) 0', background: '#f5f5f7', position: 'relative', overflow: 'hidden' }}>
         <div className="ff-blob" style={{ width: 600, height: 400, background: 'rgba(16,185,129,0.07)', top: -100, left: '50%', transform: 'translateX(-50%)' }} />
-        <div className="ff-container" style={{ position: 'relative', textAlign: 'center', maxWidth: 680, margin: '0 auto' }}>
-          <FadeIn>
-            <span className="ff-badge" style={{ marginBottom: 20, display: 'inline-flex' }}>Our Mission</span>
-            <h2 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(28px, 4vw, 48px)', letterSpacing: '-1.5px', lineHeight: 1.1, color: 'var(--dark)', marginTop: 16, marginBottom: 20 }}>
-              Financial clarity for{' '}
-              <span style={{ color: 'var(--emerald)' }}>every American.</span>
-            </h2>
-            <p style={{ fontFamily: 'Lato', fontSize: 18, color: 'var(--dark-2)', lineHeight: 1.8 }}>
-              Managing money shouldn't require a finance degree, a premium advisor, or five different apps. FutureFlow brings the intelligence of a private wealth manager into one place — and it pays for itself in the first week.
-            </p>
-          </FadeIn>
-        </div>
-      </section>
+        <div className="ff-container" style={{ position: 'relative' }}>
 
-      {/* ── Values — clean cards on neutral, 2×2 grid ── */}
-      <section style={{ padding: 'var(--sp) 0', background: '#f5f5f7' }}>
-        <div className="ff-container">
+          {/* Mission header */}
           <FadeIn>
-            <div style={{ textAlign: 'center', marginBottom: 56 }}>
-              <span className="ff-badge" style={{ marginBottom: 16, display: 'inline-flex' }}>What We Stand For</span>
-              <h2 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(28px, 4vw, 44px)', letterSpacing: '-1px', color: 'var(--dark)', marginTop: 14 }}>Our Values</h2>
+            <div style={{ textAlign: 'center', maxWidth: 680, margin: '0 auto 64px' }}>
+              <span className="ff-badge" style={{ marginBottom: 20, display: 'inline-flex' }}>Our Mission</span>
+              <h2 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(28px, 4vw, 48px)', letterSpacing: '-1.5px', lineHeight: 1.1, color: 'var(--dark)', marginTop: 16, marginBottom: 20 }}>
+                Financial clarity for{' '}
+                <span style={{ color: 'var(--emerald)' }}>every American.</span>
+              </h2>
+              <p style={{ fontFamily: 'Lato', fontSize: 18, color: 'var(--dark-2)', lineHeight: 1.8 }}>
+                Managing money shouldn't require a finance degree, a premium advisor, or five different apps. FutureFlow brings the intelligence of a private wealth manager into one place — and it pays for itself in the first week.
+              </p>
             </div>
           </FadeIn>
-          <div className="ff-grid-2">
+
+          {/* Values bento */}
+          <FadeIn>
+            <div style={{ textAlign: 'center', marginBottom: 40 }}>
+              <span className="ff-badge" style={{ marginBottom: 14, display: 'inline-flex' }}>What We Stand For</span>
+              <h2 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(26px, 3.5vw, 42px)', letterSpacing: '-1px', color: 'var(--dark)', marginTop: 12 }}>Our Values</h2>
+            </div>
+          </FadeIn>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20 }}>
             {values.map((v, i) => (
               <FadeIn key={i} delay={i * 0.08} style={{ height: '100%' }}>
-                <motion.div
-                  whileHover={{ y: -4 }}
-                  transition={{ duration: 0.22 }}
-                  className="ff-card-clean"
-                  style={{
-                    padding: '32px 28px', height: '100%',
-                    display: 'flex', gap: 22, alignItems: 'flex-start',
-                    borderLeft: `3px solid ${v.color}`,
-                  }}
-                >
-                  <div style={{
-                    width: 52, height: 52, borderRadius: '50%', flexShrink: 0,
-                    background: `radial-gradient(circle, ${v.color}18 0%, ${v.color}06 100%)`,
-                    boxShadow: `0 0 20px ${v.color}25`,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  }}>
-                    <v.Icon size={22} color={v.color} strokeWidth={1.8} />
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <h3 style={{ fontFamily: 'Manrope', fontWeight: 700, fontSize: 18, color: 'var(--dark)', marginBottom: 10 }}>{v.title}</h3>
-                    <p style={{ fontFamily: 'Lato', fontSize: 14, color: 'var(--dark-2)', lineHeight: 1.75 }}>{v.desc}</p>
-                  </div>
-                </motion.div>
+                <div className="ff-clay ff-gloss-on-hover" style={{ padding: '32px 28px', height: '100%', display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 48, color: v.color, letterSpacing: '-2px', lineHeight: 1, marginBottom: 4 }}>{v.accent}</div>
+                  <p style={{ fontFamily: 'Lato', fontSize: 10, fontWeight: 700, color: v.color, opacity: 0.7, marginBottom: 16, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{v.accentSub}</p>
+                  <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 17, color: 'var(--dark)', marginBottom: 10, letterSpacing: '-0.3px' }}>{v.title}</h3>
+                  <p style={{ fontFamily: 'Lato', fontSize: 13, color: 'var(--dark-3)', lineHeight: 1.75, flex: 1 }}>{v.desc}</p>
+                </div>
               </FadeIn>
             ))}
           </div>
+
         </div>
       </section>
 

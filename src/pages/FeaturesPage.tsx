@@ -1,6 +1,6 @@
-import { useRef } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView, useMotionValue, useSpring } from 'framer-motion'
 import {
   ArrowRight, Check, X, Minus, AlertTriangle,
 } from 'lucide-react'
@@ -423,6 +423,104 @@ function TaxSpotlightMock() {
   )
 }
 
+// ─── Floating Badges ──────────────────────────────────────────────────────────
+const badges = [
+  { label: 'Net Worth Tracker',      color: '#4353ff', depth: 0.8 },
+  { label: 'AI Budget Coach',        color: '#10b981', depth: 0.5 },
+  { label: 'Subscription Radar',     color: '#fb7185', depth: 1.0 },
+  { label: 'Tax Engine',             color: '#f69c20', depth: 0.6 },
+  { label: 'Bill Negotiation AI',    color: '#4353ff', depth: 0.9 },
+  { label: 'Credit Monitor',         color: '#10b981', depth: 0.4 },
+  { label: 'Debt Payoff Planner',    color: '#fb7185', depth: 0.7 },
+  { label: 'Cash Flow Forecast',     color: '#f69c20', depth: 1.0 },
+  { label: 'Investment Insights',    color: '#4353ff', depth: 0.5 },
+  { label: 'Free Trial Radar',       color: '#10b981', depth: 0.8 },
+  { label: 'Spending Analyzer',      color: '#fb7185', depth: 0.6 },
+  { label: 'Emergency Fund Planner', color: '#f69c20', depth: 0.9 },
+  { label: 'Financial Health Score', color: '#4353ff', depth: 0.4 },
+  { label: 'Auto Categorization',    color: '#10b981', depth: 1.0 },
+  { label: 'Bank-Level Security',    color: '#fb7185', depth: 0.7 },
+]
+
+// Fixed grid positions (col 0–3, row 0–4) mapped to % within container
+const positions = [
+  { x: 4,  y: 2  }, { x: 52, y: 0  }, { x: 26, y: 8  },
+  { x: 68, y: 14 }, { x: 8,  y: 22 }, { x: 44, y: 20 },
+  { x: 70, y: 30 }, { x: 18, y: 36 }, { x: 52, y: 40 },
+  { x: 2,  y: 50 }, { x: 66, y: 50 }, { x: 30, y: 58 },
+  { x: 10, y: 68 }, { x: 56, y: 64 }, { x: 36, y: 76 },
+]
+
+function FloatingBadges() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [mouse, setMouse] = useState({ x: 0, y: 0 })
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+  const smoothX = useSpring(mouseX, { stiffness: 50, damping: 18 })
+  const smoothY = useSpring(mouseY, { stiffness: 50, damping: 18 })
+  const [smX, setSmX] = useState(0)
+  const [smY, setSmY] = useState(0)
+
+  useEffect(() => {
+    const unsubX = smoothX.on('change', v => setSmX(v))
+    const unsubY = smoothY.on('change', v => setSmY(v))
+    return () => { unsubX(); unsubY() }
+  }, [smoothX, smoothY])
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const onMove = (e: MouseEvent) => {
+      const rect = el.getBoundingClientRect()
+      mouseX.set(e.clientX - rect.left - rect.width / 2)
+      mouseY.set(e.clientY - rect.top - rect.height / 2)
+    }
+    const onLeave = () => { mouseX.set(0); mouseY.set(0) }
+    el.addEventListener('mousemove', onMove)
+    el.addEventListener('mouseleave', onLeave)
+    return () => { el.removeEventListener('mousemove', onMove); el.removeEventListener('mouseleave', onLeave) }
+  }, [mouseX, mouseY])
+
+  // suppress unused warning
+  void mouse; void setMouse
+
+  return (
+    <div ref={containerRef} style={{ position: 'relative', height: 420, userSelect: 'none' }}>
+      {badges.map((b, i) => {
+        const pos = positions[i] || { x: 20, y: 20 }
+        const dx = smX * b.depth * 0.05
+        const dy = smY * b.depth * 0.05
+        return (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, scale: 0.7 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: i * 0.06, ease: 'easeOut' }}
+            whileHover={{ scale: 1.12, zIndex: 10 }}
+            style={{ position: 'absolute', left: `${pos.x}%`, top: `${pos.y}%`, x: dx, y: dy }}
+          >
+            <motion.div
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 2.8 + i * 0.25, repeat: Infinity, ease: 'easeInOut', delay: i * 0.18 }}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 7,
+                padding: '8px 14px', borderRadius: 50,
+                background: '#ffffff',
+                border: `1.5px solid ${b.color}35`,
+                boxShadow: `0 4px 20px rgba(0,0,0,0.09), 0 1px 4px rgba(0,0,0,0.05)`,
+                cursor: 'default', whiteSpace: 'nowrap',
+              }}
+            >
+              <div style={{ width: 7, height: 7, borderRadius: '50%', background: b.color, flexShrink: 0 }} />
+              <span style={{ fontFamily: 'Lato', fontSize: 13, fontWeight: 700, color: 'var(--dark-2)' }}>{b.label}</span>
+            </motion.div>
+          </motion.div>
+        )
+      })}
+    </div>
+  )
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function FeaturesPage() {
   return (
@@ -441,34 +539,44 @@ export default function FeaturesPage() {
       {/* ── HERO ── */}
       <section style={{ padding: '100px 0 80px' }}>
         <div className="ff-container">
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}>
-            <span className="ff-badge" style={{ marginBottom: 24, display: 'inline-flex' }}>Complete Feature Set</span>
-          </motion.div>
-          <motion.h1
-            initial={{ opacity: 0, y: 36 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}
-            style={{
-              fontFamily: 'Manrope', fontWeight: 800,
-              fontSize: 'clamp(38px, 5.5vw, 72px)',
-              letterSpacing: '-2.5px', lineHeight: 1.02,
-              color: 'var(--dark)', marginBottom: 24, maxWidth: 680,
-            }}
-          >
-            Everything you need.<br />
-            <span style={{ color: 'var(--primary)' }}>Nothing you don't.</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.25 }}
-            style={{ fontFamily: 'Lato', fontSize: 19, color: 'var(--dark-2)', maxWidth: 500, lineHeight: 1.75, marginBottom: 40 }}
-          >
-            Every tool a modern American needs to manage, protect, and grow their money — in one intelligent platform.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
-            style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}
-          >
-            <Link to="/contact" className="btn-dark">Join the Waitlist <ArrowRight size={16} /></Link>
-            <Link to="/pricing" className="btn-outline-dark">View Pricing <ArrowRight size={16} /></Link>
-          </motion.div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center' }}>
+
+            {/* Left — text */}
+            <div>
+              <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}>
+                <span className="ff-badge" style={{ marginBottom: 24, display: 'inline-flex' }}>Complete Feature Set</span>
+              </motion.div>
+              <motion.h1
+                initial={{ opacity: 0, y: 36 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}
+                style={{
+                  fontFamily: 'Manrope', fontWeight: 800,
+                  fontSize: 'clamp(36px, 4.5vw, 64px)',
+                  letterSpacing: '-2.5px', lineHeight: 1.02,
+                  color: 'var(--dark)', marginBottom: 24, marginTop: 24,
+                }}
+              >
+                Everything you need.<br />
+                <span style={{ color: 'var(--primary)' }}>Nothing you don't.</span>
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.25 }}
+                style={{ fontFamily: 'Lato', fontSize: 18, color: 'var(--dark-2)', lineHeight: 1.75, marginBottom: 40 }}
+              >
+                Every tool a modern American needs to manage, protect, and grow their money — in one intelligent platform.
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
+                style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}
+              >
+                <Link to="/contact" className="btn-dark">Join the Waitlist <ArrowRight size={16} /></Link>
+                <Link to="/pricing" className="btn-outline-dark">View Pricing <ArrowRight size={16} /></Link>
+              </motion.div>
+            </div>
+
+            {/* Right — floating feature badges */}
+            <FloatingBadges />
+
+          </div>
         </div>
       </section>
 
