@@ -100,7 +100,7 @@ const faqs = [
 
 export default function PricingPage() {
   return (
-    <div style={{ paddingTop: 72 }}>
+    <div>
 
       {/* ── HERO ── */}
       <section style={{
@@ -109,7 +109,7 @@ export default function PricingPage() {
           radial-gradient(ellipse 50% 45% at 90% 70%, rgba(213,201,248,0.35) 0%, transparent 60%),
           #f5f5f7
         `,
-        padding: 'var(--sp) 0 80px', textAlign: 'center',
+        padding: 'calc(var(--sp) + 72px) 0 80px', textAlign: 'center',
       }}>
         <div className="ff-container">
           <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>

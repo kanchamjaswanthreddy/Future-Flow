@@ -524,7 +524,7 @@ function FloatingBadges() {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function FeaturesPage() {
   return (
-    <div style={{ paddingTop: 72 }}>
+    <div>
 
       {/* ── HERO + SIX PILLARS — unified gradient background ── */}
       <div style={{
@@ -537,7 +537,7 @@ export default function FeaturesPage() {
       }}>
 
       {/* ── HERO ── */}
-      <section style={{ padding: '100px 0 80px' }}>
+      <section style={{ padding: '172px 0 80px' }}>
         <div className="ff-container">
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center' }}>
 

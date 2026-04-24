@@ -47,10 +47,10 @@ const timeline = [
 
 export default function AboutPage() {
   return (
-    <div style={{ paddingTop: 72 }}>
+    <div>
 
       {/* ── Hero ── */}
-      <section style={{ position: 'relative', background: HERO_BG, padding: 'var(--sp) 0 80px', overflow: 'hidden' }}>
+      <section style={{ position: 'relative', background: HERO_BG, padding: 'calc(var(--sp) + 72px) 0 80px', overflow: 'hidden' }}>
         {/* Ambient blobs */}
         <div className="ff-blob" style={{ width: 480, height: 480, background: 'rgba(16,185,129,0.10)', top: -120, left: -120 }} />
         <div className="ff-blob" style={{ width: 360, height: 360, background: 'rgba(67,83,255,0.07)', bottom: -80, right: -80 }} />

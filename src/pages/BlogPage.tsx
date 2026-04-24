@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useInView } from 'framer-motion'
 import { ArrowRight, TrendingUp } from 'lucide-react'
@@ -84,6 +84,8 @@ const posts = [
 const categories = ['All', 'Personal Finance', 'Budgeting', 'Subscriptions', 'Investing', 'Taxes', 'Credit', 'Money Tips']
 
 export default function BlogPage() {
+  const [activeCategory, setActiveCategory] = useState('All')
+  const filteredPosts = activeCategory === 'All' ? posts : posts.filter(p => p.tag === activeCategory)
   return (
     <div style={{ paddingTop: 72 }}>
 
@@ -115,12 +117,12 @@ export default function BlogPage() {
       {/* ── Category filter — neutral ── */}
       <section style={{ background: '#f5f5f7', padding: '14px 24px', borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
         <div className="ff-container" style={{ display: 'flex', gap: 8, overflowX: 'auto', scrollbarWidth: 'none' }}>
-          {categories.map((c, i) => (
-            <button key={c} style={{
+          {categories.map((c) => (
+            <button key={c} onClick={() => setActiveCategory(c)} style={{
               fontFamily: 'Lato', fontSize: 13, fontWeight: 600,
               padding: '8px 18px', borderRadius: 50, border: 'none', cursor: 'pointer', whiteSpace: 'nowrap',
-              background: i === 0 ? 'var(--surface)' : 'rgba(0,0,0,0.06)',
-              color: i === 0 ? '#ffffff' : 'var(--dark-2)',
+              background: activeCategory === c ? 'var(--surface)' : 'rgba(0,0,0,0.06)',
+              color: activeCategory === c ? '#ffffff' : 'var(--dark-2)',
               transition: 'all 0.25s',
             }}>
               {c}
@@ -130,7 +132,7 @@ export default function BlogPage() {
       </section>
 
       {/* ── Featured post — dark glass ── */}
-      <section style={{ padding: '60px 24px 40px', background: '#f5f5f7' }}>
+      <section style={{ padding: '60px 24px 40px', background: 'var(--surface)' }}>
         <div className="ff-container">
           <FadeIn>
             <div
@@ -195,7 +197,7 @@ export default function BlogPage() {
       <section style={{ padding: '40px 24px var(--sp)', background: '#f5f5f7' }}>
         <div className="ff-container">
           <div className="ff-grid-3" style={{ gap: 24 }}>
-            {posts.map((post, i) => (
+            {filteredPosts.map((post, i) => (
               <FadeIn key={i} delay={i * 0.07} style={{ height: '100%' }}>
                 <Link to={`/blog/${post.slug}`} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
                   <motion.div
