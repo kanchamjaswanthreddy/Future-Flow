@@ -131,44 +131,41 @@ export default function BlogPage() {
         </div>
       </section>
 
-      {/* ── Featured post — dark glass ── */}
-      <section style={{ padding: '60px 24px 40px', background: 'var(--surface)' }}>
+      {/* ── Featured post ── */}
+      <section style={{ padding: '60px 24px 40px', background: '#ffffff' }}>
         <div className="ff-container">
           <FadeIn>
-            <div
-              className="ff-glass-dark"
-              style={{
-                borderRadius: 24, padding: '48px 44px',
-                display: 'grid', gap: 40, alignItems: 'center',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              }}
-            >
+            <div className="ff-clay" style={{
+              borderRadius: 24, padding: '48px 44px',
+              display: 'grid', gap: 40, alignItems: 'center',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            }}>
               <div>
-                <span style={{ display: 'inline-block', background: 'rgba(16,185,129,0.15)', color: 'var(--emerald)', fontFamily: 'Lato', fontSize: 12, fontWeight: 700, padding: '5px 14px', borderRadius: 4, marginBottom: 20 }}>
-                  {featured.tag}
+                <span style={{ display: 'inline-block', background: 'rgba(16,185,129,0.12)', color: 'var(--emerald)', fontFamily: 'Lato', fontSize: 12, fontWeight: 700, padding: '5px 14px', borderRadius: 4, marginBottom: 20 }}>
+                  ★ Featured — {featured.tag}
                 </span>
-                <h2 style={{ fontFamily: 'Manrope', fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 800, color: '#ffffff', lineHeight: 1.25, letterSpacing: '-0.5px', marginBottom: 16 }}>
+                <h2 style={{ fontFamily: 'Manrope', fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 800, color: 'var(--dark)', lineHeight: 1.25, letterSpacing: '-0.5px', marginBottom: 16 }}>
                   {featured.title}
                 </h2>
-                <p style={{ fontFamily: 'Lato', fontSize: 16, color: 'rgba(255,255,255,0.55)', lineHeight: 1.7, marginBottom: 28 }}>
+                <p style={{ fontFamily: 'Lato', fontSize: 16, color: 'var(--dark-3)', lineHeight: 1.7, marginBottom: 28 }}>
                   {featured.excerpt}
                 </p>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 28 }}>
-                  <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(255,255,255,0.35)' }}>{featured.date}</span>
-                  <span style={{ width: 3, height: 3, borderRadius: '50%', background: 'rgba(255,255,255,0.2)' }} />
-                  <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(255,255,255,0.35)' }}>{featured.readTime}</span>
+                  <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'var(--muted)' }}>{featured.date}</span>
+                  <span style={{ width: 3, height: 3, borderRadius: '50%', background: 'var(--muted)' }} />
+                  <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'var(--muted)' }}>{featured.readTime}</span>
                 </div>
-                <Link to={`/blog/${featured.slug}`} className="btn-white" style={{ fontSize: 15, padding: '11px 24px' }}>
+                <Link to={`/blog/${featured.slug}`} className="btn-dark" style={{ fontSize: 15, padding: '11px 24px' }}>
                   Read Article <ArrowRight size={16} />
                 </Link>
               </div>
 
               {/* Decorative cost breakdown card */}
               <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <div className="ff-glass-dark" style={{ width: 240, borderRadius: 24, padding: '24px 20px' }}>
+                <div style={{ width: 240, borderRadius: 20, padding: '24px 20px', background: '#f5f5f7', border: '1px solid rgba(0,0,0,0.06)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
-                    <TrendingUp size={13} color="var(--coral)" strokeWidth={2} />
-                    <p style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.4)', margin: 0 }}>The real cost of financial chaos</p>
+                    <TrendingUp size={13} color="#fb7185" strokeWidth={2} />
+                    <p style={{ fontFamily: 'Lato', fontSize: 12, color: 'var(--muted)', margin: 0 }}>The real cost of financial chaos</p>
                   </div>
                   {[
                     { label: 'Forgotten subscriptions', val: '$3,720/yr' },
@@ -177,13 +174,13 @@ export default function BlogPage() {
                     { label: 'Overdraft fees',          val: '$840/yr'   },
                     { label: 'High-fee accounts',       val: '$640/yr'   },
                   ].map((item, i) => (
-                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: i < 4 ? '1px solid rgba(255,255,255,0.06)' : 'none' }}>
-                      <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.45)' }}>{item.label}</span>
+                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: i < 4 ? '1px solid rgba(0,0,0,0.06)' : 'none' }}>
+                      <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'var(--dark-3)' }}>{item.label}</span>
                       <span style={{ fontFamily: 'Manrope', fontSize: 13, fontWeight: 700, color: '#fb7185' }}>{item.val}</span>
                     </div>
                   ))}
                   <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 12 }}>
-                    <span style={{ fontFamily: 'Manrope', fontSize: 14, fontWeight: 700, color: '#ffffff' }}>Total leak</span>
+                    <span style={{ fontFamily: 'Manrope', fontSize: 14, fontWeight: 700, color: 'var(--dark)' }}>Total leak</span>
                     <span style={{ fontFamily: 'Manrope', fontSize: 16, fontWeight: 800, color: '#fb7185' }}>$9,400/yr</span>
                   </div>
                 </div>

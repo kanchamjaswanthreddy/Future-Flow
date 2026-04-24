@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useInView } from 'framer-motion'
+import { Tilt3DCard } from '../components/Tilt3DCard'
 import { ArrowRight, Shield, Lock, Eye, Lightbulb, Puzzle, MapPin, Calendar, CheckCircle, XCircle } from 'lucide-react'
 
 const HERO_BG = `#f5f5f7`
@@ -207,12 +208,14 @@ export default function AboutPage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20 }}>
             {values.map((v, i) => (
               <FadeIn key={i} delay={i * 0.08} style={{ height: '100%' }}>
-                <div className="ff-clay ff-gloss-on-hover" style={{ padding: '32px 28px', height: '100%', display: 'flex', flexDirection: 'column' }}>
-                  <div style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 48, color: v.color, letterSpacing: '-2px', lineHeight: 1, marginBottom: 4 }}>{v.accent}</div>
-                  <p style={{ fontFamily: 'Lato', fontSize: 10, fontWeight: 700, color: v.color, opacity: 0.7, marginBottom: 16, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{v.accentSub}</p>
-                  <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 17, color: 'var(--dark)', marginBottom: 10, letterSpacing: '-0.3px' }}>{v.title}</h3>
-                  <p style={{ fontFamily: 'Lato', fontSize: 13, color: 'var(--dark-3)', lineHeight: 1.75, flex: 1 }}>{v.desc}</p>
-                </div>
+                <Tilt3DCard intensity={12} style={{ height: '100%' }}>
+                  <div className="ff-clay ff-gloss-on-hover" style={{ padding: '32px 28px', height: '100%', display: 'flex', flexDirection: 'column' }}>
+                    <div style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 48, color: v.color, letterSpacing: '-2px', lineHeight: 1, marginBottom: 4 }}>{v.accent}</div>
+                    <p style={{ fontFamily: 'Lato', fontSize: 10, fontWeight: 700, color: v.color, opacity: 0.7, marginBottom: 16, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{v.accentSub}</p>
+                    <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 17, color: 'var(--dark)', marginBottom: 10, letterSpacing: '-0.3px' }}>{v.title}</h3>
+                    <p style={{ fontFamily: 'Lato', fontSize: 13, color: 'var(--dark-3)', lineHeight: 1.75, flex: 1 }}>{v.desc}</p>
+                  </div>
+                </Tilt3DCard>
               </FadeIn>
             ))}
           </div>

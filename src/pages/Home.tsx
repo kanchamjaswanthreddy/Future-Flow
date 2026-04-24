@@ -1,11 +1,10 @@
 import { useRef, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, useInView, useScroll, useTransform } from 'framer-motion'
+import { motion, useInView, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
 import { useIsMobile } from '../hooks/useIsMobile'
 import {
   ArrowRight, Check, Bell,
   CreditCard, Shield, RefreshCw, FileText,
-  Wifi,
 } from 'lucide-react'
 import { Tilt3DCard } from '../components/Tilt3DCard'
 
@@ -282,6 +281,209 @@ const aiEvents = [
   { Icon: Shield,     color: '#4353ff', msg: 'Comcast bill negotiated down — $27/mo less',  time: 'Yesterday', action: 'Done'  },
 ]
 
+// ─── Hero 3D Scene ────────────────────────────────────────────────────────────
+function HeroScene3D() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const rotX = useMotionValue(0)
+  const rotY = useMotionValue(0)
+  const sX = useSpring(rotX, { stiffness: 65, damping: 20 })
+  const sY = useSpring(rotY, { stiffness: 65, damping: 20 })
+
+  const [syncing, setSyncing] = useState(true)
+  useEffect(() => { const t = setTimeout(() => setSyncing(false), 2600); return () => clearTimeout(t) }, [])
+
+  function onMouseMove(e: React.MouseEvent) {
+    const rect = containerRef.current?.getBoundingClientRect()
+    if (!rect) return
+    const nx = (e.clientX - rect.left) / rect.width - 0.5
+    const ny = (e.clientY - rect.top) / rect.height - 0.5
+    rotY.set(nx * 22)
+    rotX.set(-ny * 14)
+  }
+  function onMouseLeave() { rotX.set(0); rotY.set(0) }
+
+  const events = [
+    { Icon: Bell,       color: '#fb7185', msg: 'Adobe CC trial ends in 2 days — cancel?',    action: 'Alert',   time: 'Just now' },
+    { Icon: CreditCard, color: '#10b981', msg: 'Peloton subscription cancelled successfully',  action: '−$44/mo', time: '1h ago'   },
+    { Icon: FileText,   color: '#f69c20', msg: 'Home office deduction logged: $3,240',         action: 'Saved',   time: '3h ago'   },
+  ]
+
+  return (
+    <div
+      ref={containerRef}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      style={{ width: 460, height: 560, perspective: '1400px', perspectiveOrigin: '50% 44%', position: 'relative', flexShrink: 0 }}
+    >
+      <motion.div style={{
+        width: '100%', height: '100%', position: 'relative',
+        transformStyle: 'preserve-3d',
+        rotateX: sX, rotateY: sY,
+      }}>
+
+        {/* ── Z: -90 — animated dot-grid background layer ── */}
+        <div style={{ position: 'absolute', inset: -60, transform: 'translateZ(-90px)', borderRadius: 52, overflow: 'hidden', pointerEvents: 'none' }}>
+          <motion.div
+            animate={{ scale: [1, 1.18, 1], opacity: [0.55, 0.85, 0.55] }}
+            transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
+            style={{ position: 'absolute', width: 360, height: 360, borderRadius: '50%', top: -80, right: -60, background: 'radial-gradient(circle, rgba(67,83,255,0.38) 0%, transparent 70%)', filter: 'blur(48px)' }}
+          />
+          <motion.div
+            animate={{ scale: [1, 1.22, 1], opacity: [0.45, 0.75, 0.45] }}
+            transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 1.8 }}
+            style={{ position: 'absolute', width: 300, height: 300, borderRadius: '50%', bottom: -40, left: -20, background: 'radial-gradient(circle, rgba(16,185,129,0.32) 0%, transparent 70%)', filter: 'blur(44px)' }}
+          />
+          <svg width="100%" height="100%" style={{ position: 'absolute', inset: 0, opacity: 0.16 }}>
+            <defs>
+              <pattern id="heroGrid" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
+                <circle cx="2" cy="2" r="1.5" fill="#4353ff" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#heroGrid)" />
+          </svg>
+        </div>
+
+        {/* ── Z: 0 — main dark glass card ── */}
+        <div style={{
+          position: 'absolute', inset: 0, transform: 'translateZ(0px)',
+          borderRadius: 28,
+          background: 'linear-gradient(160deg, rgba(11,11,20,0.98) 0%, rgba(6,6,14,0.97) 100%)',
+          border: '1px solid rgba(255,255,255,0.07)',
+          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08), 0 60px 120px rgba(0,0,0,0.75), 0 0 80px rgba(67,83,255,0.10)',
+          overflow: 'hidden', display: 'flex', flexDirection: 'column',
+        }}>
+          {/* ambient inner glows */}
+          <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'radial-gradient(ellipse 75% 45% at 85% 0%, rgba(67,83,255,0.14) 0%, transparent 65%)' }} />
+          <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'radial-gradient(ellipse 55% 40% at 15% 100%, rgba(16,185,129,0.10) 0%, transparent 65%)' }} />
+
+          {/* header */}
+          <div style={{ padding: '13px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.05)', background: 'rgba(255,255,255,0.02)' }}>
+            <span style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 14, background: 'linear-gradient(135deg,#ffffff,#a5b4fc)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>FutureFlow</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+              {syncing ? (
+                <>
+                  <motion.div animate={{ rotate: 360 }} transition={{ duration: 1.1, repeat: Infinity, ease: 'linear' }}>
+                    <RefreshCw size={12} color="#10b981" strokeWidth={2} />
+                  </motion.div>
+                  <span style={{ fontFamily: 'Lato', fontSize: 11, color: '#10b981', fontWeight: 600 }}>Syncing…</span>
+                </>
+              ) : (
+                <>
+                  <motion.div animate={{ opacity: [1, 0.3, 1], scale: [1, 1.4, 1] }} transition={{ duration: 2, repeat: Infinity }}
+                    style={{ width: 6, height: 6, borderRadius: '50%', background: '#10b981' }} />
+                  <span style={{ fontFamily: 'Lato', fontSize: 11, color: '#10b981', fontWeight: 600 }}>AI Active</span>
+                </>
+              )}
+            </div>
+          </div>
+          {syncing && <div style={{ height: 2 }}><div className="ff-progress-pulse" style={{ width: '100%' }} /></div>}
+
+          {/* net worth */}
+          <div style={{ padding: '20px 22px 16px', borderBottom: '1px solid rgba(255,255,255,0.05)', position: 'relative' }}>
+            <p style={{ fontFamily: 'Lato', fontSize: 10, color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>Total Net Worth</p>
+            {syncing ? (
+              <div><div className="ff-skeleton" style={{ height: 42, width: 160, marginBottom: 10 }} /><div className="ff-skeleton" style={{ height: 44, borderRadius: 8 }} /></div>
+            ) : (
+              <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 14 }}>
+                  <span style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 38, color: '#ffffff', letterSpacing: '-2px', textShadow: '0 0 40px rgba(67,83,255,0.5)' }}>$47,320</span>
+                  <span style={{ fontFamily: 'Lato', fontSize: 12, color: '#10b981', fontWeight: 700, background: 'rgba(16,185,129,0.14)', padding: '3px 9px', borderRadius: 6 }}>↑ +$2,140</span>
+                </div>
+                <svg width="100%" height="44" viewBox="0 0 390 44" preserveAspectRatio="none" style={{ display: 'block' }}>
+                  <defs>
+                    <linearGradient id="dSparkFill" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#4353ff" stopOpacity="0.35" />
+                      <stop offset="100%" stopColor="#4353ff" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <motion.path d="M0,40 L33,37 L66,33 L99,30 L132,32 L165,25 L198,21 L231,17 L264,13 L297,9 L330,6 L363,3 L390,1 L390,44 L0,44 Z"
+                    fill="url(#dSparkFill)" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.3 }} />
+                  <motion.path d="M0,40 L33,37 L66,33 L99,30 L132,32 L165,25 L198,21 L231,17 L264,13 L297,9 L330,6 L363,3 L390,1"
+                    fill="none" stroke="#4353ff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                    initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1.4, delay: 0.35, ease: 'easeOut' }}
+                    style={{ filter: 'drop-shadow(0 0 7px rgba(67,83,255,0.9))' }} />
+                  <motion.circle cx="390" cy="1" r="4.5" fill="#4353ff"
+                    initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 1.7 }}
+                    style={{ filter: 'drop-shadow(0 0 10px #4353ff)' }} />
+                </svg>
+              </motion.div>
+            )}
+          </div>
+
+          {/* AI events */}
+          <div style={{ padding: '13px 20px 12px', flex: 1 }}>
+            <p style={{ fontFamily: 'Lato', fontSize: 10, fontWeight: 700, color: 'rgba(255,255,255,0.22)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 9 }}>AI Working For You</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
+              {syncing
+                ? [1,2,3].map(i => <div key={i} className="ff-skeleton" style={{ height: 44, borderRadius: 10 }} />)
+                : events.map((ev, i) => (
+                  <motion.div key={i} initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.5 + i * 0.18, duration: 0.4 }}
+                    style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px', background: `${ev.color}0f`, borderRadius: 10, border: `1px solid ${ev.color}22` }}>
+                    <div style={{ width: 30, height: 30, borderRadius: 8, background: `${ev.color}1c`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <ev.Icon size={13} color={ev.color} strokeWidth={2} />
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <p style={{ fontFamily: 'Lato', fontSize: 11.5, color: 'rgba(255,255,255,0.68)', lineHeight: 1.35, margin: 0 }}>{ev.msg}</p>
+                      <p style={{ fontFamily: 'Lato', fontSize: 10, color: 'rgba(255,255,255,0.22)', margin: '2px 0 0' }}>{ev.time}</p>
+                    </div>
+                    <span style={{ fontFamily: 'Lato', fontSize: 10, fontWeight: 700, color: ev.color, background: `${ev.color}1c`, padding: '3px 8px', borderRadius: 5, whiteSpace: 'nowrap', flexShrink: 0 }}>{ev.action}</span>
+                  </motion.div>
+                ))
+              }
+            </div>
+          </div>
+
+          {/* bottom savings strip */}
+          {!syncing && (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.3 }}
+              style={{ margin: '0 14px 14px', padding: '10px 16px', background: 'linear-gradient(135deg, rgba(16,185,129,0.12), rgba(67,83,255,0.07))', borderRadius: 12, border: '1px solid rgba(16,185,129,0.22)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.45)' }}>Total found by AI this month</span>
+              <span style={{ fontFamily: 'Manrope', fontSize: 16, fontWeight: 800, color: '#10b981', letterSpacing: '-0.5px' }}>+$456.97</span>
+            </motion.div>
+          )}
+        </div>
+
+        {/* ── Z: +65 — Financial Health chip (top-right) ── */}
+        <div style={{ position: 'absolute', top: -20, right: -32, transform: 'translateZ(65px)' }}>
+          <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
+            style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', borderRadius: 16, padding: '12px 16px', border: '1px solid rgba(255,255,255,0.9)', boxShadow: '0 14px 44px rgba(0,0,0,0.22)', display: 'flex', alignItems: 'center', gap: 10 }}>
+            <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(16,185,129,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Shield size={16} color="#10b981" strokeWidth={2} />
+            </div>
+            <div>
+              <p style={{ fontFamily: 'Lato', fontSize: 10, color: 'var(--muted)', marginBottom: 2 }}>Financial Health</p>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 3 }}>
+                <span style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 20, color: 'var(--dark)', letterSpacing: '-0.5px' }}>87</span>
+                <span style={{ fontFamily: 'Lato', fontSize: 10, color: '#10b981', fontWeight: 700 }}>/100 · Excellent</span>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* ── Z: +95 — Savings chip (bottom-left) ── */}
+        <div style={{ position: 'absolute', bottom: -24, left: -36, transform: 'translateZ(95px)' }}>
+          <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
+            style={{ background: 'var(--dark)', borderRadius: 18, padding: '14px 20px', boxShadow: '0 20px 56px rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.08)', minWidth: 192 }}>
+            <p style={{ fontFamily: 'Lato', fontSize: 10, color: 'rgba(255,255,255,0.32)', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Projected annual savings</p>
+            <p style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 24, color: '#10b981', letterSpacing: '-0.5px' }}>$1,200 / yr</p>
+          </motion.div>
+        </div>
+
+        {/* ── Z: +115 — Alert chip (mid-right, closest to viewer) ── */}
+        <div style={{ position: 'absolute', top: '44%', right: -38, transform: 'translateZ(115px)' }}>
+          <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 3.1, repeat: Infinity, ease: 'easeInOut', delay: 2.2 }}
+            style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 12, padding: '9px 14px', border: '1px solid rgba(255,255,255,0.9)', boxShadow: '0 8px 28px rgba(0,0,0,0.18)', display: 'flex', alignItems: 'center', gap: 8 }}>
+            <motion.div animate={{ scale: [1, 1.55, 1], opacity: [1, 0.35, 1] }} transition={{ duration: 1.3, repeat: Infinity }}
+              style={{ width: 7, height: 7, borderRadius: '50%', background: '#fb7185', flexShrink: 0 }} />
+            <span style={{ fontFamily: 'Lato', fontSize: 11, fontWeight: 700, color: 'var(--dark-2)', whiteSpace: 'nowrap' }}>Trial ending in 2 days</span>
+          </motion.div>
+        </div>
+
+      </motion.div>
+    </div>
+  )
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function Home() {
   const isMobile = useIsMobile(768)
@@ -290,13 +492,6 @@ export default function Home() {
   const { scrollY } = useScroll()
   const heroY     = useTransform(scrollY, [0, 500], [0, -28])
   const heroScale = useTransform(scrollY, [0, 500], [1, 0.96])
-
-  // Skeleton loading — bank sync simulation
-  const [syncing, setSyncing] = useState(true)
-  useEffect(() => {
-    const t = setTimeout(() => setSyncing(false), 2600)
-    return () => clearTimeout(t)
-  }, [])
 
   // Haptic pulse — CTA click feedback
   const [pulsed, setPulsed] = useState(false)
@@ -378,178 +573,16 @@ export default function Home() {
               </motion.div>
             </div>
 
-            {/* Right — AI Financial Command Center */}
+            {/* Right — True 3D scene */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.93, y: 22 }} animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.85, delay: 0.22, ease: 'easeOut' }}
+              initial={{ opacity: 0, scale: 0.9, y: 28 }} animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.22, ease: 'easeOut' }}
               className="hidden lg:flex"
-              style={{ justifyContent: 'flex-end', position: 'relative' }}
+              style={{ justifyContent: 'center', alignItems: 'center', position: 'relative' }}
             >
-              <div style={{ width: 440, position: 'relative' }}>
-
-                {/* Main card */}
-                <div style={{
-                  background: 'rgba(255,255,255,0.88)',
-                  backdropFilter: 'blur(28px) saturate(180%)',
-                  WebkitBackdropFilter: 'blur(28px) saturate(180%)',
-                  borderRadius: 24,
-                  border: '1px solid rgba(255,255,255,0.7)',
-                  boxShadow: '0 24px 80px rgba(0,0,0,0.09), 0 4px 20px rgba(0,0,0,0.05)',
-                  overflow: 'hidden',
-                }}>
-
-                  {/* Header */}
-                  <div style={{ background: 'rgba(245,245,247,0.9)', padding: '12px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
-                    <span style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 13, background: 'linear-gradient(135deg,#0e0e0e,#4353ff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>FutureFlow</span>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                      {syncing ? (
-                        <>
-                          <Wifi size={11} color="#10b981" strokeWidth={2} />
-                          <span style={{ fontFamily: 'Lato', fontSize: 11, color: '#10b981', fontWeight: 600 }}>Syncing accounts…</span>
-                        </>
-                      ) : (
-                        <>
-                          <motion.div
-                            animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 2, repeat: Infinity }}
-                            style={{ width: 6, height: 6, borderRadius: '50%', background: '#10b981' }}
-                          />
-                          <span style={{ fontFamily: 'Lato', fontSize: 11, color: '#10b981', fontWeight: 600 }}>AI Active</span>
-                        </>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Sync progress bar */}
-                  {syncing && (
-                    <div style={{ height: 3, background: 'var(--neutral-100)' }}>
-                      <div className="ff-progress-pulse" style={{ width: '100%' }} />
-                    </div>
-                  )}
-
-                  {/* Net worth + sparkline */}
-                  <div style={{ padding: '20px 24px 18px', borderBottom: '1px solid var(--border)' }}>
-                    <p style={{ fontFamily: 'Lato', fontSize: 10, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 6 }}>Total Net Worth</p>
-                    {syncing ? (
-                      <div>
-                        <div className="ff-skeleton-light" style={{ height: 38, width: 150, marginBottom: 8 }} />
-                        <div className="ff-skeleton-light" style={{ height: 44, width: '100%', borderRadius: 8 }} />
-                      </div>
-                    ) : (
-                      <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}>
-                        <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 14 }}>
-                          <span style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 36, color: 'var(--dark)', letterSpacing: '-1.5px' }}>$47,320</span>
-                          <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'var(--emerald)', fontWeight: 700 }}>↑ +$2,140 this month</span>
-                        </div>
-                        {/* Animated sparkline */}
-                        <svg width="100%" height="46" viewBox="0 0 390 46" preserveAspectRatio="none" style={{ display: 'block' }}>
-                          <defs>
-                            <linearGradient id="sparkFill" x1="0" y1="0" x2="0" y2="1">
-                              <stop offset="0%" stopColor="#4353ff" stopOpacity="0.14" />
-                              <stop offset="100%" stopColor="#4353ff" stopOpacity="0" />
-                            </linearGradient>
-                          </defs>
-                          <motion.path
-                            d="M0,40 L33,37 L66,33 L99,30 L132,32 L165,25 L198,21 L231,17 L264,13 L297,9 L330,6 L363,3 L390,1 L390,46 L0,46 Z"
-                            fill="url(#sparkFill)"
-                            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.3 }}
-                          />
-                          <motion.path
-                            d="M0,40 L33,37 L66,33 L99,30 L132,32 L165,25 L198,21 L231,17 L264,13 L297,9 L330,6 L363,3 L390,1"
-                            fill="none" stroke="#4353ff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                            initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
-                            transition={{ duration: 1.4, delay: 0.35, ease: 'easeOut' }}
-                          />
-                          {/* End dot */}
-                          <motion.circle cx="390" cy="1" r="4" fill="#4353ff"
-                            initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 1.6, duration: 0.3 }}
-                          />
-                        </svg>
-                      </motion.div>
-                    )}
-                  </div>
-
-                  {/* AI Action Feed */}
-                  <div style={{ padding: '14px 20px 16px' }}>
-                    <p style={{ fontFamily: 'Lato', fontSize: 10, fontWeight: 700, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 10 }}>AI Working For You — Today</p>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                      {syncing ? (
-                        [1, 2, 3].map(i => <div key={i} className="ff-skeleton-light" style={{ height: 48, borderRadius: 10 }} />)
-                      ) : (
-                        [
-                          { Icon: Bell,       color: '#fb7185', msg: 'Adobe CC trial ends in 2 days — cancel?',   action: 'Alert',    time: 'Just now' },
-                          { Icon: CreditCard, color: '#10b981', msg: 'Peloton subscription cancelled successfully', action: '−$44/mo',  time: '1h ago'   },
-                          { Icon: FileText,   color: '#f69c20', msg: 'Home office deduction logged: $3,240',        action: 'Saved',    time: '3h ago'   },
-                        ].map((ev, i) => (
-                          <motion.div
-                            key={i}
-                            initial={{ opacity: 0, x: 18 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.55 + i * 0.2, duration: 0.45, ease: 'easeOut' }}
-                            style={{
-                              display: 'flex', alignItems: 'center', gap: 10,
-                              padding: '10px 12px',
-                              background: `${ev.color}09`,
-                              borderRadius: 10,
-                              border: `1px solid ${ev.color}20`,
-                            }}
-                          >
-                            <div style={{ width: 32, height: 32, borderRadius: 9, background: `${ev.color}14`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                              <ev.Icon size={14} color={ev.color} strokeWidth={2} />
-                            </div>
-                            <div style={{ flex: 1, minWidth: 0 }}>
-                              <p style={{ fontFamily: 'Lato', fontSize: 12, color: 'var(--dark-2)', lineHeight: 1.4, margin: 0 }}>{ev.msg}</p>
-                              <p style={{ fontFamily: 'Lato', fontSize: 10, color: 'var(--muted)', margin: '2px 0 0' }}>{ev.time}</p>
-                            </div>
-                            <span style={{ fontFamily: 'Lato', fontSize: 11, fontWeight: 700, color: ev.color, background: `${ev.color}14`, padding: '3px 10px', borderRadius: 5, whiteSpace: 'nowrap', flexShrink: 0 }}>
-                              {ev.action}
-                            </span>
-                          </motion.div>
-                        ))
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Bottom — total value found strip */}
-                  {!syncing && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.25, duration: 0.4 }}
-                      style={{ margin: '0 16px 16px', padding: '12px 16px', background: 'linear-gradient(135deg, rgba(16,185,129,0.08), rgba(67,83,255,0.05))', borderRadius: 12, border: '1px solid rgba(16,185,129,0.2)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-                    >
-                      <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'var(--dark-2)' }}>Total found by AI this month</span>
-                      <span style={{ fontFamily: 'Manrope', fontSize: 17, fontWeight: 800, color: 'var(--emerald)', letterSpacing: '-0.5px' }}>+$456.97</span>
-                    </motion.div>
-                  )}
-                </div>
-
-                {/* Floating savings chip */}
-                <motion.div
-                  animate={{ y: [0, -8, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
-                  style={{ position: 'absolute', bottom: -28, left: -44, background: 'var(--dark)', borderRadius: 16, padding: '14px 20px', boxShadow: '0 12px 40px rgba(0,0,0,0.28)', minWidth: 190 }}
-                >
-                  <p style={{ fontFamily: 'Lato', fontSize: 10, color: 'rgba(255,255,255,0.4)', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Projected annual savings</p>
-                  <p style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 24, color: '#10b981', letterSpacing: '-0.5px' }}>$1,200 / yr</p>
-                </motion.div>
-
-                {/* Floating financial health chip */}
-                <motion.div
-                  animate={{ y: [0, -6, 0] }} transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
-                  style={{ position: 'absolute', top: -22, right: -24, background: 'var(--white)', borderRadius: 14, padding: '11px 16px', boxShadow: '0 6px 28px rgba(0,0,0,0.10)', border: '1px solid rgba(16,185,129,0.2)', display: 'flex', alignItems: 'center', gap: 10 }}
-                >
-                  <div style={{ width: 32, height: 32, borderRadius: 9, background: 'rgba(16,185,129,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <Shield size={15} color="#10b981" strokeWidth={2} />
-                  </div>
-                  <div>
-                    <p style={{ fontFamily: 'Lato', fontSize: 10, color: 'var(--muted)', marginBottom: 2 }}>Financial Health</p>
-                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 3 }}>
-                      <span style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 18, color: 'var(--dark)', letterSpacing: '-0.5px' }}>87</span>
-                      <span style={{ fontFamily: 'Lato', fontSize: 10, color: 'var(--emerald)', fontWeight: 700 }}>/100 · Excellent</span>
-                    </div>
-                  </div>
-                </motion.div>
-
-              </div>
+              <HeroScene3D />
             </motion.div>
+
 
           </div>
         </div>

@@ -1,9 +1,10 @@
 import { useRef, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, useInView, useMotionValue, useSpring } from 'framer-motion'
+import { motion, useInView, AnimatePresence, useMotionValue, useSpring } from 'framer-motion'
 import {
   ArrowRight, Check, X, Minus, AlertTriangle,
 } from 'lucide-react'
+import { Tilt3DCard } from '../components/Tilt3DCard'
 
 function FadeIn({
   children, delay = 0, style = {}, x = 0,
@@ -423,100 +424,453 @@ function TaxSpotlightMock() {
   )
 }
 
-// ─── Floating Badges ──────────────────────────────────────────────────────────
-const badges = [
-  { label: 'Net Worth Tracker',      color: '#4353ff', depth: 0.8 },
-  { label: 'AI Budget Coach',        color: '#10b981', depth: 0.5 },
-  { label: 'Subscription Radar',     color: '#fb7185', depth: 1.0 },
-  { label: 'Tax Engine',             color: '#f69c20', depth: 0.6 },
-  { label: 'Bill Negotiation AI',    color: '#4353ff', depth: 0.9 },
-  { label: 'Credit Monitor',         color: '#10b981', depth: 0.4 },
-  { label: 'Debt Payoff Planner',    color: '#fb7185', depth: 0.7 },
-  { label: 'Cash Flow Forecast',     color: '#f69c20', depth: 1.0 },
-  { label: 'Investment Insights',    color: '#4353ff', depth: 0.5 },
-  { label: 'Free Trial Radar',       color: '#10b981', depth: 0.8 },
-  { label: 'Spending Analyzer',      color: '#fb7185', depth: 0.6 },
-  { label: 'Emergency Fund Planner', color: '#f69c20', depth: 0.9 },
-  { label: 'Financial Health Score', color: '#4353ff', depth: 0.4 },
-  { label: 'Auto Categorization',    color: '#10b981', depth: 1.0 },
-  { label: 'Bank-Level Security',    color: '#fb7185', depth: 0.7 },
+// ─── Animated counter ─────────────────────────────────────────────────────────
+function AnimCounter({ value, color }: { value: string; color: string }) {
+  const numeric = parseFloat(value.replace(/[^0-9.]/g, ''))
+  const prefix = value.match(/^[^0-9]*/)?.[0] ?? ''
+  const suffix = value.match(/[^0-9.]+$/)?.[0] ?? ''
+  const mv = useMotionValue(0)
+  const spring = useSpring(mv, { stiffness: 60, damping: 18 })
+  const [display, setDisplay] = useState('0')
+  useEffect(() => {
+    mv.set(0)
+    spring.set(0)
+    const t = setTimeout(() => mv.set(numeric), 80)
+    return () => clearTimeout(t)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value])
+  useEffect(() => spring.on('change', v => {
+    setDisplay(numeric % 1 !== 0 ? v.toFixed(1) : Math.round(v).toString())
+  }), [spring, numeric])
+  return (
+    <span style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 36, color, letterSpacing: '-2px', lineHeight: 1 }}>
+      {prefix}{display}{suffix}
+    </span>
+  )
+}
+
+// ─── Mini visuals per feature ─────────────────────────────────────────────────
+function SparklineViz({ color }: { color: string }) {
+  const pts = [18,28,22,35,30,42,38,52,46,60,54,68]
+  const w = 160, h = 60
+  const max = Math.max(...pts), min = Math.min(...pts)
+  const toX = (i: number) => (i / (pts.length - 1)) * w
+  const toY = (v: number) => h - ((v - min) / (max - min)) * (h - 8) - 4
+  const d = pts.map((v, i) => `${i === 0 ? 'M' : 'L'}${toX(i)},${toY(v)}`).join(' ')
+  const fill = pts.map((v, i) => `${i === 0 ? 'M' : 'L'}${toX(i)},${toY(v)}`).join(' ') + ` L${w},${h} L0,${h} Z`
+  return (
+    <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`}>
+      <motion.path d={fill} fill={`${color}15`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }} />
+      <motion.path d={d} fill="none" stroke={color} strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"
+        initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1, ease: 'easeOut' }} />
+      <circle cx={toX(pts.length - 1)} cy={toY(pts[pts.length - 1])} r={4} fill={color} />
+    </svg>
+  )
+}
+
+function BarsViz({ color }: { color: string }) {
+  const bars = [{ l: 'Housing', v: 72 }, { l: 'Food', v: 48 }, { l: 'Transport', v: 34 }, { l: 'Leisure', v: 58 }]
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 7, width: '100%' }}>
+      {bars.map((b, i) => (
+        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontFamily: 'Lato', fontSize: 11, color: 'var(--muted)', width: 62, flexShrink: 0 }}>{b.l}</span>
+          <div style={{ flex: 1, height: 6, borderRadius: 99, background: 'rgba(0,0,0,0.07)', overflow: 'hidden' }}>
+            <motion.div initial={{ width: 0 }} animate={{ width: `${b.v}%` }} transition={{ duration: 0.7, delay: i * 0.08, ease: 'easeOut' }}
+              style={{ height: '100%', borderRadius: 99, background: `linear-gradient(90deg,${color},${color}80)` }} />
+          </div>
+          <span style={{ fontFamily: 'Manrope', fontSize: 11, fontWeight: 700, color, width: 28, textAlign: 'right' }}>{b.v}%</span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function SubRadarViz({ color }: { color: string }) {
+  const subs = [{ name: 'Netflix', price: '$17', active: false }, { name: 'Gym', price: '$45', active: false }, { name: 'Adobe', price: '$55', active: true }]
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, width: '100%' }}>
+      {subs.map((s, i) => (
+        <motion.div key={i} initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.1 }}
+          style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 10px', borderRadius: 8, background: s.active ? `${color}10` : 'rgba(0,0,0,0.04)', border: `1px solid ${s.active ? color + '25' : 'transparent'}` }}>
+          <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'var(--dark-2)' }}>{s.name}</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: s.active ? color : 'var(--muted)', textDecoration: s.active ? 'none' : 'line-through' }}>{s.price}</span>
+            {!s.active && <span style={{ fontFamily: 'Lato', fontSize: 10, color: '#10b981', fontWeight: 700 }}>SAVED</span>}
+          </div>
+        </motion.div>
+      ))}
+    </div>
+  )
+}
+
+function ScoreGaugeViz({ color }: { color: string }) {
+  const score = 782, min = 300, max = 850
+  const pct = (score - min) / (max - min)
+  const r = 48, cx = 70, cy = 60
+  const arc = Math.PI * r
+  const dash = pct * arc
+  return (
+    <svg width={140} height={72} viewBox="0 0 140 72">
+      <path d={`M ${cx - r},${cy} A ${r},${r} 0 0 1 ${cx + r},${cy}`} fill="none" stroke="rgba(0,0,0,0.08)" strokeWidth={8} strokeLinecap="round" />
+      <motion.path d={`M ${cx - r},${cy} A ${r},${r} 0 0 1 ${cx + r},${cy}`} fill="none" stroke={color} strokeWidth={8} strokeLinecap="round"
+        strokeDasharray={`${arc}`} initial={{ strokeDashoffset: arc }} animate={{ strokeDashoffset: arc - dash }}
+        transition={{ duration: 1.2, ease: 'easeOut' }} />
+      <text x={cx} y={cy - 6} textAnchor="middle" fontFamily="Manrope" fontWeight="800" fontSize="18" fill={color}>{score}</text>
+      <text x={cx} y={cy + 10} textAnchor="middle" fontFamily="Lato" fontSize="10" fill="var(--muted)">Excellent</text>
+    </svg>
+  )
+}
+
+function DebtViz({ color }: { color: string }) {
+  const bars = [{ l: 'Snowball', v: 88, mo: '34 mo' }, { l: 'Avalanche', v: 65, mo: '26 mo' }]
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%' }}>
+      {bars.map((b, i) => (
+        <div key={i}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+            <span style={{ fontFamily: 'Lato', fontSize: 11, color: 'var(--muted)' }}>{b.l}</span>
+            <span style={{ fontFamily: 'Manrope', fontSize: 11, fontWeight: 700, color: i === 1 ? color : 'var(--dark-3)' }}>{b.mo}</span>
+          </div>
+          <div style={{ height: 8, borderRadius: 99, background: 'rgba(0,0,0,0.07)', overflow: 'hidden' }}>
+            <motion.div initial={{ width: 0 }} animate={{ width: `${b.v}%` }} transition={{ duration: 0.8, delay: i * 0.15, ease: 'easeOut' }}
+              style={{ height: '100%', borderRadius: 99, background: i === 1 ? color : 'rgba(0,0,0,0.2)' }} />
+          </div>
+        </div>
+      ))}
+      <p style={{ fontFamily: 'Lato', fontSize: 11, color, fontWeight: 700, marginTop: 2 }}>↑ Save 8 months with Avalanche</p>
+    </div>
+  )
+}
+
+function NegotiationViz({ color }: { color: string }) {
+  return (
+    <div style={{ display: 'flex', gap: 12, alignItems: 'center', width: '100%' }}>
+      {[{ label: 'Before', val: '$127/mo', muted: true }, { label: 'After', val: '$89/mo', muted: false }].map((s, i) => (
+        <motion.div key={i} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.2 }}
+          style={{ flex: 1, padding: '10px 12px', borderRadius: 12, background: s.muted ? 'rgba(0,0,0,0.05)' : `${color}12`, border: `1px solid ${s.muted ? 'transparent' : color + '30'}`, textAlign: 'center' }}>
+          <p style={{ fontFamily: 'Lato', fontSize: 10, color: 'var(--muted)', marginBottom: 4 }}>{s.label}</p>
+          <p style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 16, color: s.muted ? 'var(--dark-3)' : color, textDecoration: s.muted ? 'line-through' : 'none' }}>{s.val}</p>
+        </motion.div>
+      ))}
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
+        style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 13, color, background: `${color}15`, padding: '6px 10px', borderRadius: 8 }}>
+        −$38
+      </motion.div>
+    </div>
+  )
+}
+
+function CashFlowViz({ color }: { color: string }) {
+  const vals = [65,72,58,80,74,68,85,79,88,82,90,86]
+  return (
+    <div style={{ display: 'flex', gap: 3, alignItems: 'flex-end', height: 52, width: '100%' }}>
+      {vals.map((v, i) => (
+        <motion.div key={i} initial={{ height: 0 }} animate={{ height: `${v}%` }} transition={{ duration: 0.5, delay: i * 0.04, ease: 'easeOut' }}
+          style={{ flex: 1, borderRadius: 3, background: i >= 8 ? `${color}35` : color, opacity: 0.8 + (i / vals.length) * 0.2 }} />
+      ))}
+    </div>
+  )
+}
+
+function TaxViz({ color }: { color: string }) {
+  const cats = [{ l: 'Home office', v: 45 }, { l: 'Equipment', v: 30 }, { l: 'Travel', v: 20 }, { l: 'Software', v: 60 }]
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, width: '100%' }}>
+      {cats.map((c, i) => (
+        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontFamily: 'Lato', fontSize: 11, color: 'var(--muted)', width: 72, flexShrink: 0 }}>{c.l}</span>
+          <div style={{ flex: 1, height: 5, borderRadius: 99, background: 'rgba(0,0,0,0.07)', overflow: 'hidden' }}>
+            <motion.div initial={{ width: 0 }} animate={{ width: `${c.v}%` }} transition={{ duration: 0.6, delay: i * 0.07 }}
+              style={{ height: '100%', borderRadius: 99, background: color }} />
+          </div>
+          <span style={{ fontFamily: 'Lato', fontSize: 10, fontWeight: 700, color, width: 22 }}>✓</span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+// ─── Feature Drum ─────────────────────────────────────────────────────────────
+const DRUM_INTERVAL = 9000
+
+const drumFeatures = [
+  {
+    name: 'Net Worth Tracker',   color: '#4353ff',
+    tagline: 'Your full financial picture, live.',
+    points: ['Every account, asset & liability in one view', 'Auto-updates daily from 12,000+ banks', 'Tracks month-over-month growth automatically'],
+    stat: '$47,320', statLabel: 'avg tracked per user',
+    chips: [{ val: '+12%', label: 'monthly growth' }, { val: '12k+', label: 'banks linked' }],
+  },
+  {
+    name: 'AI Budget Coach',     color: '#10b981',
+    tagline: 'Budgeting that thinks for you.',
+    points: ['Built from your actual spending history', 'Adjusts in real-time as your life changes', 'Flags overspend before it happens'],
+    stat: '94%', statLabel: 'of users stay on budget',
+    chips: [{ val: '3.2×', label: 'savings increase' }, { val: '94%', label: 'on budget rate' }],
+  },
+  {
+    name: 'Subscription Radar',  color: '#fb7185',
+    tagline: 'Never pay for a forgotten trial again.',
+    points: ['Detects every recurring charge automatically', 'Free trial alerts before they convert to paid', 'One-tap cancellation for unused services'],
+    stat: '$312', statLabel: 'avg saved in year one',
+    chips: [{ val: '12', label: 'subs detected avg' }, { val: '$312', label: 'avg saved/yr' }],
+  },
+  {
+    name: 'Tax Engine',          color: '#f69c20',
+    tagline: 'Keep more of what you earn.',
+    points: ['Auto-tracks deductible expenses year-round', 'Flags freelance & remote worker deductions', 'Exports clean data ready for filing'],
+    stat: '$1,400', statLabel: 'avg in missed deductions found',
+    chips: [{ val: 'All 50', label: 'states covered' }, { val: '$1,400', label: 'deductions found' }],
+  },
+  {
+    name: 'Debt Payoff Planner', color: '#4353ff',
+    tagline: 'Debt-free, on your timeline.',
+    points: ['Avalanche vs Snowball comparison built in', 'Shows exact payoff date for every scenario', 'Recalculates live as income and balances change'],
+    stat: '2.4 yrs', statLabel: 'avg time saved vs min payments',
+    chips: [{ val: '2.4 yrs', label: 'faster payoff' }, { val: '$8,200', label: 'interest saved' }],
+  },
+  {
+    name: 'Bill Negotiation AI', color: '#10b981',
+    tagline: 'We argue. You save.',
+    points: ['Identifies every bill eligible for negotiation', 'Drafts and sends negotiation requests for you', 'Logs outcomes and applies savings automatically'],
+    stat: '$840', statLabel: 'avg saved on recurring bills',
+    chips: [{ val: '−30%', label: 'avg bill cut' }, { val: '$840', label: 'saved per year' }],
+  },
+  {
+    name: 'Credit Monitor',      color: '#fb7185',
+    tagline: 'Know your score. Grow your score.',
+    points: ['Real-time alerts the moment your score changes', 'AI-powered tips tailored to your credit profile', 'Explains every factor impacting your number'],
+    stat: '+47pts', statLabel: 'avg score gain in 6 months',
+    chips: [{ val: '+47pts', label: 'in 6 months' }, { val: '782', label: 'avg score reached' }],
+  },
+  {
+    name: 'Cash Flow Forecast',  color: '#f69c20',
+    tagline: '30 days ahead. Always.',
+    points: ['Predicts your exact balance 30 days out', 'Flags upcoming bills and shortfalls in advance', 'Spots saving windows before they close'],
+    stat: '30 days', statLabel: 'of financial visibility ahead',
+    chips: [{ val: '98%', label: 'forecast accuracy' }, { val: '30d', label: 'visibility ahead' }],
+  },
 ]
 
-// Fixed grid positions (col 0–3, row 0–4) mapped to % within container
-const positions = [
-  { x: 4,  y: 2  }, { x: 52, y: 0  }, { x: 26, y: 8  },
-  { x: 68, y: 14 }, { x: 8,  y: 22 }, { x: 44, y: 20 },
-  { x: 70, y: 30 }, { x: 18, y: 36 }, { x: 52, y: 40 },
-  { x: 2,  y: 50 }, { x: 66, y: 50 }, { x: 30, y: 58 },
-  { x: 10, y: 68 }, { x: 56, y: 64 }, { x: 36, y: 76 },
-]
+// ─── Glass Chip (floating stat badge) ────────────────────────────────────────
+function GlassChip({ val, label, color }: { val: string; label: string; color: string }) {
+  return (
+    <div style={{
+      background: 'rgba(255,255,255,0.92)',
+      backdropFilter: 'blur(16px)',
+      WebkitBackdropFilter: 'blur(16px)',
+      borderRadius: 16,
+      padding: '12px 18px',
+      border: '1px solid rgba(255,255,255,0.85)',
+      boxShadow: '0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06)',
+      minWidth: 100,
+    }}>
+      <div style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 20, color, lineHeight: 1, letterSpacing: '-0.5px' }}>{val}</div>
+      <div style={{ fontFamily: 'Lato', fontSize: 11, color: 'var(--muted)', marginTop: 4, whiteSpace: 'nowrap' }}>{label}</div>
+    </div>
+  )
+}
 
-function FloatingBadges() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [mouse, setMouse] = useState({ x: 0, y: 0 })
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
-  const smoothX = useSpring(mouseX, { stiffness: 50, damping: 18 })
-  const smoothY = useSpring(mouseY, { stiffness: 50, damping: 18 })
-  const [smX, setSmX] = useState(0)
-  const [smY, setSmY] = useState(0)
+function FeatureDrumScene() {
+  const [active, setActive] = useState(0)
+  const [progress, setProgress] = useState(0)
+  const [dir, setDir] = useState(1)
 
   useEffect(() => {
-    const unsubX = smoothX.on('change', v => setSmX(v))
-    const unsubY = smoothY.on('change', v => setSmY(v))
-    return () => { unsubX(); unsubY() }
-  }, [smoothX, smoothY])
+    setProgress(0)
+    const start = Date.now()
+    const tick = setInterval(() => {
+      const pct = Math.min((Date.now() - start) / DRUM_INTERVAL, 1)
+      setProgress(pct)
+      if (pct >= 1) {
+        setDir(1)
+        setActive(i => (i + 1) % drumFeatures.length)
+        clearInterval(tick)
+      }
+    }, 40)
+    return () => clearInterval(tick)
+  }, [active])
 
-  useEffect(() => {
-    const el = containerRef.current
-    if (!el) return
-    const onMove = (e: MouseEvent) => {
-      const rect = el.getBoundingClientRect()
-      mouseX.set(e.clientX - rect.left - rect.width / 2)
-      mouseY.set(e.clientY - rect.top - rect.height / 2)
-    }
-    const onLeave = () => { mouseX.set(0); mouseY.set(0) }
-    el.addEventListener('mousemove', onMove)
-    el.addEventListener('mouseleave', onLeave)
-    return () => { el.removeEventListener('mousemove', onMove); el.removeEventListener('mouseleave', onLeave) }
-  }, [mouseX, mouseY])
-
-  // suppress unused warning
-  void mouse; void setMouse
+  const f = drumFeatures[active]
+  const handleSelect = (i: number) => { setDir(i > active ? 1 : -1); setActive(i) }
 
   return (
-    <div ref={containerRef} style={{ position: 'relative', height: 420, userSelect: 'none' }}>
-      {badges.map((b, i) => {
-        const pos = positions[i] || { x: 20, y: 20 }
-        const dx = smX * b.depth * 0.05
-        const dy = smY * b.depth * 0.05
-        return (
+    <div style={{ position: 'relative', padding: '52px 36px' }}>
+
+      {/* ── BG: big saturated radial glow ── */}
+      <motion.div
+        animate={{ background: `radial-gradient(ellipse 130% 110% at 50% 50%, ${f.color}40 0%, ${f.color}14 40%, transparent 68%)` }}
+        transition={{ duration: 0.9, ease: 'easeInOut' }}
+        style={{ position: 'absolute', inset: -32, borderRadius: 60, pointerEvents: 'none', filter: 'blur(40px)' }}
+      />
+
+      {/* ── Pulsing halo ring ── */}
+      <motion.div
+        animate={{ boxShadow: [`0 0 0px 0px ${f.color}00`, `0 0 80px 28px ${f.color}30`, `0 0 0px 0px ${f.color}00`] }}
+        transition={{ duration: 2.6, repeat: Infinity, ease: 'easeInOut' }}
+        style={{ position: 'absolute', inset: 36, borderRadius: 32, pointerEvents: 'none', zIndex: 0 }}
+      />
+
+      {/* ── Stacked ghost cards (depth effect) ── */}
+      <div style={{ position: 'relative' }}>
+        <motion.div
+          animate={{ borderColor: `${f.color}22`, background: `${f.color}07` }}
+          transition={{ duration: 0.7 }}
+          style={{
+            position: 'absolute', inset: 0, borderRadius: 28,
+            border: '1.5px solid', zIndex: 1,
+            transform: 'rotate(4.5deg) translateY(12px) scale(0.97)',
+            transformOrigin: 'bottom center',
+          }}
+        />
+        <motion.div
+          animate={{ borderColor: `${f.color}16`, background: `${f.color}04` }}
+          transition={{ duration: 0.7 }}
+          style={{
+            position: 'absolute', inset: 0, borderRadius: 28,
+            border: '1.5px solid', zIndex: 2,
+            transform: 'rotate(2deg) translateY(6px) scale(0.985)',
+            transformOrigin: 'bottom center',
+          }}
+        />
+
+        {/* ── Main Tilt3D card ── */}
+        <div style={{ position: 'relative', zIndex: 10 }}>
+          <Tilt3DCard intensity={14} style={{ width: '100%' }} radius={28}>
+            <div className="ff-clay" style={{
+              borderRadius: 28, overflow: 'hidden', position: 'relative',
+              display: 'flex', flexDirection: 'column', boxShadow: 'none',
+            }}>
+
+              {/* Animated top color stripe */}
+              <motion.div
+                animate={{ background: `linear-gradient(90deg, ${f.color} 0%, ${f.color}55 100%)` }}
+                transition={{ duration: 0.6 }}
+                style={{ height: 4, flexShrink: 0 }}
+              />
+
+              {/* Inner corner glow */}
+              <motion.div
+                animate={{ background: `radial-gradient(ellipse 70% 55% at 95% 0%, ${f.color}20 0%, transparent 65%)` }}
+                transition={{ duration: 0.7 }}
+                style={{ position: 'absolute', inset: 0, pointerEvents: 'none', top: 4 }}
+              />
+
+              {/* Header */}
+              <div style={{ padding: '22px 26px 0', position: 'relative' }}>
+                <div style={{ display: 'flex', gap: 5, marginBottom: 18 }}>
+                  {drumFeatures.map((feat, i) => (
+                    <motion.div key={i} onClick={() => handleSelect(i)}
+                      animate={{ width: i === active ? 24 : 6, background: i === active ? f.color : 'rgba(0,0,0,0.1)' }}
+                      transition={{ duration: 0.3 }}
+                      style={{ height: 6, borderRadius: 99, cursor: 'pointer', flexShrink: 0 }}
+                      title={feat.name}
+                    />
+                  ))}
+                </div>
+                <div style={{ height: 40, overflow: 'hidden', position: 'relative', marginBottom: 8 }}>
+                  <AnimatePresence mode="popLayout" custom={dir}>
+                    <motion.div key={active} custom={dir}
+                      initial={{ y: dir > 0 ? 40 : -40, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: dir > 0 ? -40 : 40, opacity: 0 }}
+                      transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+                      style={{ position: 'absolute', width: '100%' }}
+                    >
+                      <span style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 22, letterSpacing: '-0.5px', color: f.color }}>
+                        {f.name}
+                      </span>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+                <p style={{ fontFamily: 'Lato', fontSize: 14, color: 'var(--dark-3)', lineHeight: 1.5 }}>{f.tagline}</p>
+              </div>
+
+              {/* Body */}
+              <AnimatePresence mode="wait">
+                <motion.div key={active}
+                  initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                  style={{ padding: '18px 26px 24px' }}
+                >
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 20 }}>
+                    {f.points.map((pt, pi) => (
+                      <motion.div key={pi} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: pi * 0.08 }}
+                        style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}
+                      >
+                        <motion.div animate={{ background: f.color }} transition={{ duration: 0.5 }}
+                          style={{ width: 7, height: 7, borderRadius: '50%', flexShrink: 0, marginTop: 6 }} />
+                        <span style={{ fontFamily: 'Lato', fontSize: 14, color: 'var(--dark-2)', lineHeight: 1.6 }}>{pt}</span>
+                      </motion.div>
+                    ))}
+                  </div>
+                  <div style={{
+                    display: 'flex', alignItems: 'center', gap: 16, padding: '16px 20px',
+                    borderRadius: 16, background: `${f.color}08`, border: `1px solid ${f.color}18`,
+                  }}>
+                    <AnimCounter value={f.stat} color={f.color} />
+                    <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'var(--muted)', lineHeight: 1.4, maxWidth: 160 }}>{f.statLabel}</span>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              <div style={{ height: 3, background: 'rgba(0,0,0,0.05)' }}>
+                <motion.div style={{ height: '100%', background: f.color, width: `${progress * 100}%`, transition: 'background 0.6s' }} />
+              </div>
+            </div>
+          </Tilt3DCard>
+        </div>
+      </div>
+
+      {/* ── Floating chips (above everything) ── */}
+      {/* Live indicator — top left */}
+      <motion.div
+        animate={{ y: [0, -7, 0] }} transition={{ duration: 3.6, repeat: Infinity, ease: 'easeInOut' }}
+        style={{ position: 'absolute', top: 16, left: 8, zIndex: 30 }}
+      >
+        <div style={{
+          background: 'rgba(255,255,255,0.93)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)',
+          borderRadius: 12, padding: '8px 14px', border: '1px solid rgba(255,255,255,0.9)',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.10)', display: 'flex', alignItems: 'center', gap: 7,
+        }}>
           <motion.div
-            key={i}
-            initial={{ opacity: 0, scale: 0.7 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: i * 0.06, ease: 'easeOut' }}
-            whileHover={{ scale: 1.12, zIndex: 10 }}
-            style={{ position: 'absolute', left: `${pos.x}%`, top: `${pos.y}%`, x: dx, y: dy }}
-          >
-            <motion.div
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 2.8 + i * 0.25, repeat: Infinity, ease: 'easeInOut', delay: i * 0.18 }}
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: 7,
-                padding: '8px 14px', borderRadius: 50,
-                background: '#ffffff',
-                border: `1.5px solid ${b.color}35`,
-                boxShadow: `0 4px 20px rgba(0,0,0,0.09), 0 1px 4px rgba(0,0,0,0.05)`,
-                cursor: 'default', whiteSpace: 'nowrap',
-              }}
-            >
-              <div style={{ width: 7, height: 7, borderRadius: '50%', background: b.color, flexShrink: 0 }} />
-              <span style={{ fontFamily: 'Lato', fontSize: 13, fontWeight: 700, color: 'var(--dark-2)' }}>{b.label}</span>
-            </motion.div>
+            animate={{ scale: [1, 1.6, 1], opacity: [1, 0.4, 1] }}
+            transition={{ duration: 1.3, repeat: Infinity }}
+            style={{ width: 7, height: 7, borderRadius: '50%', background: '#10b981', flexShrink: 0 }}
+          />
+          <span style={{ fontFamily: 'Lato', fontSize: 11, fontWeight: 700, color: 'var(--dark-2)', whiteSpace: 'nowrap' }}>Live sync</span>
+        </div>
+      </motion.div>
+
+      {/* Chip A — top right */}
+      <AnimatePresence mode="wait">
+        <motion.div key={`ca-${active}`}
+          initial={{ opacity: 0, scale: 0.7, x: 16 }} animate={{ opacity: 1, scale: 1, x: 0 }}
+          exit={{ opacity: 0, scale: 0.75 }}
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          style={{ position: 'absolute', top: 16, right: -4, zIndex: 30 }}
+        >
+          <motion.div animate={{ y: [0, -11, 0] }} transition={{ duration: 2.7, repeat: Infinity, ease: 'easeInOut' }}>
+            <GlassChip val={f.chips[0].val} label={f.chips[0].label} color={f.color} />
           </motion.div>
-        )
-      })}
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Chip B — bottom left */}
+      <AnimatePresence mode="wait">
+        <motion.div key={`cb-${active}`}
+          initial={{ opacity: 0, scale: 0.7, x: -16 }} animate={{ opacity: 1, scale: 1, x: 0 }}
+          exit={{ opacity: 0, scale: 0.75 }}
+          transition={{ duration: 0.45, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+          style={{ position: 'absolute', bottom: 16, left: -4, zIndex: 30 }}
+        >
+          <motion.div animate={{ y: [0, 11, 0] }} transition={{ duration: 3.1, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}>
+            <GlassChip val={f.chips[1].val} label={f.chips[1].label} color={f.color} />
+          </motion.div>
+        </motion.div>
+      </AnimatePresence>
     </div>
   )
 }
@@ -573,8 +927,8 @@ export default function FeaturesPage() {
               </motion.div>
             </div>
 
-            {/* Right — floating feature badges */}
-            <FloatingBadges />
+            {/* Right — feature drum scene */}
+            <FeatureDrumScene />
 
           </div>
         </div>
