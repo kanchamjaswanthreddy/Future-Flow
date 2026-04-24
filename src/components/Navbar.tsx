@@ -55,11 +55,11 @@ export default function Navbar() {
       <div className="ff-container" style={{ height: 72, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
         {/* Logo */}
-        <Link to="/" style={{ textDecoration: 'none', flexShrink: 0, display: 'flex', alignItems: 'center' }}>
+        <Link to="/" style={{ textDecoration: 'none', flexShrink: 0, display: 'flex', alignItems: 'center', height: '100%' }}>
           <img
             src="/futureflow-logo.svg"
             alt="FutureFlow"
-            style={{ height: 150, width: 'auto', display: 'block' }}
+            style={{ height: 48, width: 'auto', display: 'block', maxHeight: '100%' }}
           />
         </Link>
 
