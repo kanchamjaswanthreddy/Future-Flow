@@ -302,7 +302,7 @@ export default function AboutPage() {
               <span className="ff-badge" style={{ marginBottom: 16, display: 'inline-flex' }}>Security</span>
               <h2 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(28px, 4vw, 44px)', letterSpacing: '-1px', color: 'var(--dark)', marginTop: 14 }}>
                 Your money. Your data.{' '}
-                <span style={{ color: 'var(--emerald)' }}>Your rules.</span>
+                <span style={{ color: 'var(--emerald)' }}>Your privacy.</span>
               </h2>
               <p style={{ fontFamily: 'Lato', fontSize: 17, color: 'var(--dark-2)', marginTop: 14, lineHeight: 1.7, maxWidth: 520, margin: '14px auto 0' }}>
                 We built the security architecture that user trust demands.
@@ -310,52 +310,87 @@ export default function AboutPage() {
             </div>
           </FadeIn>
 
-          <div className="ff-grid-3" style={{ gap: 24 }}>
+          <div className="ff-grid-3" style={{ gap: 20 }}>
             {[
               {
-                Icon: Lock, color: '#4353ff',
+                color: '#4353ff',
+                bg: 'linear-gradient(145deg, #eef0ff 0%, #f2f4ff 100%)',
+                tag: 'Encryption',
+                heroStat: '256-bit', heroLabel: 'AES + TLS 1.3 in transit',
                 title: '256-bit AES Encryption',
                 desc: 'All data encrypted at rest and in transit using bank-grade AES-256 encryption and TLS 1.3.',
-                stat: 'AES-256 + TLS 1.3', badge: 'Bank-grade',
               },
               {
-                Icon: Eye, color: '#10b981',
+                color: '#10b981',
+                bg: 'linear-gradient(145deg, #edfff5 0%, #f2fff8 100%)',
+                tag: 'Privacy',
+                heroStat: '$0', heroLabel: 'moved — ever',
                 title: 'Read-Only Access',
                 desc: 'Plaid connection is strictly read-only. FutureFlow can never view, move, transfer, or modify your funds.',
-                stat: '$0 moved — ever', badge: 'Read Only',
               },
               {
-                Icon: Shield, color: '#f69c20',
+                color: '#f69c20',
+                bg: 'linear-gradient(145deg, #fff8ee 0%, #fffcf7 100%)',
+                tag: 'Compliance',
+                heroStat: 'SOC 2', heroLabel: 'Type II — third-party audited',
                 title: 'SOC 2 Type II Compliant',
                 desc: 'Our security practices meet the highest enterprise standards through independent third-party auditing.',
-                stat: 'Third-party audited', badge: 'Certified',
               },
             ].map((s, i) => (
-              <FadeIn key={i} delay={i * 0.1} style={{ height: '100%' }}>
+              <FadeIn key={i} delay={i * 0.06} style={{ height: '100%' }}>
                 <motion.div
-                  whileHover={{ y: -8, scale: 1.015 }}
-                  transition={{ duration: 0.25 }}
-                  className="ff-clay"
-                  style={{ borderRadius: 24, padding: '36px 32px', height: '100%', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden' }}
+                  whileHover={{ y: -4, scale: 1.012 }}
+                  transition={{ duration: 0.25, ease: 'easeOut' }}
+                  style={{
+                    background: s.bg,
+                    borderRadius: 24,
+                    padding: '32px 28px',
+                    height: '100%', display: 'flex', flexDirection: 'column',
+                    position: 'relative', overflow: 'hidden',
+                    cursor: 'default',
+                    border: `1px solid ${s.color}18`,
+                    boxShadow: `0 2px 12px rgba(0,0,0,0.04), 0 8px 32px ${s.color}08`,
+                  }}
                 >
-                  {/* Color top stripe */}
-                  <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 4, background: `linear-gradient(90deg, ${s.color}, ${s.color}40)` }} />
                   {/* Corner glow */}
-                  <div style={{ position: 'absolute', top: -40, right: -40, width: 140, height: 140, borderRadius: '50%', background: `radial-gradient(circle, ${s.color}12 0%, transparent 70%)`, pointerEvents: 'none' }} />
+                  <div style={{
+                    position: 'absolute', top: -60, right: -60,
+                    width: 200, height: 200, borderRadius: '50%',
+                    background: `radial-gradient(circle, ${s.color}10 0%, transparent 70%)`,
+                    pointerEvents: 'none',
+                  }} />
 
-                  {/* Icon */}
-                  <div style={{ width: 56, height: 56, borderRadius: 18, background: `${s.color}12`, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 24, flexShrink: 0, boxShadow: `0 0 24px ${s.color}20` }}>
-                    <s.Icon size={26} color={s.color} strokeWidth={1.8} />
+                  {/* Tag */}
+                  <span style={{
+                    fontFamily: 'Lato', fontSize: 13, fontWeight: 800,
+                    color: s.color, letterSpacing: '0.12em',
+                    textTransform: 'uppercase', display: 'inline-block', marginBottom: 16,
+                    background: `${s.color}12`, padding: '5px 12px', borderRadius: 6,
+                  }}>
+                    {s.tag}
+                  </span>
+
+                  {/* Hero stat */}
+                  <div style={{
+                    fontFamily: 'Manrope', fontWeight: 800,
+                    fontSize: 'clamp(32px, 3vw, 44px)', letterSpacing: '-2px',
+                    color: s.color, lineHeight: 1, marginBottom: 6,
+                  }}>
+                    {s.heroStat}
+                  </div>
+                  <div style={{ fontFamily: 'Lato', fontSize: 12, fontWeight: 600, color: `${s.color}80`, marginBottom: 20 }}>
+                    {s.heroLabel}
                   </div>
 
-                  <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 21, color: 'var(--dark)', marginBottom: 12, lineHeight: 1.2 }}>{s.title}</h3>
-                  <p style={{ fontFamily: 'Lato', fontSize: 15, color: 'var(--dark-2)', lineHeight: 1.75, flex: 1, marginBottom: 24 }}>{s.desc}</p>
+                  {/* Divider */}
+                  <div style={{ height: 1, background: `${s.color}14`, marginBottom: 18 }} />
 
-                  {/* Bottom row */}
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 18, borderTop: `1px solid ${s.color}18` }}>
-                    <span style={{ fontFamily: 'Lato', fontSize: 13, fontWeight: 700, color: s.color }}>{s.stat}</span>
-                    <span style={{ fontFamily: 'Lato', fontSize: 12, fontWeight: 700, color: s.color, background: `${s.color}12`, padding: '5px 14px', borderRadius: 50 }}>{s.badge}</span>
-                  </div>
+                  <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 17, color: 'var(--dark)', marginBottom: 8, lineHeight: 1.25 }}>
+                    {s.title}
+                  </h3>
+                  <p style={{ fontFamily: 'Lato', fontSize: 15, color: 'var(--dark-2)', lineHeight: 1.75, flex: 1 }}>
+                    {s.desc}
+                  </p>
                 </motion.div>
               </FadeIn>
             ))}

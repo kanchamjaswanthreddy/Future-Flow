@@ -557,7 +557,7 @@ function GlassChip({ val, label, color }: { val: string; label: string; color: s
       minWidth: 100,
     }}>
       <div style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 20, color, lineHeight: 1, letterSpacing: '-0.5px' }}>{val}</div>
-      <div style={{ fontFamily: 'Lato', fontSize: 11, color: 'var(--muted)', marginTop: 4, whiteSpace: 'nowrap' }}>{label}</div>
+      <div style={{ fontFamily: 'Lato', fontSize: 13, fontWeight: 600, color: 'var(--dark-2)', marginTop: 5, whiteSpace: 'nowrap' }}>{label}</div>
     </div>
   )
 }
@@ -674,7 +674,7 @@ function FeatureDrumScene() {
                     </motion.div>
                   </AnimatePresence>
                 </div>
-                <p style={{ fontFamily: 'Lato', fontSize: 14, color: 'var(--dark-3)', lineHeight: 1.5 }}>{f.tagline}</p>
+                <p style={{ fontFamily: 'Lato', fontSize: 15, color: 'var(--dark-2)', lineHeight: 1.55 }}>{f.tagline}</p>
               </div>
 
               {/* Body */}
@@ -692,7 +692,7 @@ function FeatureDrumScene() {
                       >
                         <motion.div animate={{ background: f.color }} transition={{ duration: 0.5 }}
                           style={{ width: 7, height: 7, borderRadius: '50%', flexShrink: 0, marginTop: 6 }} />
-                        <span style={{ fontFamily: 'Lato', fontSize: 14, color: 'var(--dark-2)', lineHeight: 1.6 }}>{pt}</span>
+                        <span style={{ fontFamily: 'Lato', fontSize: 15, color: 'var(--dark)', lineHeight: 1.65 }}>{pt}</span>
                       </motion.div>
                     ))}
                   </div>
@@ -701,7 +701,7 @@ function FeatureDrumScene() {
                     borderRadius: 16, background: `${f.color}08`, border: `1px solid ${f.color}18`,
                   }}>
                     <AnimCounter value={f.stat} color={f.color} />
-                    <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'var(--muted)', lineHeight: 1.4, maxWidth: 160 }}>{f.statLabel}</span>
+                    <span style={{ fontFamily: 'Lato', fontSize: 14, fontWeight: 600, color: 'var(--dark-2)', lineHeight: 1.45, maxWidth: 160 }}>{f.statLabel}</span>
                   </div>
                 </motion.div>
               </AnimatePresence>
