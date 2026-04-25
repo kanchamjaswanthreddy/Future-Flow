@@ -332,7 +332,7 @@ export default function BlogPostPage() {
     <div style={{ paddingTop: 72 }}>
 
       {/* Hero */}
-      <section style={{ background: 'var(--dark)', padding: '80px 0 64px' }}>
+      <section className="ff-page-hero" style={{ background: 'var(--dark)', padding: '80px 0 64px' }}>
         <div className="ff-container">
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}>
             <Link to="/blog" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'Lato', fontSize: 14, color: 'rgba(255,255,255,0.45)', textDecoration: 'none', marginBottom: 28, transition: 'color 0.2s' }}

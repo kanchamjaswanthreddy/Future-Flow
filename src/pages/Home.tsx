@@ -699,7 +699,7 @@ export default function Home() {
                     <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(20px, 2.2vw, 26px)', color: 'var(--dark)', lineHeight: 1.25, marginBottom: 20 }}>
                       Money Is Americans'<br />#1 Stress
                     </h3>
-                    <ScrollCounter value="52%" color="#fb7185" style={{ fontSize: 80, letterSpacing: '-5px', marginBottom: 10 }} />
+                    <ScrollCounter value="52%" color="#fb7185" style={{ fontSize: 'clamp(48px, 16vw, 80px)', letterSpacing: '-5px', marginBottom: 10 }} />
                     <p style={{ fontFamily: 'Lato', fontSize: 16, fontWeight: 500, color: 'var(--dark-2)', lineHeight: 1.72, flex: 1 }}>
                       rank money as their #1 source of stress — costing productivity, health, and relationships every single day.
                     </p>
@@ -730,7 +730,7 @@ export default function Home() {
                       Wasted on Forgotten Subscriptions
                     </h3>
                     <p style={{ fontFamily: 'Lato', fontSize: 16, fontWeight: 500, color: 'var(--dark-2)', lineHeight: 1.7, marginBottom: 20 }}>$460 billion evaporates every year from forgotten auto-renewals. Most people have no idea what they're paying for.</p>
-                    <ScrollCounter value="$460B" color="#f69c20" style={{ fontSize: 88, letterSpacing: '-5px', marginBottom: 4 }} />
+                    <ScrollCounter value="$460B" color="#f69c20" style={{ fontSize: 'clamp(48px, 16vw, 88px)', letterSpacing: '-5px', marginBottom: 4 }} />
                     <p style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(246,156,32,0.7)', fontWeight: 600, marginBottom: 'auto' }}>lost annually in the US alone</p>
                     <div style={{ marginTop: 28, paddingTop: 20, borderTop: '1px solid rgba(0,0,0,0.06)' }}>
                       {[
@@ -766,7 +766,7 @@ export default function Home() {
                       Live Paycheck to Paycheck
                     </h3>
                     <p style={{ fontFamily: 'Lato', fontSize: 16, fontWeight: 500, color: 'var(--dark-2)', lineHeight: 1.7, marginBottom: 20 }}>Not just a low-income problem. High earners with no visibility into their money face the same cycle.</p>
-                    <ScrollCounter value="51%" color="#4353ff" style={{ fontSize: 88, letterSpacing: '-5px', marginBottom: 4 }} />
+                    <ScrollCounter value="51%" color="#4353ff" style={{ fontSize: 'clamp(48px, 16vw, 88px)', letterSpacing: '-5px', marginBottom: 4 }} />
                     <p style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(67,83,255,0.65)', fontWeight: 600, marginBottom: 12 }}>of Americans, regardless of income</p>
                     <div style={{ flex: 1, paddingTop: 16, borderTop: '1px solid rgba(0,0,0,0.06)', display: 'flex', gap: 8, alignItems: 'flex-end' }}>
                       {[
@@ -799,7 +799,7 @@ export default function Home() {
                     <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(20px, 2.2vw, 26px)', color: 'var(--dark)', lineHeight: 1.25, marginBottom: 20 }}>
                       Apps Just to<br />Track Money
                     </h3>
-                    <ScrollCounter value="4+" color="#10b981" style={{ fontSize: 80, letterSpacing: '-5px', marginBottom: 10 }} />
+                    <ScrollCounter value="4+" color="#10b981" style={{ fontSize: 'clamp(48px, 16vw, 80px)', letterSpacing: '-5px', marginBottom: 10 }} />
                     <p style={{ fontFamily: 'Lato', fontSize: 16, fontWeight: 500, color: 'var(--dark-2)', lineHeight: 1.72, flex: 1 }}>
                       The average American juggles 4–6 separate apps and still can't see their full financial picture.
                     </p>
@@ -1074,7 +1074,7 @@ export default function Home() {
                   <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(26px, 2.8vw, 34px)', color: 'var(--dark)', lineHeight: 1.15, marginBottom: 20, letterSpacing: '-0.5px' }}>
                     Net Worth<br />Tracker
                   </h3>
-                  <ScrollCounter value="$47,320" color="#4353ff" style={{ fontSize: 48, letterSpacing: '-2px', marginBottom: 4 }} />
+                  <ScrollCounter value="$47,320" color="#4353ff" style={{ fontSize: 'clamp(32px, 7vw, 48px)', letterSpacing: '-2px', marginBottom: 4 }} />
                   <p style={{ fontFamily: 'Lato', fontSize: 12, color: '#10b981', fontWeight: 700, marginBottom: 20 }}>+$2,840 this month</p>
                   <p style={{ fontFamily: 'Lato', fontSize: 14, color: 'var(--dark-3)', lineHeight: 1.72, flex: 1 }}>Every account, asset, and liability in one live dashboard — updated automatically, every day.</p>
                   <div style={{ display: 'flex', gap: 6, marginTop: 24, paddingTop: 20, borderTop: '1px solid rgba(0,0,0,0.06)', flexWrap: 'wrap' }}>
@@ -1093,7 +1093,7 @@ export default function Home() {
                   <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(26px, 2.8vw, 34px)', color: 'var(--dark)', lineHeight: 1.15, marginBottom: 20, letterSpacing: '-0.5px' }}>
                     Credit Score<br />Monitor
                   </h3>
-                  <ScrollCounter value="782" color="#10b981" style={{ fontSize: 48, letterSpacing: '-2px', marginBottom: 4 }} />
+                  <ScrollCounter value="782" color="#10b981" style={{ fontSize: 'clamp(32px, 7vw, 48px)', letterSpacing: '-2px', marginBottom: 4 }} />
                   <p style={{ fontFamily: 'Lato', fontSize: 12, color: '#10b981', fontWeight: 700, marginBottom: 20 }}>Excellent — top 12%</p>
                   <p style={{ fontFamily: 'Lato', fontSize: 14, color: 'var(--dark-3)', lineHeight: 1.72, flex: 1 }}>Real-time alerts on score changes, plus AI-powered tips to push your score higher every month.</p>
                   <div style={{ marginTop: 24, paddingTop: 20, borderTop: '1px solid rgba(0,0,0,0.06)' }}>
@@ -1120,7 +1120,7 @@ export default function Home() {
                   <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(26px, 2.8vw, 34px)', color: 'var(--dark)', lineHeight: 1.15, marginBottom: 20, letterSpacing: '-0.5px' }}>
                     Cash Flow<br />Forecast
                   </h3>
-                  <ScrollCounter value="30 days" color="#f69c20" style={{ fontSize: 48, letterSpacing: '-2px', marginBottom: 4 }} />
+                  <ScrollCounter value="30 days" color="#f69c20" style={{ fontSize: 'clamp(32px, 7vw, 48px)', letterSpacing: '-2px', marginBottom: 4 }} />
                   <p style={{ fontFamily: 'Lato', fontSize: 12, color: '#10b981', fontWeight: 700, marginBottom: 20 }}>No shortfalls predicted</p>
                   <p style={{ fontFamily: 'Lato', fontSize: 14, color: 'var(--dark-3)', lineHeight: 1.72, flex: 1 }}>AI predicts your balance 30 days out — flagging upcoming bills and saving opportunities in advance.</p>
                   <div style={{ marginTop: 24, paddingTop: 20, borderTop: '1px solid rgba(0,0,0,0.06)', display: 'flex', gap: 3, alignItems: 'flex-end', height: 52 }}>

@@ -781,9 +781,9 @@ export default function FeaturesPage() {
       }}>
 
       {/* ── HERO ── */}
-      <section style={{ padding: '172px 0 80px' }}>
+      <section style={{ padding: 'calc(var(--sp) + 72px) 0 80px' }}>
         <div className="ff-container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center' }}>
+          <div className="ff-2col-hero">
 
             {/* Left — text */}
             <div>
@@ -818,7 +818,7 @@ export default function FeaturesPage() {
             </div>
 
             {/* Right — feature drum scene */}
-            <FeatureDrumScene />
+            <div className="ff-hide-mobile"><FeatureDrumScene /></div>
 
           </div>
         </div>

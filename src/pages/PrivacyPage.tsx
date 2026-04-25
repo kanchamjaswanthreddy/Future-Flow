@@ -12,7 +12,7 @@ export default function PrivacyPage() {
     <div style={{ paddingTop: 72 }}>
 
       {/* Header */}
-      <section style={{ background: 'var(--dark)', padding: '80px 24px 60px' }}>
+      <section className="ff-page-hero" style={{ background: 'var(--dark)', padding: '80px 24px 60px' }}>
         <div className="ff-container">
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             <span className="ff-badge" style={{ marginBottom: 20, display: 'inline-block' }}>Legal</span>

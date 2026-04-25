@@ -90,7 +90,7 @@ export default function BlogPage() {
     <div style={{ paddingTop: 72 }}>
 
       {/* ── Hero — dark with emerald accent ── */}
-      <section style={{ background: 'var(--surface)', padding: '80px 24px 60px', position: 'relative', overflow: 'hidden' }}>
+      <section className="ff-page-hero" style={{ background: 'var(--surface)', padding: '80px 24px 60px', position: 'relative', overflow: 'hidden' }}>
         <div className="ff-blob" style={{ width: 480, height: 480, background: 'rgba(16,185,129,0.08)', top: -160, right: -120 }} />
         <div className="ff-blob" style={{ width: 320, height: 320, background: 'rgba(67,83,255,0.06)', bottom: -80, left: -60 }} />
 

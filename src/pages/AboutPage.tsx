@@ -234,12 +234,12 @@ export default function AboutPage() {
               <h2 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(26px, 3.5vw, 42px)', letterSpacing: '-1px', color: 'var(--dark)', marginTop: 12 }}>Our Values</h2>
             </div>
           </FadeIn>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20 }}>
+          <div className="ff-values-grid">
             {values.map((v, i) => (
               <FadeIn key={i} delay={i * 0.08} style={{ height: '100%' }}>
                 <Tilt3DCard intensity={12} style={{ height: '100%' }}>
                   <div className="ff-clay ff-gloss-on-hover" style={{ padding: '32px 28px', height: '100%', display: 'flex', flexDirection: 'column' }}>
-                    <ScrollCounter value={v.accent} color={v.color} style={{ fontSize: 48, letterSpacing: '-2px', marginBottom: 4 }} />
+                    <ScrollCounter value={v.accent} color={v.color} style={{ fontSize: 'clamp(30px, 7vw, 48px)', letterSpacing: '-2px', marginBottom: 4 }} />
                     <p style={{ fontFamily: 'Lato', fontSize: 10, fontWeight: 700, color: v.color, opacity: 0.7, marginBottom: 16, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{v.accentSub}</p>
                     <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 17, color: 'var(--dark)', marginBottom: 10, letterSpacing: '-0.3px' }}>{v.title}</h3>
                     <p style={{ fontFamily: 'Lato', fontSize: 13, color: 'var(--dark-3)', lineHeight: 1.75, flex: 1 }}>{v.desc}</p>
