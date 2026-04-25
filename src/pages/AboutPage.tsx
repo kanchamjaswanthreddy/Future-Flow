@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useInView, useMotionValue, useSpring } from 'framer-motion'
 import { Tilt3DCard } from '../components/Tilt3DCard'
-import { ArrowRight, Shield, Lock, Eye, Lightbulb, Puzzle, MapPin, Calendar, CheckCircle, XCircle } from 'lucide-react'
+import { ArrowRight, Lightbulb, Puzzle, MapPin, Calendar, CheckCircle, XCircle } from 'lucide-react'
 
 function ScrollCounter({ value, color, style = {} }: { value: string; color: string; style?: React.CSSProperties }) {
   const ref = useRef<HTMLDivElement>(null)
