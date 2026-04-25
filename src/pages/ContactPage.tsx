@@ -29,14 +29,14 @@ export default function ContactPage() {
   }
 
   const contacts = [
-    { Icon: Mail,         title: 'Email Support',   desc: 'For product questions, billing, or general help.',        contact: 'support@futureflow.app',      color: '#4353ff' },
+    { Icon: Mail,         title: 'Email Support',   desc: 'For product questions, billing, or general help.',        contact: 'support@joinfutureflow.com',  color: '#4353ff' },
     { Icon: Building2,    title: 'Press & Media',   desc: 'For journalists, researchers, and media inquiries.',       contact: 'press@futureflow.app',        color: '#10b981' },
     { Icon: MessageSquare,title: 'Partnerships',    desc: 'For business, API, and integration partnerships.',         contact: 'partnerships@futureflow.app', color: '#f69c20' },
   ]
 
   const responseTimes = [
-    { plan: 'Free plan',  time: 'Within 48 hours',            color: 'rgba(255,255,255,0.45)' },
-    { plan: 'Pro',        time: 'Within 24 hours',            color: 'var(--emerald)' },
+    { plan: 'Free plan',  time: 'Within 48 hours',            color: 'rgba(255,255,255,0.55)' },
+    { plan: 'Pro',        time: 'Within 24 hours',            color: '#10b981' },
     { plan: 'Household',  time: 'Within 4 hours (priority)',  color: '#f69c20' },
   ]
 
@@ -104,12 +104,16 @@ export default function ContactPage() {
               </motion.div>
             ))}
 
-            {/* Response time — dark glass */}
+            {/* Response time — explicit dark card */}
             <motion.div
               whileHover={{ scale: 1.01 }}
               transition={{ duration: 0.2 }}
-              className="ff-glass-dark"
-              style={{ borderRadius: 18, padding: '24px 22px' }}
+              style={{
+                borderRadius: 18, padding: '24px 22px',
+                background: '#0c0c0f',
+                border: '1px solid rgba(255,255,255,0.09)',
+                boxShadow: '0 4px 32px rgba(0,0,0,0.22)',
+              }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
                 <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'rgba(16,185,129,0.15)', boxShadow: '0 0 14px rgba(16,185,129,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -118,8 +122,8 @@ export default function ContactPage() {
                 <h3 style={{ fontFamily: 'Manrope', fontSize: 15, fontWeight: 700, color: '#ffffff' }}>Response Time</h3>
               </div>
               {responseTimes.map((r, i) => (
-                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: i < 2 ? '1px solid rgba(255,255,255,0.06)' : 'none' }}>
-                  <span style={{ fontFamily: 'Lato', fontSize: 14, color: 'rgba(255,255,255,0.5)' }}>{r.plan}</span>
+                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '11px 0', borderBottom: i < 2 ? '1px solid rgba(255,255,255,0.08)' : 'none' }}>
+                  <span style={{ fontFamily: 'Lato', fontSize: 14, fontWeight: 600, color: 'rgba(255,255,255,0.65)' }}>{r.plan}</span>
                   <span style={{ fontFamily: 'Manrope', fontSize: 13, fontWeight: 700, color: r.color }}>{r.time}</span>
                 </div>
               ))}

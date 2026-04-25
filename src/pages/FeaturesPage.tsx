@@ -80,6 +80,14 @@ const bento = [
 type CellVal = boolean | 'partial'
 const competitors = ['Monarch Money', 'Rocket Money', 'Copilot Money', 'YNAB', 'PocketGuard', 'FutureFlow']
 const rows: { name: string; values: CellVal[] }[] = [
+  // ── FutureFlow exclusives — shown first ──
+  { name: '★ Email + Plaid Sub Radar',       values: [false,    false,    false,    false,    false,    true] },
+  { name: '★ Free Trial Ending Alerts',      values: [false,    false,    false,    false,    false,    true] },
+  { name: '★ Fraud-Proof Bill Splitting',    values: [false,    false,    false,    false,    false,    true] },
+  { name: '★ Portfolio Health Radar',        values: [false,    false,    false,    false,    false,    true] },
+  { name: '★ Autonomous Tax Engine',         values: [false,    false,    false,    false,    false,    true] },
+  { name: '★ 50-State Tax Guidance',         values: [false,    false,    false,    false,    false,    true] },
+  // ── Standard features ──
   { name: 'Spending Analytics',              values: [true,     true,     true,     true,     true,     true] },
   { name: 'Auto Categorisation',             values: [true,     true,     true,     true,     true,     true] },
   { name: 'Flexible Budgeting',              values: [true,     true,     true,     true,     true,     true] },
@@ -105,12 +113,6 @@ const rows: { name: string; values: CellVal[] }[] = [
   { name: 'Customisable Categories',         values: [true,     true,     true,     true,     true,     true] },
   { name: 'Shared Goals (Couples)',          values: [true,     false,    false,    false,    false,    true] },
   { name: 'Panic-Sell Prevention',           values: [false,    false,    false,    false,    false,    true] },
-  { name: '★ Email + Plaid Sub Radar',       values: [false,    false,    false,    false,    false,    true] },
-  { name: '★ Free Trial Ending Alerts',      values: [false,    false,    false,    false,    false,    true] },
-  { name: '★ Fraud-Proof Bill Splitting',    values: [false,    false,    false,    false,    false,    true] },
-  { name: '★ Portfolio Health Radar',        values: [false,    false,    false,    false,    false,    true] },
-  { name: '★ Autonomous Tax Engine',         values: [false,    false,    false,    false,    false,    true] },
-  { name: '★ 50-State Tax Guidance',         values: [false,    false,    false,    false,    false,    true] },
 ]
 
 function Cell({ val, isFF }: { val: CellVal; isFF: boolean }) {
@@ -446,6 +448,36 @@ function AnimCounter({ value, color }: { value: string; color: string }) {
     <span style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 36, color, letterSpacing: '-2px', lineHeight: 1 }}>
       {prefix}{display}{suffix}
     </span>
+  )
+}
+
+// ─── Scroll-triggered counter ─────────────────────────────────────────────────
+function ScrollCounter({ value, color, style = {} }: { value: string; color: string; style?: React.CSSProperties }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-60px' })
+  const numeric = parseFloat(value.replace(/[^0-9.]/g, ''))
+  const prefix = value.match(/^[^0-9]*/)?.[0] ?? ''
+  const suffix = value.match(/[^0-9.]+$/)?.[0] ?? ''
+  const mv = useMotionValue(0)
+  const spring = useSpring(mv, { stiffness: 48, damping: 16 })
+  const [display, setDisplay] = useState('0')
+  useEffect(() => {
+    if (!inView) return
+    const t = setTimeout(() => mv.set(numeric), 120)
+    return () => clearTimeout(t)
+  }, [inView, mv, numeric])
+  useEffect(() => spring.on('change', v => {
+    const n = Math.round(v)
+    setDisplay(
+      numeric % 1 !== 0 ? v.toFixed(1) :
+      numeric >= 1000 ? n.toLocaleString() :
+      n.toString()
+    )
+  }), [spring, numeric])
+  return (
+    <div ref={ref} style={{ fontFamily: 'Manrope', fontWeight: 800, color, lineHeight: 1, ...style }}>
+      {prefix}{display}{suffix}
+    </div>
   )
 }
 
@@ -850,14 +882,7 @@ export default function FeaturesPage() {
                   </span>
 
                   {/* Hero stat */}
-                  <div style={{
-                    fontFamily: 'Manrope', fontWeight: 800,
-                    fontSize: 'clamp(36px, 3.2vw, 48px)',
-                    color: card.color, letterSpacing: '-2px', lineHeight: 1,
-                    marginBottom: 6,
-                  }}>
-                    {card.heroStat}
-                  </div>
+                  <ScrollCounter value={card.heroStat} color={card.color} style={{ fontSize: 'clamp(36px, 3.2vw, 48px)', letterSpacing: '-2px', marginBottom: 6 }} />
                   <div style={{ fontFamily: 'Lato', fontSize: 12, fontWeight: 600, color: `${card.color}80`, marginBottom: 20 }}>
                     {card.heroLabel}
                   </div>
@@ -868,7 +893,7 @@ export default function FeaturesPage() {
                   <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 17, color: 'var(--dark)', marginBottom: 8, lineHeight: 1.25 }}>
                     {card.title}
                   </h3>
-                  <p style={{ fontFamily: 'Lato', fontSize: 13, color: 'var(--dark-3)', lineHeight: 1.7, flex: 1 }}>
+                  <p style={{ fontFamily: 'Lato', fontSize: 15, color: 'var(--dark-2)', lineHeight: 1.75, flex: 1 }}>
                     {card.desc}
                   </p>
 
@@ -1023,14 +1048,14 @@ export default function FeaturesPage() {
                 <thead>
                   <tr style={{ background: 'rgba(255,255,255,0.04)' }}>
                     <th style={{
-                      fontFamily: 'Manrope', fontSize: 13, fontWeight: 700,
-                      color: 'rgba(255,255,255,0.4)', textAlign: 'left',
-                      padding: '16px 20px', borderBottom: '1px solid rgba(255,255,255,0.06)',
+                      fontFamily: 'Manrope', fontSize: 15, fontWeight: 700,
+                      color: 'rgba(255,255,255,0.5)', textAlign: 'left',
+                      padding: '18px 20px', borderBottom: '1px solid rgba(255,255,255,0.06)',
                     }}>Feature</th>
                     {competitors.map((c, i) => (
                       <th key={c} style={{
-                        fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, textAlign: 'center',
-                        padding: '16px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)',
+                        fontFamily: 'Manrope', fontSize: 13, fontWeight: 700, textAlign: 'center',
+                        padding: '18px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)',
                         color: i === 5 ? 'var(--emerald)' : 'rgba(255,255,255,0.35)',
                         background: i === 5 ? 'rgba(67,83,255,0.14)' : 'transparent',
                         borderLeft: i === 5 ? '1px solid rgba(67,83,255,0.3)' : 'none',
@@ -1046,13 +1071,13 @@ export default function FeaturesPage() {
                       background: row.name.startsWith('★') ? 'rgba(246,156,32,0.03)' : 'transparent',
                     }}>
                       <td style={{
-                        fontFamily: 'Lato', fontSize: 13, padding: '12px 20px',
-                        color: row.name.startsWith('★') ? '#f69c20' : 'rgba(255,255,255,0.6)',
-                        fontWeight: row.name.startsWith('★') ? 700 : 400,
+                        fontFamily: 'Lato', fontSize: 15, padding: '14px 20px',
+                        color: row.name.startsWith('★') ? '#f69c20' : 'rgba(255,255,255,0.75)',
+                        fontWeight: row.name.startsWith('★') ? 700 : 500,
                       }}>{row.name}</td>
                       {row.values.map((val, vi) => (
                         <td key={vi} style={{
-                          textAlign: 'center', padding: '12px 10px',
+                          textAlign: 'center', padding: '14px 10px',
                           background: vi === 5 ? 'rgba(67,83,255,0.08)' : 'transparent',
                           borderLeft: vi === 5 ? '1px solid rgba(67,83,255,0.2)' : 'none',
                           borderRight: vi === 5 ? '1px solid rgba(67,83,255,0.2)' : 'none',

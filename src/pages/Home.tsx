@@ -44,6 +44,35 @@ function FadeIn({
   )
 }
 
+function ScrollCounter({ value, color, style = {} }: { value: string; color: string; style?: React.CSSProperties }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-60px' })
+  const numeric = parseFloat(value.replace(/[^0-9.]/g, ''))
+  const prefix = value.match(/^[^0-9]*/)?.[0] ?? ''
+  const suffix = value.match(/[^0-9.]+$/)?.[0] ?? ''
+  const mv = useMotionValue(0)
+  const spring = useSpring(mv, { stiffness: 48, damping: 16 })
+  const [display, setDisplay] = useState('0')
+  useEffect(() => {
+    if (!inView) return
+    const t = setTimeout(() => mv.set(numeric), 120)
+    return () => clearTimeout(t)
+  }, [inView, mv, numeric])
+  useEffect(() => spring.on('change', v => {
+    const n = Math.round(v)
+    setDisplay(
+      numeric % 1 !== 0 ? v.toFixed(1) :
+      numeric >= 1000 ? n.toLocaleString() :
+      n.toString()
+    )
+  }), [spring, numeric])
+  return (
+    <div ref={ref} style={{ fontFamily: 'Manrope', fontWeight: 800, color, lineHeight: 1, ...style }}>
+      {prefix}{display}{suffix}
+    </div>
+  )
+}
+
 
 // ─── Dark bento data ──────────────────────────────────────────────────────────
 // color = data signal: #4353ff neutral info | #10b981 emerald = savings win | #fb7185 coral = alert
@@ -98,124 +127,156 @@ const bento = [
   },
 ]
 
-// ─── Dark bento mini-visuals ──────────────────────────────────────────────────
-// AI Spend Tracking (span 2) — animated category bars
-function DarkSpendVisual() {
-  const cats = [
-    { label: 'Housing',      amt: '$1,850', pct: 82, color: '#4353ff' },
-    { label: 'Food & Dining',amt: '$620',   pct: 54, color: '#f69c20' },
-    { label: 'Subscriptions',amt: '$312',   pct: 38, color: '#fb7185' },
-    { label: 'Transport',    amt: '$180',   pct: 22, color: '#10b981' },
-  ]
+// ─── Shared live-scroll ticker ────────────────────────────────────────────────
+function LiveScrollList({ rows, renderRow, rowHeight = 44, visibleRows = 3, speed = 2.3 }: {
+  rows: any[]
+  renderRow: (row: any) => React.ReactNode
+  rowHeight?: number
+  visibleRows?: number
+  speed?: number
+}) {
+  const totalH = rows.length * rowHeight
+  const duration = rows.length * speed
   return (
-    <div style={{ marginTop: 'auto', paddingTop: 20 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 14 }}>
-        <span style={{ fontFamily: 'Lato', fontSize: 11, color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', letterSpacing: '0.07em' }}>This Month</span>
-        <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.45)' }}>$2,962 total</span>
-      </div>
-      {cats.map((cat, i) => (
-        <div key={i} style={{ marginBottom: 12 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
-            <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>{cat.label}</span>
-            <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: cat.color }}>{cat.amt}</span>
+    <div style={{
+      height: rowHeight * visibleRows,
+      overflow: 'hidden',
+      WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%)',
+      maskImage: 'linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%)',
+    } as React.CSSProperties}>
+      <motion.div
+        animate={{ y: [0, -totalH] }}
+        transition={{ duration, repeat: Infinity, ease: 'linear', repeatType: 'loop' }}
+      >
+        {[...rows, ...rows].map((row, i) => (
+          <div key={i} style={{ height: rowHeight, display: 'flex', alignItems: 'center' }}>
+            {renderRow(row)}
           </div>
-          <div style={{ height: 5, borderRadius: 99, background: 'rgba(255,255,255,0.06)' }}>
-            <motion.div
-              initial={{ width: 0 }}
-              whileInView={{ width: `${cat.pct}%` }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.9, delay: i * 0.1, ease: 'easeOut' }}
-              style={{ height: '100%', borderRadius: 99, background: `linear-gradient(90deg,${cat.color},${cat.color}88)` }}
-            />
-          </div>
-        </div>
-      ))}
+        ))}
+      </motion.div>
     </div>
   )
 }
 
-// Subscription Manager (span 1) — list with badges
-function DarkSubsVisual() {
-  const subs = [
-    { name: 'Netflix',   price: '$17.99', cancel: true },
-    { name: 'Adobe CC',  price: '$59.99', cancel: true },
-    { name: 'Spotify',   price: '$9.99',  cancel: false },
+// ─── Dark bento mini-visuals ──────────────────────────────────────────────────
+function DarkSpendVisual() {
+  const cats = [
+    { label: 'Housing',        amt: '$1,850', color: '#4353ff' },
+    { label: 'Food & Dining',  amt: '$620',   color: '#f69c20' },
+    { label: 'Subscriptions',  amt: '$312',   color: '#fb7185' },
+    { label: 'Transport',      amt: '$180',   color: '#10b981' },
+    { label: 'Entertainment',  amt: '$95',    color: '#f69c20' },
+    { label: 'Health',         amt: '$140',   color: '#10b981' },
+    { label: 'Shopping',       amt: '$230',   color: '#fb7185' },
+    { label: 'Utilities',      amt: '$85',    color: '#4353ff' },
   ]
   return (
     <div style={{ marginTop: 'auto', paddingTop: 16 }}>
-      {subs.map((s, i) => (
-        <div key={i} style={{
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          padding: '9px 0', borderBottom: i < 2 ? '1px solid rgba(255,255,255,0.06)' : 'none',
-        }}>
-          <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(255,255,255,0.7)' }}>{s.name}</span>
-          <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-            <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.35)' }}>{s.price}</span>
-            <span style={{
-              fontFamily: 'Lato', fontSize: 10, fontWeight: 700, padding: '3px 9px', borderRadius: 4,
-              background: s.cancel ? 'rgba(251,113,133,0.18)' : 'rgba(16,185,129,0.18)',
-              color: s.cancel ? '#fb7185' : '#10b981',
-            }}>{s.cancel ? 'Cancel' : 'Keep'}</span>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
+        <span style={{ fontFamily: 'Lato', fontSize: 11, color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', letterSpacing: '0.07em' }}>This Month</span>
+        <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.45)' }}>$2,962 total</span>
+      </div>
+      <LiveScrollList rows={cats} rowHeight={38} visibleRows={3} speed={2.2}
+        renderRow={(cat) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <div style={{ width: 7, height: 7, borderRadius: '50%', background: cat.color, flexShrink: 0 }} />
+              <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.55)' }}>{cat.label}</span>
+            </div>
+            <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: cat.color }}>{cat.amt}</span>
           </div>
-        </div>
-      ))}
+        )}
+      />
     </div>
   )
 }
 
-// Debt Payoff Planner (span 1) — circular progress ring
-function DarkDebtVisual() {
-  const r = 34
-  const circ = 2 * Math.PI * r
-  return (
-    <div style={{ marginTop: 'auto', paddingTop: 16, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-      <div style={{ position: 'relative', width: 86, height: 86 }}>
-        <svg width="86" height="86" viewBox="0 0 86 86">
-          <circle cx="43" cy="43" r={r} fill="none" stroke="rgba(16,185,129,0.12)" strokeWidth="7"/>
-          <motion.circle
-            cx="43" cy="43" r={r} fill="none"
-            stroke="#10b981" strokeWidth="7" strokeLinecap="round"
-            strokeDasharray={circ}
-            initial={{ strokeDashoffset: circ }}
-            whileInView={{ strokeDashoffset: circ * 0.26 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.4, ease: 'easeOut', delay: 0.2 }}
-            transform="rotate(-90 43 43)"
-          />
-        </svg>
-        <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-          <span style={{ fontFamily: 'Manrope', fontSize: 17, fontWeight: 800, color: '#10b981', lineHeight: 1 }}>74%</span>
-          <span style={{ fontFamily: 'Lato', fontSize: 9, color: 'rgba(255,255,255,0.35)', marginTop: 2 }}>paid off</span>
-        </div>
-      </div>
-      <div style={{ textAlign: 'center' }}>
-        <p style={{ fontFamily: 'Lato', fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>Debt-free date</p>
-        <p style={{ fontFamily: 'Manrope', fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,0.65)' }}>Dec 2026</p>
-      </div>
-    </div>
-  )
-}
-
-// Tax Engine (span 2) — deduction rows with animated bars
-function DarkTaxVisual() {
-  const items = [
-    { label: 'Home Office',    amt: '$3,240', pct: 78 },
-    { label: 'Business Travel',amt: '$1,870', pct: 62 },
-    { label: 'Software & Tools',amt: '$840',  pct: 44 },
+function DarkSubsVisual() {
+  const subs = [
+    { name: 'Netflix',      price: '$17.99', cancel: true  },
+    { name: 'Adobe CC',     price: '$59.99', cancel: true  },
+    { name: 'Spotify',      price: '$9.99',  cancel: false },
+    { name: 'Peloton',      price: '$44.00', cancel: true  },
+    { name: 'Hulu',         price: '$7.99',  cancel: false },
+    { name: 'Notion',       price: '$16.00', cancel: true  },
+    { name: 'LinkedIn',     price: '$39.99', cancel: true  },
+    { name: 'Duolingo',     price: '$6.99',  cancel: false },
   ]
   return (
-    <div style={{ marginTop: 'auto', paddingTop: 20 }}>
-      {items.map((item, i) => (
-        <div key={i} style={{
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          padding: '9px 12px', background: 'rgba(16,185,129,0.07)', borderRadius: 8,
-          border: '1px solid rgba(16,185,129,0.14)', marginBottom: 7,
-        }}>
-          <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>{item.label}</span>
-          <span style={{ fontFamily: 'Manrope', fontSize: 13, fontWeight: 800, color: '#10b981' }}>{item.amt}</span>
-        </div>
-      ))}
-      <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0 0', borderTop: '1px solid rgba(255,255,255,0.07)', marginTop: 4 }}>
+    <div style={{ marginTop: 'auto', paddingTop: 16 }}>
+      <LiveScrollList rows={subs} rowHeight={44} visibleRows={3} speed={2.4}
+        renderRow={(s) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+            <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(255,255,255,0.7)' }}>{s.name}</span>
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.35)' }}>{s.price}</span>
+              <span style={{
+                fontFamily: 'Lato', fontSize: 10, fontWeight: 700, padding: '3px 9px', borderRadius: 4,
+                background: s.cancel ? 'rgba(251,113,133,0.18)' : 'rgba(16,185,129,0.18)',
+                color: s.cancel ? '#fb7185' : '#10b981',
+              }}>{s.cancel ? 'Cancel' : 'Keep'}</span>
+            </div>
+          </div>
+        )}
+      />
+    </div>
+  )
+}
+
+function DarkDebtVisual() {
+  const debts = [
+    { label: 'Student Loan',  remaining: '$12,400', pct: '62%' },
+    { label: 'Credit Card',   remaining: '$3,200',  pct: '81%' },
+    { label: 'Car Loan',      remaining: '$8,750',  pct: '45%' },
+    { label: 'Medical Bill',  remaining: '$1,500',  pct: '88%' },
+    { label: 'Personal Loan', remaining: '$5,200',  pct: '34%' },
+    { label: 'HELOC',         remaining: '$22,100', pct: '28%' },
+  ]
+  return (
+    <div style={{ marginTop: 'auto', paddingTop: 16 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
+        <span style={{ fontFamily: 'Lato', fontSize: 11, color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', letterSpacing: '0.07em' }}>Debt Accounts</span>
+        <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: '#10b981' }}>Debt-free Dec 2026</span>
+      </div>
+      <LiveScrollList rows={debts} rowHeight={44} visibleRows={3} speed={2.5}
+        renderRow={(d) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+            <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.6)' }}>{d.label}</span>
+            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+              <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.35)' }}>{d.remaining}</span>
+              <span style={{ fontFamily: 'Lato', fontSize: 10, fontWeight: 700, color: '#10b981', background: 'rgba(16,185,129,0.14)', padding: '3px 8px', borderRadius: 4 }}>{d.pct}</span>
+            </div>
+          </div>
+        )}
+      />
+    </div>
+  )
+}
+
+function DarkTaxVisual() {
+  const items = [
+    { label: 'Home Office',     amt: '$3,240' },
+    { label: 'Business Travel', amt: '$1,870' },
+    { label: 'Software & Tools',amt: '$840'   },
+    { label: 'Phone (business)',amt: '$360'   },
+    { label: 'Internet',        amt: '$480'   },
+    { label: 'Professional Dev',amt: '$420'   },
+    { label: 'Meals (business)',amt: '$230'   },
+    { label: 'Mileage',         amt: '$780'   },
+  ]
+  return (
+    <div style={{ marginTop: 'auto', paddingTop: 16 }}>
+      <LiveScrollList rows={items} rowHeight={42} visibleRows={3} speed={2.2}
+        renderRow={(item) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%',
+            padding: '0 12px', background: 'rgba(16,185,129,0.06)', borderRadius: 8, height: 36,
+          }}>
+            <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>{item.label}</span>
+            <span style={{ fontFamily: 'Manrope', fontSize: 13, fontWeight: 800, color: '#10b981' }}>{item.amt}</span>
+          </div>
+        )}
+      />
+      <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0 0', borderTop: '1px solid rgba(255,255,255,0.07)', marginTop: 6 }}>
         <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.35)' }}>Est. tax savings</span>
         <span style={{ fontFamily: 'Manrope', fontSize: 15, fontWeight: 800, color: '#10b981' }}>$1,593</span>
       </div>
@@ -223,52 +284,62 @@ function DarkTaxVisual() {
   )
 }
 
-// Bill Negotiation AI (span 1) — before/after
 function DarkBillVisual() {
   const bills = [
-    { provider: 'Comcast',    before: '$127', after: '$89', saved: '$456/yr' },
-    { provider: 'Progressive',before: '$214', after: '$178',saved: '$432/yr' },
+    { provider: 'Comcast',     before: '$127', after: '$89',  saved: '$456/yr' },
+    { provider: 'Progressive', before: '$214', after: '$178', saved: '$432/yr' },
+    { provider: 'AT&T',        before: '$95',  after: '$73',  saved: '$264/yr' },
+    { provider: 'ADT Security',before: '$68',  after: '$50',  saved: '$216/yr' },
+    { provider: 'Xfinity',     before: '$110', after: '$79',  saved: '$372/yr' },
+    { provider: 'Spectrum',    before: '$89',  after: '$65',  saved: '$288/yr' },
   ]
   return (
-    <div style={{ marginTop: 'auto', paddingTop: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
-      {bills.map((b, i) => (
-        <div key={i} style={{ padding: '10px 12px', background: 'rgba(255,255,255,0.04)', borderRadius: 10, border: '1px solid rgba(255,255,255,0.07)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-            <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.65)' }}>{b.provider}</span>
-            <span style={{ fontFamily: 'Lato', fontSize: 10, fontWeight: 700, color: '#10b981', background: 'rgba(16,185,129,0.14)', padding: '2px 7px', borderRadius: 4 }}>Saved {b.saved}</span>
+    <div style={{ marginTop: 'auto', paddingTop: 16 }}>
+      <LiveScrollList rows={bills} rowHeight={62} visibleRows={2} speed={3.0}
+        renderRow={(b) => (
+          <div style={{ width: '100%', padding: '8px 12px', background: 'rgba(255,255,255,0.04)', borderRadius: 10, border: '1px solid rgba(255,255,255,0.07)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 5 }}>
+              <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.65)' }}>{b.provider}</span>
+              <span style={{ fontFamily: 'Lato', fontSize: 10, fontWeight: 700, color: '#10b981', background: 'rgba(16,185,129,0.14)', padding: '2px 7px', borderRadius: 4 }}>Saved {b.saved}</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.25)', textDecoration: 'line-through' }}>{b.before}/mo</span>
+              <span style={{ color: 'rgba(255,255,255,0.22)', fontSize: 12 }}>→</span>
+              <span style={{ fontFamily: 'Manrope', fontSize: 14, fontWeight: 800, color: '#10b981' }}>{b.after}/mo</span>
+            </div>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.25)', textDecoration: 'line-through' }}>{b.before}/mo</span>
-            <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: 12 }}>→</span>
-            <span style={{ fontFamily: 'Manrope', fontSize: 14, fontWeight: 800, color: '#10b981' }}>{b.after}/mo</span>
-          </div>
-        </div>
-      ))}
+        )}
+      />
     </div>
   )
 }
 
-// Free Trial Radar (span 1) — countdown pills (coral=urgent, amber=warn, emerald=safe)
 function DarkTrialVisual() {
   const trials = [
-    { name: 'Adobe CC', days: 2,  color: '#fb7185' },  // coral — urgent
-    { name: 'Hulu',     days: 7,  color: '#f69c20' },  // amber  — warning
-    { name: 'Notion',   days: 14, color: '#10b981' },  // emerald — safe
+    { name: 'Adobe CC',     days: 2,  color: '#fb7185' },
+    { name: 'Hulu',         days: 7,  color: '#f69c20' },
+    { name: 'Notion',       days: 14, color: '#10b981' },
+    { name: 'Canva Pro',    days: 3,  color: '#fb7185' },
+    { name: 'Grammarly',    days: 1,  color: '#fb7185' },
+    { name: 'Coursera',     days: 9,  color: '#f69c20' },
+    { name: 'Figma',        days: 5,  color: '#f69c20' },
+    { name: 'Squarespace',  days: 12, color: '#10b981' },
   ]
   return (
-    <div style={{ marginTop: 'auto', paddingTop: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
-      {trials.map((t, i) => (
-        <div key={i} style={{
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          padding: '8px 12px', background: 'rgba(255,255,255,0.03)', borderRadius: 8,
-          border: `1px solid ${t.color}22`,
-        }}>
-          <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.6)' }}>{t.name}</span>
-          <span style={{ fontFamily: 'Manrope', fontSize: 11, fontWeight: 700, color: t.color, background: `${t.color}18`, padding: '3px 9px', borderRadius: 4 }}>
-            {t.days}d left
-          </span>
-        </div>
-      ))}
+    <div style={{ marginTop: 'auto', paddingTop: 16 }}>
+      <LiveScrollList rows={trials} rowHeight={44} visibleRows={3} speed={2.2}
+        renderRow={(t) => (
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%',
+            padding: '0 12px', background: 'rgba(255,255,255,0.03)', borderRadius: 8, height: 36,
+            border: `1px solid ${t.color}22`,
+          }}>
+            <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.6)' }}>{t.name}</span>
+            <span style={{ fontFamily: 'Manrope', fontSize: 11, fontWeight: 700, color: t.color, background: `${t.color}18`, padding: '3px 9px', borderRadius: 4 }}>
+              {t.days}d left
+            </span>
+          </div>
+        )}
+      />
     </div>
   )
 }
@@ -628,14 +699,14 @@ export default function Home() {
                     <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(20px, 2.2vw, 26px)', color: 'var(--dark)', lineHeight: 1.25, marginBottom: 20 }}>
                       Money Is Americans'<br />#1 Stress
                     </h3>
-                    <div style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 80, color: '#fb7185', letterSpacing: '-5px', lineHeight: 1, marginBottom: 10 }}>52%</div>
-                    <p style={{ fontFamily: 'Lato', fontSize: 14, color: 'var(--dark-3)', lineHeight: 1.72, flex: 1 }}>
+                    <ScrollCounter value="52%" color="#fb7185" style={{ fontSize: 80, letterSpacing: '-5px', marginBottom: 10 }} />
+                    <p style={{ fontFamily: 'Lato', fontSize: 16, fontWeight: 500, color: 'var(--dark-2)', lineHeight: 1.72, flex: 1 }}>
                       rank money as their #1 source of stress — costing productivity, health, and relationships every single day.
                     </p>
                     <div style={{ marginTop: 28, paddingTop: 20, borderTop: '1px solid rgba(0,0,0,0.06)' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                        <span style={{ fontFamily: 'Lato', fontSize: 11, color: 'var(--muted)', fontWeight: 600 }}>Financial Stress Index</span>
-                        <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: '#fb7185' }}>High</span>
+                        <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'var(--dark-3)', fontWeight: 600 }}>Financial Stress Index</span>
+                        <span style={{ fontFamily: 'Manrope', fontSize: 13, fontWeight: 700, color: '#fb7185' }}>High</span>
                       </div>
                       <div style={{ height: 6, borderRadius: 99, background: 'rgba(0,0,0,0.07)', overflow: 'hidden' }}>
                         <motion.div
@@ -658,9 +729,9 @@ export default function Home() {
                     <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(20px, 2.2vw, 26px)', color: 'var(--dark)', lineHeight: 1.25, marginBottom: 8 }}>
                       Wasted on Forgotten Subscriptions
                     </h3>
-                    <p style={{ fontFamily: 'Lato', fontSize: 14, color: 'var(--dark-3)', lineHeight: 1.7, marginBottom: 20 }}>$460 billion evaporates every year from forgotten auto-renewals. Most people have no idea what they're paying for.</p>
-                    <div style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 88, color: '#f69c20', letterSpacing: '-5px', lineHeight: 1, marginBottom: 4 }}>$460B</div>
-                    <p style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(246,156,32,0.6)', fontWeight: 600, marginBottom: 'auto' }}>lost annually in the US alone</p>
+                    <p style={{ fontFamily: 'Lato', fontSize: 16, fontWeight: 500, color: 'var(--dark-2)', lineHeight: 1.7, marginBottom: 20 }}>$460 billion evaporates every year from forgotten auto-renewals. Most people have no idea what they're paying for.</p>
+                    <ScrollCounter value="$460B" color="#f69c20" style={{ fontSize: 88, letterSpacing: '-5px', marginBottom: 4 }} />
+                    <p style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(246,156,32,0.7)', fontWeight: 600, marginBottom: 'auto' }}>lost annually in the US alone</p>
                     <div style={{ marginTop: 28, paddingTop: 20, borderTop: '1px solid rgba(0,0,0,0.06)' }}>
                       {[
                         { label: 'Streaming',  pct: 82, val: '$47/mo' },
@@ -668,16 +739,16 @@ export default function Home() {
                         { label: 'Fitness',    pct: 48, val: '$29/mo' },
                         { label: 'News',       pct: 35, val: '$18/mo' },
                       ].map((item, idx) => (
-                        <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 9 }}>
-                          <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'var(--dark-3)', width: 72, flexShrink: 0 }}>{item.label}</span>
-                          <div style={{ flex: 1, height: 5, borderRadius: 99, background: 'rgba(0,0,0,0.07)', overflow: 'hidden' }}>
+                        <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
+                          <span style={{ fontFamily: 'Lato', fontSize: 14, fontWeight: 600, color: 'var(--dark-2)', width: 72, flexShrink: 0 }}>{item.label}</span>
+                          <div style={{ flex: 1, height: 6, borderRadius: 99, background: 'rgba(0,0,0,0.07)', overflow: 'hidden' }}>
                             <motion.div
                               initial={{ width: 0 }} whileInView={{ width: `${item.pct}%` }} viewport={{ once: true }}
                               transition={{ duration: 0.9, delay: idx * 0.08 + 0.3 }}
                               style={{ height: '100%', borderRadius: 99, background: 'linear-gradient(90deg, #f69c20, #fbbf24)' }}
                             />
                           </div>
-                          <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: '#f69c20', width: 48, textAlign: 'right', flexShrink: 0 }}>{item.val}</span>
+                          <span style={{ fontFamily: 'Manrope', fontSize: 13, fontWeight: 700, color: '#f69c20', width: 48, textAlign: 'right', flexShrink: 0 }}>{item.val}</span>
                         </div>
                       ))}
                     </div>
@@ -694,24 +765,24 @@ export default function Home() {
                     <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(20px, 2.2vw, 26px)', color: 'var(--dark)', lineHeight: 1.25, marginBottom: 8 }}>
                       Live Paycheck to Paycheck
                     </h3>
-                    <p style={{ fontFamily: 'Lato', fontSize: 14, color: 'var(--dark-3)', lineHeight: 1.7, marginBottom: 20 }}>Not just a low-income problem. High earners with no visibility into their money face the same cycle.</p>
-                    <div style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 88, color: '#4353ff', letterSpacing: '-5px', lineHeight: 1, marginBottom: 4 }}>51%</div>
-                    <p style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(67,83,255,0.55)', fontWeight: 600, marginBottom: 'auto' }}>of Americans, regardless of income</p>
-                    <div style={{ marginTop: 28, paddingTop: 20, borderTop: '1px solid rgba(0,0,0,0.06)', display: 'flex', gap: 8, alignItems: 'flex-end' }}>
+                    <p style={{ fontFamily: 'Lato', fontSize: 16, fontWeight: 500, color: 'var(--dark-2)', lineHeight: 1.7, marginBottom: 20 }}>Not just a low-income problem. High earners with no visibility into their money face the same cycle.</p>
+                    <ScrollCounter value="51%" color="#4353ff" style={{ fontSize: 88, letterSpacing: '-5px', marginBottom: 4 }} />
+                    <p style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(67,83,255,0.65)', fontWeight: 600, marginBottom: 12 }}>of Americans, regardless of income</p>
+                    <div style={{ flex: 1, paddingTop: 16, borderTop: '1px solid rgba(0,0,0,0.06)', display: 'flex', gap: 8, alignItems: 'flex-end' }}>
                       {[
                         { label: 'Rent/Mortgage', pct: 35, color: '#4353ff' },
                         { label: 'Debt', pct: 22, color: '#f69c20' },
                         { label: 'Food', pct: 15, color: '#fb7185' },
                         { label: 'Subs', pct: 12, color: '#10b981' },
-                        { label: 'Savings', pct: 16, color: 'rgba(0,0,0,0.12)' },
+                        { label: 'Savings', pct: 16, color: 'rgba(0,0,0,0.18)' },
                       ].map((s, idx) => (
-                        <div key={idx} style={{ flex: s.pct, display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'center' }}>
+                        <div key={idx} style={{ flex: s.pct, display: 'flex', flexDirection: 'column', gap: 7, alignItems: 'center' }}>
                           <motion.div
-                            initial={{ height: 0 }} whileInView={{ height: s.pct * 1.6 }} viewport={{ once: true }}
+                            initial={{ height: 0 }} whileInView={{ height: s.pct * 4 }} viewport={{ once: true }}
                             transition={{ duration: 0.7, delay: idx * 0.08 + 0.2 }}
                             style={{ width: '100%', borderRadius: 6, background: s.color }}
                           />
-                          <span style={{ fontFamily: 'Lato', fontSize: 9, color: 'var(--muted)', textAlign: 'center', lineHeight: 1.3 }}>{s.label}</span>
+                          <span style={{ fontFamily: 'Lato', fontSize: 11, fontWeight: 600, color: 'var(--dark-3)', textAlign: 'center', lineHeight: 1.3 }}>{s.label}</span>
                         </div>
                       ))}
                     </div>
@@ -728,22 +799,23 @@ export default function Home() {
                     <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(20px, 2.2vw, 26px)', color: 'var(--dark)', lineHeight: 1.25, marginBottom: 20 }}>
                       Apps Just to<br />Track Money
                     </h3>
-                    <div style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 80, color: '#10b981', letterSpacing: '-5px', lineHeight: 1, marginBottom: 10 }}>3+</div>
-                    <p style={{ fontFamily: 'Lato', fontSize: 14, color: 'var(--dark-3)', lineHeight: 1.72, flex: 1 }}>
-                      The average American juggles 3–5 separate apps and still can't see their full financial picture.
+                    <ScrollCounter value="4+" color="#10b981" style={{ fontSize: 80, letterSpacing: '-5px', marginBottom: 10 }} />
+                    <p style={{ fontFamily: 'Lato', fontSize: 16, fontWeight: 500, color: 'var(--dark-2)', lineHeight: 1.72, flex: 1 }}>
+                      The average American juggles 4–6 separate apps and still can't see their full financial picture.
                     </p>
                     <div style={{ marginTop: 28, paddingTop: 20, borderTop: '1px solid rgba(0,0,0,0.06)' }}>
                       {[
                         { name: 'Budgeting App',    crossed: true },
                         { name: 'Investment App',   crossed: true },
                         { name: 'Debt Tracker',     crossed: true },
+                        { name: 'Financial Advisor', crossed: true },
                         { name: 'FutureFlow',       crossed: false },
                       ].map((item) => (
                         <div key={item.name} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 9 }}>
                           <div style={{ width: 16, height: 16, borderRadius: '50%', background: item.crossed ? 'rgba(0,0,0,0.07)' : 'rgba(16,185,129,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                             {!item.crossed && <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#10b981' }} />}
                           </div>
-                          <span style={{ fontFamily: 'Lato', fontSize: 13, color: item.crossed ? 'var(--muted)' : 'var(--dark)', fontWeight: item.crossed ? 400 : 700, textDecoration: item.crossed ? 'line-through' : 'none' }}>{item.name}</span>
+                          <span style={{ fontFamily: 'Lato', fontSize: 15, color: item.crossed ? 'var(--dark-3)' : 'var(--dark)', fontWeight: item.crossed ? 400 : 700, textDecoration: item.crossed ? 'line-through' : 'none' }}>{item.name}</span>
                         </div>
                       ))}
                     </div>
@@ -780,6 +852,118 @@ export default function Home() {
               · {t}
             </span>
           ))}
+        </div>
+      </section>
+
+      {/* ── WHY FUTUREFLOW ── */}
+      <section style={{ padding: 'var(--sp) 0', background: '#ffffff', position: 'relative', overflow: 'hidden' }}>
+        <div className="ff-blob" style={{ width: 560, height: 320, background: 'rgba(67,83,255,0.04)', top: -80, left: '50%', transform: 'translateX(-50%)' }} />
+        <div className="ff-container" style={{ position: 'relative' }}>
+
+          {/* Header */}
+          <FadeIn>
+            <div style={{ textAlign: 'center', marginBottom: 56, maxWidth: 680, margin: '0 auto 56px' }}>
+              <span className="ff-badge" style={{ marginBottom: 20, display: 'inline-flex' }}>Why FutureFlow</span>
+              <h2 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(28px, 3.8vw, 48px)', letterSpacing: '-1.5px', lineHeight: 1.1, color: 'var(--dark)', marginTop: 14, marginBottom: 20 }}>
+                Hard work shouldn't mean{' '}
+                <span style={{ color: 'var(--primary)' }}>financial struggle.</span>
+              </h2>
+              <p style={{ fontFamily: 'Lato', fontSize: 17, color: 'var(--dark-2)', lineHeight: 1.8 }}>
+                Millions work hard, earn well, and still struggle to build real wealth. The problem isn't effort — it's access to clear, unbiased financial guidance. FutureFlow is changing that by making smart financial advice simple, accessible, and built for everyday people.
+              </p>
+            </div>
+          </FadeIn>
+
+          {/* Three-card row */}
+          <div className="ff-grid-3" style={{ gap: 24, marginBottom: 0 }}>
+
+            {/* Mission */}
+            <FadeIn delay={0} style={{ height: '100%' }}>
+              <motion.div
+                whileHover={{ y: -6, scale: 1.012 }}
+                transition={{ duration: 0.22, ease: 'easeOut' }}
+                className="ff-clay"
+                style={{ borderRadius: 24, padding: '36px 32px', height: '100%', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden' }}
+              >
+                {/* Corner glow */}
+                <div style={{ position: 'absolute', bottom: -60, right: -60, width: 220, height: 220, borderRadius: '50%', background: 'radial-gradient(circle, rgba(16,185,129,0.12) 0%, transparent 65%)', pointerEvents: 'none' }} />
+
+                {/* Big label */}
+                <div style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(42px, 4vw, 58px)', color: '#10b981', letterSpacing: '-2.5px', lineHeight: 1, marginBottom: 24 }}>
+                  Mission
+                </div>
+
+                <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 18, color: 'var(--dark)', marginBottom: 12, lineHeight: 1.35 }}>
+                  Empowering everyone to grow.
+                </h3>
+                <p style={{ fontFamily: 'Lato', fontSize: 16, color: 'var(--dark-2)', lineHeight: 1.85, flex: 1 }}>
+                  To empower individuals and families with real-time, intelligent financial guidance that helps them manage money better, reduce stress, and build lasting wealth.
+                </p>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 20, marginTop: 24, borderTop: '1px solid rgba(0,0,0,0.07)' }}>
+                  <span style={{ fontFamily: 'Lato', fontSize: 13, fontWeight: 600, color: 'var(--dark-3)' }}>Real-time guidance</span>
+                  <span style={{ fontFamily: 'Lato', fontSize: 12, fontWeight: 700, color: '#10b981', background: 'rgba(16,185,129,0.10)', padding: '5px 14px', borderRadius: 50 }}>Our Mission</span>
+                </div>
+              </motion.div>
+            </FadeIn>
+
+            {/* Vision */}
+            <FadeIn delay={0.1} style={{ height: '100%' }}>
+              <motion.div
+                whileHover={{ y: -6, scale: 1.012 }}
+                transition={{ duration: 0.22, ease: 'easeOut' }}
+                className="ff-clay"
+                style={{ borderRadius: 24, padding: '36px 32px', height: '100%', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden' }}
+              >
+                <div style={{ position: 'absolute', bottom: -60, right: -60, width: 220, height: 220, borderRadius: '50%', background: 'radial-gradient(circle, rgba(67,83,255,0.11) 0%, transparent 65%)', pointerEvents: 'none' }} />
+
+                <div style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(42px, 4vw, 58px)', color: '#4353ff', letterSpacing: '-2.5px', lineHeight: 1, marginBottom: 24 }}>
+                  Vision
+                </div>
+
+                <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 18, color: 'var(--dark)', marginBottom: 12, lineHeight: 1.35 }}>
+                  Financial clarity for all.
+                </h3>
+                <p style={{ fontFamily: 'Lato', fontSize: 16, color: 'var(--dark-2)', lineHeight: 1.85, flex: 1 }}>
+                  To be the trusted financial advisor in every pocket — delivering clarity, confidence, and financial independence for all.
+                </p>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 20, marginTop: 24, borderTop: '1px solid rgba(0,0,0,0.07)' }}>
+                  <span style={{ fontFamily: 'Lato', fontSize: 13, fontWeight: 600, color: 'var(--dark-3)' }}>Trusted advisor</span>
+                  <span style={{ fontFamily: 'Lato', fontSize: 12, fontWeight: 700, color: '#4353ff', background: 'rgba(67,83,255,0.10)', padding: '5px 14px', borderRadius: 50 }}>Our Vision</span>
+                </div>
+              </motion.div>
+            </FadeIn>
+
+            {/* What Makes Us Different */}
+            <FadeIn delay={0.2} style={{ height: '100%' }}>
+              <motion.div
+                whileHover={{ y: -6, scale: 1.012 }}
+                transition={{ duration: 0.22, ease: 'easeOut' }}
+                className="ff-clay"
+                style={{ borderRadius: 24, padding: '36px 32px', height: '100%', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden' }}
+              >
+                <div style={{ position: 'absolute', bottom: -60, right: -60, width: 220, height: 220, borderRadius: '50%', background: 'radial-gradient(circle, rgba(246,156,32,0.11) 0%, transparent 65%)', pointerEvents: 'none' }} />
+
+                <div style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(30px, 2.8vw, 42px)', color: '#f69c20', letterSpacing: '-1.5px', lineHeight: 1.08, marginBottom: 24 }}>
+                  What Makes<br />Us Different
+                </div>
+
+                <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 18, color: 'var(--dark)', marginBottom: 12, lineHeight: 1.35 }}>
+                  AI advice meets money tools.
+                </h3>
+                <p style={{ fontFamily: 'Lato', fontSize: 16, color: 'var(--dark-2)', lineHeight: 1.85, flex: 1 }}>
+                  FutureFlow combines AI-driven financial advice with powerful money management tools in one seamless platform — helping you not just track your money, but grow it smarter every month.
+                </p>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 20, marginTop: 24, borderTop: '1px solid rgba(0,0,0,0.07)' }}>
+                  <span style={{ fontFamily: 'Lato', fontSize: 13, fontWeight: 600, color: 'var(--dark-3)' }}>One platform</span>
+                  <span style={{ fontFamily: 'Lato', fontSize: 12, fontWeight: 700, color: '#f69c20', background: 'rgba(246,156,32,0.10)', padding: '5px 14px', borderRadius: 50 }}>Our Edge</span>
+                </div>
+              </motion.div>
+            </FadeIn>
+
+          </div>
         </div>
       </section>
 
@@ -835,13 +1019,7 @@ export default function Home() {
 
                     {/* Hero stat */}
                     <div style={{ marginBottom: 8 }}>
-                      <div style={{
-                        fontFamily: 'Manrope', fontWeight: 800,
-                        fontSize: 'clamp(42px, 3.6vw, 54px)',
-                        color: card.color, letterSpacing: '-3px', lineHeight: 1,
-                      }}>
-                        {card.heroStat}
-                      </div>
+                      <ScrollCounter value={card.heroStat} color={card.color} style={{ fontSize: 'clamp(42px, 3.6vw, 54px)', letterSpacing: '-3px' }} />
                       <div style={{ fontFamily: 'Lato', fontSize: 13, fontWeight: 600, color: `${card.color}99`, marginTop: 5 }}>
                         {card.heroLabel}
                       </div>
@@ -896,7 +1074,7 @@ export default function Home() {
                   <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(26px, 2.8vw, 34px)', color: 'var(--dark)', lineHeight: 1.15, marginBottom: 20, letterSpacing: '-0.5px' }}>
                     Net Worth<br />Tracker
                   </h3>
-                  <div style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 48, color: '#4353ff', letterSpacing: '-2px', lineHeight: 1, marginBottom: 4 }}>$47,320</div>
+                  <ScrollCounter value="$47,320" color="#4353ff" style={{ fontSize: 48, letterSpacing: '-2px', marginBottom: 4 }} />
                   <p style={{ fontFamily: 'Lato', fontSize: 12, color: '#10b981', fontWeight: 700, marginBottom: 20 }}>+$2,840 this month</p>
                   <p style={{ fontFamily: 'Lato', fontSize: 14, color: 'var(--dark-3)', lineHeight: 1.72, flex: 1 }}>Every account, asset, and liability in one live dashboard — updated automatically, every day.</p>
                   <div style={{ display: 'flex', gap: 6, marginTop: 24, paddingTop: 20, borderTop: '1px solid rgba(0,0,0,0.06)', flexWrap: 'wrap' }}>
@@ -915,7 +1093,7 @@ export default function Home() {
                   <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(26px, 2.8vw, 34px)', color: 'var(--dark)', lineHeight: 1.15, marginBottom: 20, letterSpacing: '-0.5px' }}>
                     Credit Score<br />Monitor
                   </h3>
-                  <div style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 48, color: '#10b981', letterSpacing: '-2px', lineHeight: 1, marginBottom: 4 }}>782</div>
+                  <ScrollCounter value="782" color="#10b981" style={{ fontSize: 48, letterSpacing: '-2px', marginBottom: 4 }} />
                   <p style={{ fontFamily: 'Lato', fontSize: 12, color: '#10b981', fontWeight: 700, marginBottom: 20 }}>Excellent — top 12%</p>
                   <p style={{ fontFamily: 'Lato', fontSize: 14, color: 'var(--dark-3)', lineHeight: 1.72, flex: 1 }}>Real-time alerts on score changes, plus AI-powered tips to push your score higher every month.</p>
                   <div style={{ marginTop: 24, paddingTop: 20, borderTop: '1px solid rgba(0,0,0,0.06)' }}>
@@ -942,7 +1120,7 @@ export default function Home() {
                   <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(26px, 2.8vw, 34px)', color: 'var(--dark)', lineHeight: 1.15, marginBottom: 20, letterSpacing: '-0.5px' }}>
                     Cash Flow<br />Forecast
                   </h3>
-                  <div style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 48, color: '#f69c20', letterSpacing: '-2px', lineHeight: 1, marginBottom: 4 }}>30 days</div>
+                  <ScrollCounter value="30 days" color="#f69c20" style={{ fontSize: 48, letterSpacing: '-2px', marginBottom: 4 }} />
                   <p style={{ fontFamily: 'Lato', fontSize: 12, color: '#10b981', fontWeight: 700, marginBottom: 20 }}>No shortfalls predicted</p>
                   <p style={{ fontFamily: 'Lato', fontSize: 14, color: 'var(--dark-3)', lineHeight: 1.72, flex: 1 }}>AI predicts your balance 30 days out — flagging upcoming bills and saving opportunities in advance.</p>
                   <div style={{ marginTop: 24, paddingTop: 20, borderTop: '1px solid rgba(0,0,0,0.06)', display: 'flex', gap: 3, alignItems: 'flex-end', height: 52 }}>

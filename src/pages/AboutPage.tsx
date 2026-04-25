@@ -1,8 +1,37 @@
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView, useMotionValue, useSpring } from 'framer-motion'
 import { Tilt3DCard } from '../components/Tilt3DCard'
 import { ArrowRight, Shield, Lock, Eye, Lightbulb, Puzzle, MapPin, Calendar, CheckCircle, XCircle } from 'lucide-react'
+
+function ScrollCounter({ value, color, style = {} }: { value: string; color: string; style?: React.CSSProperties }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-60px' })
+  const numeric = parseFloat(value.replace(/[^0-9.]/g, ''))
+  const prefix = value.match(/^[^0-9]*/)?.[0] ?? ''
+  const suffix = value.match(/[^0-9.]+$/)?.[0] ?? ''
+  const mv = useMotionValue(0)
+  const spring = useSpring(mv, { stiffness: 48, damping: 16 })
+  const [display, setDisplay] = useState('0')
+  useEffect(() => {
+    if (!inView) return
+    const t = setTimeout(() => mv.set(numeric), 120)
+    return () => clearTimeout(t)
+  }, [inView, mv, numeric])
+  useEffect(() => spring.on('change', v => {
+    const n = Math.round(v)
+    setDisplay(
+      numeric % 1 !== 0 ? v.toFixed(1) :
+      numeric >= 1000 ? n.toLocaleString() :
+      n.toString()
+    )
+  }), [spring, numeric])
+  return (
+    <div ref={ref} style={{ fontFamily: 'Manrope', fontWeight: 800, color, lineHeight: 1, ...style }}>
+      {prefix}{display}{suffix}
+    </div>
+  )
+}
 
 const HERO_BG = `#f5f5f7`
 
@@ -210,7 +239,7 @@ export default function AboutPage() {
               <FadeIn key={i} delay={i * 0.08} style={{ height: '100%' }}>
                 <Tilt3DCard intensity={12} style={{ height: '100%' }}>
                   <div className="ff-clay ff-gloss-on-hover" style={{ padding: '32px 28px', height: '100%', display: 'flex', flexDirection: 'column' }}>
-                    <div style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 48, color: v.color, letterSpacing: '-2px', lineHeight: 1, marginBottom: 4 }}>{v.accent}</div>
+                    <ScrollCounter value={v.accent} color={v.color} style={{ fontSize: 48, letterSpacing: '-2px', marginBottom: 4 }} />
                     <p style={{ fontFamily: 'Lato', fontSize: 10, fontWeight: 700, color: v.color, opacity: 0.7, marginBottom: 16, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{v.accentSub}</p>
                     <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 17, color: 'var(--dark)', marginBottom: 10, letterSpacing: '-0.3px' }}>{v.title}</h3>
                     <p style={{ fontFamily: 'Lato', fontSize: 13, color: 'var(--dark-3)', lineHeight: 1.75, flex: 1 }}>{v.desc}</p>
@@ -276,35 +305,57 @@ export default function AboutPage() {
                 <span style={{ color: 'var(--emerald)' }}>Your rules.</span>
               </h2>
               <p style={{ fontFamily: 'Lato', fontSize: 17, color: 'var(--dark-2)', marginTop: 14, lineHeight: 1.7, maxWidth: 520, margin: '14px auto 0' }}>
-                Being first-timers doesn't mean cutting corners. We built the security architecture that user trust demands.
+                We built the security architecture that user trust demands.
               </p>
             </div>
           </FadeIn>
 
           <div className="ff-grid-3" style={{ gap: 24 }}>
             {[
-              { Icon: Lock,   title: '256-bit AES Encryption',  desc: 'All data encrypted at rest and in transit using bank-grade AES-256 encryption and TLS 1.3.' },
-              { Icon: Eye,    title: 'Read-Only Access',         desc: 'Plaid connection is strictly read-only. FutureFlow can never move, transfer, or modify your funds.' },
-              { Icon: Shield, title: 'SOC 2 Type II Compliant',  desc: 'Our security practices meet the highest enterprise standards through independent third-party auditing.' },
+              {
+                Icon: Lock, color: '#4353ff',
+                title: '256-bit AES Encryption',
+                desc: 'All data encrypted at rest and in transit using bank-grade AES-256 encryption and TLS 1.3.',
+                stat: 'AES-256 + TLS 1.3', badge: 'Bank-grade',
+              },
+              {
+                Icon: Eye, color: '#10b981',
+                title: 'Read-Only Access',
+                desc: 'Plaid connection is strictly read-only. FutureFlow can never view, move, transfer, or modify your funds.',
+                stat: '$0 moved — ever', badge: 'Read Only',
+              },
+              {
+                Icon: Shield, color: '#f69c20',
+                title: 'SOC 2 Type II Compliant',
+                desc: 'Our security practices meet the highest enterprise standards through independent third-party auditing.',
+                stat: 'Third-party audited', badge: 'Certified',
+              },
             ].map((s, i) => (
               <FadeIn key={i} delay={i * 0.1} style={{ height: '100%' }}>
                 <motion.div
-                  whileHover={{ scale: 1.015, y: -6 }}
-                  transition={{ duration: 0.22 }}
-                  className="ff-glass"
-                  style={{ borderRadius: 24, padding: '36px 28px', textAlign: 'center', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+                  whileHover={{ y: -8, scale: 1.015 }}
+                  transition={{ duration: 0.25 }}
+                  className="ff-clay"
+                  style={{ borderRadius: 24, padding: '36px 32px', height: '100%', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden' }}
                 >
-                  <div style={{
-                    width: 60, height: 60, borderRadius: '50%',
-                    background: 'radial-gradient(circle, rgba(16,185,129,0.18) 0%, rgba(16,185,129,0.06) 100%)',
-                    boxShadow: '0 0 24px rgba(16,185,129,0.25)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    marginBottom: 20, flexShrink: 0,
-                  }}>
-                    <s.Icon size={24} color="var(--emerald)" strokeWidth={1.8} />
+                  {/* Color top stripe */}
+                  <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 4, background: `linear-gradient(90deg, ${s.color}, ${s.color}40)` }} />
+                  {/* Corner glow */}
+                  <div style={{ position: 'absolute', top: -40, right: -40, width: 140, height: 140, borderRadius: '50%', background: `radial-gradient(circle, ${s.color}12 0%, transparent 70%)`, pointerEvents: 'none' }} />
+
+                  {/* Icon */}
+                  <div style={{ width: 56, height: 56, borderRadius: 18, background: `${s.color}12`, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 24, flexShrink: 0, boxShadow: `0 0 24px ${s.color}20` }}>
+                    <s.Icon size={26} color={s.color} strokeWidth={1.8} />
                   </div>
-                  <h3 style={{ fontFamily: 'Manrope', fontWeight: 700, fontSize: 18, color: 'var(--dark)', marginBottom: 10 }}>{s.title}</h3>
-                  <p style={{ fontFamily: 'Lato', fontSize: 15, color: 'var(--dark-2)', lineHeight: 1.7, flex: 1 }}>{s.desc}</p>
+
+                  <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 21, color: 'var(--dark)', marginBottom: 12, lineHeight: 1.2 }}>{s.title}</h3>
+                  <p style={{ fontFamily: 'Lato', fontSize: 15, color: 'var(--dark-2)', lineHeight: 1.75, flex: 1, marginBottom: 24 }}>{s.desc}</p>
+
+                  {/* Bottom row */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 18, borderTop: `1px solid ${s.color}18` }}>
+                    <span style={{ fontFamily: 'Lato', fontSize: 13, fontWeight: 700, color: s.color }}>{s.stat}</span>
+                    <span style={{ fontFamily: 'Lato', fontSize: 12, fontWeight: 700, color: s.color, background: `${s.color}12`, padding: '5px 14px', borderRadius: 50 }}>{s.badge}</span>
+                  </div>
                 </motion.div>
               </FadeIn>
             ))}
