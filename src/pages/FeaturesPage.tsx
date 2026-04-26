@@ -110,7 +110,6 @@ const rows: { name: string; values: CellVal[] }[] = [
   { name: 'AI Chatbot / Assistant',          values: [true,     false,    'partial',false,    false,    true] },
   { name: 'Customisable Categories',         values: [true,     true,     true,     true,     true,     true] },
   { name: 'Shared Goals (Couples)',          values: [true,     false,    false,    false,    false,    true] },
-  { name: 'Panic-Sell Prevention',           values: [false,    false,    false,    false,    false,    true] },
 ]
 
 function Cell({ val, isFF }: { val: CellVal; isFF: boolean }) {
