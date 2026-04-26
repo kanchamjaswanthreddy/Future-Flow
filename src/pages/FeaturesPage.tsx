@@ -81,12 +81,12 @@ type CellVal = boolean | 'partial'
 const competitors = ['Monarch Money', 'Rocket Money', 'Copilot Money', 'YNAB', 'PocketGuard', 'FutureFlow']
 const rows: { name: string; values: CellVal[] }[] = [
   // ── FutureFlow exclusives — shown first ──
-  { name: '★ Email + Plaid Sub Radar',       values: [false,    false,    false,    false,    false,    true] },
+  { name: '★ Email + Expense Radar',         values: [false,    false,    false,    false,    false,    true] },
   { name: '★ Free Trial Ending Alerts',      values: [false,    false,    false,    false,    false,    true] },
-  { name: '★ Fraud-Proof Bill Splitting',    values: [false,    false,    false,    false,    false,    true] },
+  { name: '★ Bill Splitting',                values: [false,    false,    false,    false,    false,    true] },
   { name: '★ Portfolio Health Radar',        values: [false,    false,    false,    false,    false,    true] },
   { name: '★ Autonomous Tax Engine',         values: [false,    false,    false,    false,    false,    true] },
-  { name: '★ 50-State Tax Guidance',         values: [false,    false,    false,    false,    false,    true] },
+  { name: '★ US & Canada Tax Guidance',      values: [false,    false,    false,    false,    false,    true] },
   // ── Standard features ──
   { name: 'Spending Analytics',              values: [true,     true,     true,     true,     true,     true] },
   { name: 'Auto Categorisation',             values: [true,     true,     true,     true,     true,     true] },
@@ -103,10 +103,8 @@ const rows: { name: string; values: CellVal[] }[] = [
   { name: 'Bill Negotiation',                values: [false,    true,     false,    false,    true,     false] },
   { name: 'No Ads / No Data Sales',          values: [true,     false,    true,     true,     true,     true] },
   { name: 'Free Tier Available',             values: [false,    true,     false,    false,    'partial',true] },
-  { name: 'Financial Advisor Mode',          values: [true,     false,    false,    false,    false,    false] },
+  { name: 'Financial Advisor Mode',          values: [true,     false,    false,    false,    false,    true] },
   { name: 'Real-Time Bank Sync',             values: [true,     true,     'partial',true,     true,     true] },
-  { name: 'Multi-Currency Support',          values: [false,    false,    false,    false,    false,    'partial'] },
-  { name: 'Dark Mode',                       values: [true,     true,     true,     false,    true,     true] },
   { name: 'Data Export (CSV/PDF)',            values: [true,     'partial',true,     true,     false,    true] },
   { name: 'Recurring Payment Detection',     values: [true,     true,     true,     'partial',true,     true] },
   { name: 'AI Chatbot / Assistant',          values: [true,     false,    'partial',false,    false,    true] },
