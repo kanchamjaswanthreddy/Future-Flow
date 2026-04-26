@@ -1,14 +1,27 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Mail, MessageSquare, Building2, ArrowRight, Clock, CheckCircle } from 'lucide-react'
+import { Mail, ArrowRight, Clock, CheckCircle } from 'lucide-react'
+
+const FORMSPREE_ID = 'YOUR_FORM_ID' // Replace with your Formspree form ID
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
   const [sent, setSent] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSent(true)
+    setSubmitting(true)
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(form),
+      })
+      if (res.ok) setSent(true)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const inputBase: React.CSSProperties = {
@@ -29,9 +42,7 @@ export default function ContactPage() {
   }
 
   const contacts = [
-    { Icon: Mail,         title: 'Email Support',   desc: 'For product questions, billing, or general help.',        contact: 'support@joinfutureflow.com',  color: '#4353ff' },
-    { Icon: Building2,    title: 'Press & Media',   desc: 'For journalists, researchers, and media inquiries.',       contact: 'press@futureflow.app',        color: '#10b981' },
-    { Icon: MessageSquare,title: 'Partnerships',    desc: 'For business, API, and integration partnerships.',         contact: 'partnerships@futureflow.app', color: '#f69c20' },
+    { Icon: Mail, title: 'Email Us', desc: 'For product questions, billing, partnerships, or general help.', contact: 'help@joinfutureflow.com', color: '#4353ff' },
   ]
 
   const responseTimes = [
@@ -201,8 +212,8 @@ export default function ContactPage() {
                   />
                 </div>
 
-                <button type="submit" className="btn-dark" style={{ justifyContent: 'center', marginTop: 4 }}>
-                  Send Message <ArrowRight size={18} />
+                <button type="submit" disabled={submitting} className="btn-dark" style={{ justifyContent: 'center', marginTop: 4, opacity: submitting ? 0.7 : 1 }}>
+                  {submitting ? 'Sending…' : <> Send Message <ArrowRight size={18} /> </>}
                 </button>
               </form>
             )}

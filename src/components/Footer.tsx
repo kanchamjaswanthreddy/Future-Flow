@@ -122,7 +122,7 @@ export default function Footer() {
             <p style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 22, letterSpacing: '-0.5px', color: 'var(--white)', marginBottom: 6 }}>
               Be first in the door.
             </p>
-            <p style={{ fontFamily: 'Lato', fontSize: 14, color: 'rgba(255,255,255,0.4)', lineHeight: 1.6 }}>
+            <p style={{ fontFamily: 'Lato', fontSize: 15, color: 'rgba(255,255,255,0.55)', lineHeight: 1.6 }}>
               Join our waitlist and get early access when we launch in 2026.
             </p>
           </div>
@@ -152,8 +152,8 @@ export default function Footer() {
             </Link>
 
             <p style={{
-              fontFamily: 'Lato', fontSize: 14, color: 'rgba(255,255,255,0.42)',
-              lineHeight: 1.8, marginBottom: 28, maxWidth: 260,
+              fontFamily: 'Lato', fontWeight: 600, fontSize: 15, color: 'rgba(255,255,255,0.75)',
+              lineHeight: 1.85, marginBottom: 28, maxWidth: 260,
             }}>
               The intelligent personal finance platform that unifies your spending, saving, debt payoff, and wealth building — all in one place.
             </p>
@@ -192,8 +192,8 @@ export default function Footer() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
               {trust.map(({ Icon, text }, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
-                  <Icon size={12} color="rgba(255,255,255,0.25)" strokeWidth={2} />
-                  <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.25)', letterSpacing: '0.01em' }}>
+                  <Icon size={14} color="rgba(255,255,255,0.6)" strokeWidth={2} />
+                  <span style={{ fontFamily: 'Lato', fontWeight: 600, fontSize: 14, color: 'rgba(255,255,255,0.6)', letterSpacing: '0.01em' }}>
                     {text}
                   </span>
                 </div>
@@ -207,8 +207,8 @@ export default function Footer() {
               {cols.map(col => (
                 <div key={col.heading}>
                   <p style={{
-                    fontFamily: 'Manrope', fontWeight: 700, fontSize: 11,
-                    color: 'rgba(255,255,255,0.55)', textTransform: 'uppercase',
+                    fontFamily: 'Manrope', fontWeight: 800, fontSize: 13,
+                    color: 'rgba(255,255,255,0.85)', textTransform: 'uppercase',
                     letterSpacing: '0.1em', marginBottom: 22,
                   }}>
                     {col.heading}
@@ -216,7 +216,7 @@ export default function Footer() {
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                     {col.links.map(l => (
                       <Link key={l.label} to={l.to} style={{
-                        fontFamily: 'Lato', fontSize: 14, color: 'rgba(255,255,255,0.42)',
+                        fontFamily: 'Lato', fontWeight: 600, fontSize: 15, color: 'rgba(255,255,255,0.7)',
                         textDecoration: 'none', transition: 'color 0.2s',
                       }}
                         onMouseEnter={e => (e.currentTarget.style.color = 'var(--white)')}
@@ -243,7 +243,7 @@ export default function Footer() {
 
         {/* ── Bottom bar ── */}
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 16, marginBottom: 18 }}>
-          <p style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(255,255,255,0.28)' }}>
+          <p style={{ fontFamily: 'Lato', fontWeight: 600, fontSize: 14, color: 'rgba(255,255,255,0.6)' }}>
             © {new Date().getFullYear()} FutureFlow, Inc. All rights reserved.
           </p>
           <div style={{ display: 'flex', gap: 28, flexWrap: 'wrap', alignItems: 'center' }}>
@@ -251,20 +251,20 @@ export default function Footer() {
               { label: 'Privacy', to: '/privacy' },
               { label: 'Terms',   to: '/terms' },
             ].map(({ label, to }) => (
-              <Link key={label} to={to} style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(255,255,255,0.28)', textDecoration: 'none', transition: 'color 0.2s' }}
-                onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.65)')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.28)')}
+              <Link key={label} to={to} style={{ fontFamily: 'Lato', fontWeight: 600, fontSize: 14, color: 'rgba(255,255,255,0.6)', textDecoration: 'none', transition: 'color 0.2s' }}
+                onMouseEnter={e => (e.currentTarget.style.color = 'var(--white)')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.6)')}
               >{label}</Link>
             ))}
-            <a href="mailto:hello@futureflow.app" style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(255,255,255,0.28)', textDecoration: 'none', transition: 'color 0.2s' }}
-              onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.65)')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.28)')}
-            >hello@futureflow.app</a>
+            <a href="mailto:help@joinfutureflow.com" style={{ fontFamily: 'Lato', fontWeight: 600, fontSize: 14, color: 'rgba(255,255,255,0.6)', textDecoration: 'none', transition: 'color 0.2s' }}
+              onMouseEnter={e => (e.currentTarget.style.color = 'var(--white)')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.6)')}
+            >help@joinfutureflow.com</a>
           </div>
         </div>
 
         {/* ── Disclaimer ── */}
-        <p style={{ fontFamily: 'Lato', fontSize: 11, color: 'rgba(255,255,255,0.18)', lineHeight: 1.75 }}>
+        <p style={{ fontFamily: 'Lato', fontWeight: 500, fontSize: 13, color: 'rgba(255,255,255,0.48)', lineHeight: 1.8 }}>
           FutureFlow is not a bank. Information on this platform is for informational purposes only and should not be construed as financial advice. Banking services, where applicable, will be provided by FDIC-insured partner institutions.
         </p>
 
