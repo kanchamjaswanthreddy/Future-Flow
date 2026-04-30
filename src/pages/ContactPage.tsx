@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import SEO from '../components/SEO'
 import { Mail, ArrowRight, Clock, CheckCircle } from 'lucide-react'
 
 const FORMSPREE_ID = 'YOUR_FORM_ID' // Replace with your Formspree form ID
@@ -53,6 +54,11 @@ export default function ContactPage() {
 
   return (
     <div style={{ paddingTop: 72 }}>
+      <SEO
+        title="Contact — Get in Touch with FutureFlow"
+        description="Have a question about FutureFlow? Send us a message and we'll get back to you within 24 hours. We're here to help with anything — product, partnerships, or press."
+        canonical="/contact"
+      />
 
       {/* ── Hero — dark with emerald accent ── */}
       <section className="ff-page-hero" style={{ background: 'var(--surface)', padding: '80px 24px 64px', position: 'relative', overflow: 'hidden' }}>

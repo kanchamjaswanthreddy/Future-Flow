@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
+import SEO from '../components/SEO'
 import { motion, useInView } from 'framer-motion'
 import { ArrowRight, Check, Star, Zap, Shield } from 'lucide-react'
 
@@ -105,6 +106,11 @@ const faqs = [
 export default function PricingPage() {
   return (
     <div>
+      <SEO
+        title="Pricing — Free, Pro & Household Plans"
+        description="Start free or upgrade to Pro at $9.99/month. All plans include AI budgeting, subscription management, debt payoff planner, and net worth tracking. 30-day free trial on Pro and Household."
+        canonical="/pricing"
+      />
 
       {/* ── HERO ── */}
       <section style={{

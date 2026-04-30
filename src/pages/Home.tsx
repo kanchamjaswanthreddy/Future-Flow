@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import SEO from '../components/SEO'
 import { motion, useInView, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
 import { useIsMobile } from '../hooks/useIsMobile'
 import {
@@ -573,6 +574,11 @@ export default function Home() {
 
   return (
     <div>
+      <SEO
+        title="FutureFlow — AI-Powered Personal Finance App"
+        description="FutureFlow unifies your banks, predicts cash flow, cancels subscriptions, and files your taxes — all automated. Join the waitlist for smarter personal finance."
+        canonical="/"
+      />
 
       {/* ── HERO ── */}
       <section style={{ background: HERO_BG, minHeight: '100vh', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>

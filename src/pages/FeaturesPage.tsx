@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import SEO from '../components/SEO'
 import { motion, useInView, AnimatePresence, useMotionValue, useSpring } from 'framer-motion'
 import {
   ArrowRight, Check, X, Minus, AlertTriangle,
@@ -766,6 +767,11 @@ function FeatureDrumScene() {
 export default function FeaturesPage() {
   return (
     <div>
+      <SEO
+        title="Features — AI Budgeting, Tax Engine, Subscription Radar & More"
+        description="Explore FutureFlow's full feature set: AI budgeting engine, Subscription Radar, Debt Payoff Planner, autonomous Tax Engine, Bill Negotiation AI, and real-time net worth tracking."
+        canonical="/features"
+      />
 
       {/* ── HERO + SIX PILLARS — unified gradient background ── */}
       <div style={{

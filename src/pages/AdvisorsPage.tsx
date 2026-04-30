@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import SEO from '../components/SEO'
 import { Phone, Mail } from 'lucide-react'
 
 function FadeIn({ children, delay = 0, style = {} }: { children: React.ReactNode; delay?: number; style?: React.CSSProperties }) {
@@ -36,6 +37,11 @@ const advisors = [
 export default function AdvisorsPage() {
   return (
     <div style={{ paddingTop: 72 }}>
+      <SEO
+        title="Advisors — Meet the FutureFlow Advisory Team"
+        description="Meet the financial and technology experts advising FutureFlow on its mission to build the world's most complete personal finance platform."
+        canonical="/advisors"
+      />
 
       {/* ── Hero ── */}
       <section style={{ background: 'var(--surface)', padding: '80px 24px 64px', position: 'relative', overflow: 'hidden' }}>

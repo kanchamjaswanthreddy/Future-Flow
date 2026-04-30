@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import SEO from '../components/SEO'
 import { motion, useInView } from 'framer-motion'
 import { ArrowRight, TrendingUp } from 'lucide-react'
 
@@ -88,6 +89,11 @@ export default function BlogPage() {
   const filteredPosts = activeCategory === 'All' ? posts : posts.filter(p => p.tag === activeCategory)
   return (
     <div style={{ paddingTop: 72 }}>
+      <SEO
+        title="Blog — Personal Finance Tips, Guides & Insights"
+        description="Smart personal finance articles from FutureFlow: debt payoff strategies, hidden subscription audits, tax deductions for freelancers, investing basics, and credit score guides."
+        canonical="/blog"
+      />
 
       {/* ── Hero — dark with emerald accent ── */}
       <section className="ff-page-hero" style={{ background: 'var(--surface)', padding: '80px 24px 60px', position: 'relative', overflow: 'hidden' }}>

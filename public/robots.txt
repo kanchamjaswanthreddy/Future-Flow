@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Block legal pages from indexing (noindex also set in page meta)
+Disallow: /terms
+Disallow: /privacy
+
+Sitemap: https://futureflow.app/sitemap.xml

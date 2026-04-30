@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import SEO from '../components/SEO'
 import { motion, useInView, useMotionValue, useSpring } from 'framer-motion'
 import { Tilt3DCard } from '../components/Tilt3DCard'
 import { ArrowRight, Lightbulb, Puzzle, MapPin, Calendar, CheckCircle, XCircle } from 'lucide-react'
@@ -78,6 +79,11 @@ const timeline = [
 export default function AboutPage() {
   return (
     <div>
+      <SEO
+        title="About FutureFlow — Our Mission, Story & Values"
+        description="FutureFlow was built in Boston to replace the fragmented mess of personal finance apps. Privacy-first, radically transparent, and built for everyone — here's our story."
+        canonical="/about"
+      />
 
       {/* ── Hero ── */}
       <section style={{ position: 'relative', background: HERO_BG, padding: 'calc(var(--sp) + 72px) 0 80px', overflow: 'hidden' }}>

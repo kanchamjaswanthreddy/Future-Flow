@@ -1,5 +1,7 @@
 import { useRef } from 'react'
 import { useParams, Link, Navigate } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
+import SEO from '../components/SEO'
 import { motion, useInView } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Calendar, Clock, Tag } from 'lucide-react'
 
@@ -328,8 +330,34 @@ export default function BlogPostPage() {
 
   const related = posts.filter(p => p.slug !== slug).slice(0, 3)
 
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt,
+    author: { '@type': 'Organization', name: post.author },
+    publisher: {
+      '@type': 'Organization',
+      name: 'FutureFlow',
+      logo: { '@type': 'ImageObject', url: 'https://futureflow.app/logo.jpeg' },
+    },
+    datePublished: post.date,
+    url: `https://futureflow.app/blog/${post.slug}`,
+    articleSection: post.tag,
+  }
+
   return (
     <div style={{ paddingTop: 72 }}>
+      <SEO
+        title={post.title}
+        description={post.excerpt}
+        canonical={`/blog/${post.slug}`}
+        ogType="article"
+        article={{ publishedTime: post.date, author: post.author, tag: post.tag }}
+      />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(articleJsonLd)}</script>
+      </Helmet>
 
       {/* Hero */}
       <section className="ff-page-hero" style={{ background: 'var(--dark)', padding: '80px 0 64px' }}>

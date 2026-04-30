@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import SEO from '../components/SEO'
 import { CheckCircle2 } from 'lucide-react'
 
 const EFFECTIVE_DATE = 'April 1, 2026'
@@ -10,6 +11,12 @@ const ADDRESS = '548 Market Street, Suite 12100, San Francisco, CA 94104'
 export default function PrivacyPage() {
   return (
     <div style={{ paddingTop: 72 }}>
+      <SEO
+        title="Privacy Policy — FutureFlow"
+        description="FutureFlow never sells your data. Learn how we protect your financial information with bank-grade 256-bit AES encryption and read-only Plaid connections."
+        canonical="/privacy"
+        noindex={true}
+      />
 
       {/* Header */}
       <section className="ff-page-hero" style={{ background: 'var(--dark)', padding: '80px 24px 60px' }}>
