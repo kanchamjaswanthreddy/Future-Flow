@@ -1,0 +1,107 @@
+# FutureFlow
+
+> FutureFlow is an AI-powered personal finance platform that unifies bank accounts, predicts cash flow, automates subscription management, cancels unwanted subscriptions, and files taxes — all in one app. Pre-launch, waitlist open. Boston-based startup launching in 2026.
+
+## Overview
+
+FutureFlow replaces the fragmented mess of multiple finance apps (Mint, YNAB, TurboTax, Rocket Money, etc.) with a single AI-powered platform that does everything automatically. The mission is to make financial wellness radically accessible.
+
+- **Website:** https://futureflow.app
+- **Contact:** help@joinfutureflow.com
+- **Status:** Pre-launch — accepting waitlist signups for 2026 launch
+- **Founded:** Boston, MA
+- **Privacy:** 100% ad-free, never sells user data, 256-bit AES encryption, read-only Plaid connections
+
+---
+
+## Core Features (The 6 Pillars)
+
+### Pillar 1 — Connect Everything
+Connects 12,000+ banks, brokerages, and email accounts via Plaid. Real-time unified dashboard with zero manual setup.
+
+### Pillar 2 — Predict Problems
+AI forecasts cash flow 30 days ahead, flags risks before they happen, and spots hidden savings automatically.
+
+### Pillar 3 — Act Automatically
+Cancels subscriptions, executes savings transfers, files taxes — 100% automated with no effort required from the user.
+
+### Pillar 4 — Subscription Radar (Exclusive)
+Detects every subscription via Plaid + email scanning. Alerts before charges hit. One-tap AI cancellation — no phone calls required. Finds an average $312/month in hidden subscriptions.
+
+### Pillar 5 — AI Tax Engine (Exclusive)
+Autonomous tax harvesting and filing across all 50 US states. Also covers Canada. Proactive anomaly detection.
+
+### Pillar 6 — Portfolio & Bill Splitting (Exclusive)
+Portfolio Health Radar links investments to real cash flow. Fraud-proof Bill Splitting uses real bank transactions rather than estimates.
+
+---
+
+## Pricing
+
+### Free Plan — $0/month
+No credit card required. No commitment.
+Includes: Spending analytics, auto categorisation, up to 2 connected accounts, monthly budget overview, basic savings goals, email support.
+
+### Pro Plan — $9.99/month (Most Popular)
+30-day free trial. No charge until trial ends.
+Includes everything in Free, plus: Email + Expense Radar, free trial ending alerts, portfolio health radar, bill splitting, autonomous tax engine, US & Canada tax guidance, unlimited connected accounts, AI subscription manager, debt payoff planner, cash flow forecasting, bill & due date alerts, credit score monitor, net worth tracker, investment tracking, priority support.
+
+Average Pro user saves over $1,200/year. At $9.99/month, FutureFlow pays for itself many times over.
+
+### Household Plan — $14.99/month
+30-day free trial. Same as Pro — built for two users.
+Includes everything in Pro, plus: 2-user family access, shared goals and insights as a family.
+
+---
+
+## Comparison vs. Competitors
+
+FutureFlow is the only personal finance platform with all of: Email + Expense Radar, Free Trial Ending Alerts, Fraud-proof Bill Splitting, Portfolio Health Radar, Autonomous Tax Engine, US & Canada Tax Guidance, and a free tier — in one app.
+
+Competitors compared: Monarch Money, Rocket Money, Copilot Money, YNAB, PocketGuard.
+
+---
+
+## Pages
+
+- [Home](https://futureflow.app/): Platform overview, key features, waitlist signup
+- [Features](https://futureflow.app/features): Full 6-pillar feature breakdown, competitor comparison table
+- [Pricing](https://futureflow.app/pricing): Free, Pro ($9.99/mo), Household ($14.99/mo) plans with FAQ
+- [About](https://futureflow.app/about): Company story, mission, values, origin in Boston
+- [Advisors](https://futureflow.app/advisors): Advisory board of financial and technology experts
+- [Blog](https://futureflow.app/blog): Personal finance articles, guides, and data-backed insights
+- [Contact](https://futureflow.app/contact): Contact form, support email help@joinfutureflow.com
+
+---
+
+## Blog Posts
+
+- [The $9,400 Problem](https://futureflow.app/blog/the-9400-problem): The average American loses $9,400/year to hidden subscriptions and financial inefficiencies — and doesn't know it.
+- [Avalanche vs. Snowball: Which Debt Payoff Method Saves You More?](https://futureflow.app/blog/avalanche-vs-snowball): Analysis of 50,000 real debt payoff plans. The results might surprise you.
+- [12 Subscriptions You're Probably Paying For Right Now (And Don't Know It)](https://futureflow.app/blog/12-subscriptions): The average American pays for 3.4 subscriptions they haven't used in over 6 months. Here are the most common ones.
+- [The 11 Most Missed Tax Deductions for Freelancers and Remote Workers](https://futureflow.app/blog/11-tax-deductions): If you work from home or freelance, you're likely leaving hundreds — maybe thousands — on the table.
+- [The 50/30/20 Rule Is Dead. Here's What Actually Works in 2026.](https://futureflow.app/blog/50-30-20-rule-dead): Rigid percentage-based budgets break down fast. Here's a modern, flexible system our data shows actually works.
+- [How to Start Investing With $100: A No-Hype Beginner's Guide](https://futureflow.app/blog/investing-with-100): You don't need thousands to start building wealth. A realistic, actionable plan for total beginners.
+- [Why Your Credit Score Went Down (Even If You Did Nothing Wrong)](https://futureflow.app/blog/credit-score-went-down): The 7 most common causes of credit score drops and exactly how to fix each one.
+
+---
+
+## Frequently Asked Questions
+
+**Is my financial data safe?**
+Yes. FutureFlow uses 256-bit AES encryption and connects to your accounts via Plaid — a bank-grade, read-only connection. We never store your banking credentials.
+
+**Can I cancel anytime?**
+Absolutely. Cancel at any time from your account settings with no cancellation fees. You keep access until the end of your billing period.
+
+**How does the 30-day free trial work?**
+Pro and Household plans include a 30-day free trial. No charge until the trial ends, and you can cancel before then with zero fees.
+
+**How does bill negotiation work?**
+Our AI calls your service providers and negotiates lower rates. We only charge a success fee — 40% of first-year savings — if we actually succeed.
+
+**Does FutureFlow sell my data?**
+Never. We are 100% ad-free and never sell user data to third parties. Our revenue comes from subscriptions only.
+
+**When does FutureFlow launch?**
+We are accepting waitlist signups now and plan to launch publicly in 2026. Join the waitlist for early access and a free extended trial.

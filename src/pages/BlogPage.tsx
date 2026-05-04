@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import SEO from '../components/SEO'
 import { motion, useInView } from 'framer-motion'
 import { ArrowRight, TrendingUp } from 'lucide-react'
@@ -94,6 +95,31 @@ export default function BlogPage() {
         description="Smart personal finance articles from FutureFlow: debt payoff strategies, hidden subscription audits, tax deductions for freelancers, investing basics, and credit score guides."
         canonical="/blog"
       />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Blog",
+          "name": "FutureFlow Blog",
+          "url": "https://futureflow.app/blog",
+          "description": "Personal finance tips, guides, and insights from FutureFlow — debt payoff, budgeting, subscriptions, investing, taxes, and credit.",
+          "publisher": {
+            "@type": "Organization",
+            "@id": "https://futureflow.app/#organization"
+          },
+          "blogPost": posts.map(post => ({
+            "@type": "BlogPosting",
+            "headline": post.title,
+            "description": post.excerpt,
+            "url": `https://futureflow.app/blog/${post.slug}`,
+            "datePublished": post.date,
+            "author": {
+              "@type": "Organization",
+              "name": "FutureFlow"
+            },
+            "keywords": post.tag
+          }))
+        })}</script>
+      </Helmet>
 
       {/* ── Hero — dark with emerald accent ── */}
       <section className="ff-page-hero" style={{ background: 'var(--surface)', padding: '80px 24px 60px', position: 'relative', overflow: 'hidden' }}>

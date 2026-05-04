@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import SEO from '../components/SEO'
 import { motion, useInView, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
 import { useIsMobile } from '../hooks/useIsMobile'
@@ -579,6 +580,46 @@ export default function Home() {
         description="FutureFlow unifies your banks, predicts cash flow, cancels subscriptions, and files your taxes — all automated. Join the waitlist for smarter personal finance."
         canonical="/"
       />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "FutureFlow",
+          "url": "https://futureflow.app",
+          "applicationCategory": "FinanceApplication",
+          "operatingSystem": "Web, iOS, Android",
+          "description": "FutureFlow is an AI-powered personal finance platform that unifies bank accounts, predicts cash flow, automates subscription management, cancels unwanted subscriptions, and files taxes — all in one app.",
+          "offers": [
+            {
+              "@type": "Offer",
+              "name": "Free Plan",
+              "price": "0",
+              "priceCurrency": "USD",
+              "description": "Essential tools to get started. No credit card. No commitment."
+            },
+            {
+              "@type": "Offer",
+              "name": "Pro Plan",
+              "price": "9.99",
+              "priceCurrency": "USD",
+              "billingIncrement": "P1M",
+              "description": "The complete FutureFlow experience — AI budgeting, autonomous tax engine, subscription radar, and more."
+            },
+            {
+              "@type": "Offer",
+              "name": "Household Plan",
+              "price": "14.99",
+              "priceCurrency": "USD",
+              "billingIncrement": "P1M",
+              "description": "Same as Pro — built for two. Share access, goals, and insights as a family."
+            }
+          ],
+          "publisher": {
+            "@type": "Organization",
+            "@id": "https://futureflow.app/#organization"
+          }
+        })}</script>
+      </Helmet>
 
       {/* ── HERO ── */}
       <section style={{ background: HERO_BG, minHeight: '100vh', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>

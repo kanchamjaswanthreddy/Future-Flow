@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { Helmet } from 'react-helmet-async'
 import SEO from '../components/SEO'
 import { Mail, ArrowRight, Clock, CheckCircle } from 'lucide-react'
 
@@ -59,6 +60,22 @@ export default function ContactPage() {
         description="Have a question about FutureFlow? Send us a message and we'll get back to you within 24 hours. We're here to help with anything — product, partnerships, or press."
         canonical="/contact"
       />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ContactPage",
+          "name": "Contact FutureFlow",
+          "url": "https://futureflow.app/contact",
+          "description": "Get in touch with the FutureFlow team for product questions, partnerships, or press inquiries.",
+          "publisher": {
+            "@type": "Organization",
+            "@id": "https://futureflow.app/#organization",
+            "name": "FutureFlow",
+            "email": "help@joinfutureflow.com",
+            "url": "https://futureflow.app"
+          }
+        })}</script>
+      </Helmet>
 
       {/* ── Hero — dark with emerald accent ── */}
       <section className="ff-page-hero" style={{ background: 'var(--surface)', padding: '80px 24px 64px', position: 'relative', overflow: 'hidden' }}>

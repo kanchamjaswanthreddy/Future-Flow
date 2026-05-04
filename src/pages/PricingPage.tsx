@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import SEO from '../components/SEO'
 import { motion, useInView } from 'framer-motion'
 import { ArrowRight, Check, Star, Zap, Shield } from 'lucide-react'
@@ -111,6 +112,60 @@ export default function PricingPage() {
         description="Start free or upgrade to Pro at $9.99/month. All plans include AI budgeting, subscription management, debt payoff planner, and net worth tracking. 30-day free trial on Pro and Household."
         canonical="/pricing"
       />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "name": "FutureFlow",
+          "url": "https://futureflow.app",
+          "description": "AI-powered personal finance platform — budgeting, subscription management, tax filing, and cash flow forecasting.",
+          "brand": {
+            "@type": "Brand",
+            "name": "FutureFlow"
+          },
+          "offers": [
+            {
+              "@type": "Offer",
+              "name": "Free Plan",
+              "price": "0",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/InStock",
+              "url": "https://futureflow.app/pricing",
+              "description": "Essential tools to get started. No credit card required."
+            },
+            {
+              "@type": "Offer",
+              "name": "Pro Plan",
+              "price": "9.99",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/PreOrder",
+              "url": "https://futureflow.app/pricing",
+              "description": "The complete FutureFlow experience with 30-day free trial."
+            },
+            {
+              "@type": "Offer",
+              "name": "Household Plan",
+              "price": "14.99",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/PreOrder",
+              "url": "https://futureflow.app/pricing",
+              "description": "Pro features for two users — share access, goals, and insights."
+            }
+          ]
+        })}</script>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": faqs.map(faq => ({
+            "@type": "Question",
+            "name": faq.q,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": faq.a
+            }
+          }))
+        })}</script>
+      </Helmet>
 
       {/* ── HERO ── */}
       <section style={{

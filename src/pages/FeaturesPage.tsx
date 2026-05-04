@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import SEO from '../components/SEO'
 import { motion, useInView, AnimatePresence, useMotionValue, useSpring } from 'framer-motion'
 import {
@@ -772,6 +773,22 @@ export default function FeaturesPage() {
         description="Explore FutureFlow's full feature set: AI budgeting engine, Subscription Radar, Debt Payoff Planner, autonomous Tax Engine, Bill Negotiation AI, and real-time net worth tracking."
         canonical="/features"
       />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          "name": "FutureFlow Features",
+          "description": "The six core pillars of FutureFlow — AI-powered personal finance tools.",
+          "url": "https://futureflow.app/features",
+          "itemListElement": bento.map((pillar, index) => ({
+            "@type": "ListItem",
+            "position": index + 1,
+            "name": pillar.title,
+            "description": pillar.desc,
+            "url": `https://futureflow.app/features#${pillar.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`
+          }))
+        })}</script>
+      </Helmet>
 
       {/* ── HERO + SIX PILLARS — unified gradient background ── */}
       <div style={{

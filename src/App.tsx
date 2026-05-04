@@ -19,7 +19,7 @@ function ScrollToTop() {
   return null
 }
 
-function Layout() {
+export function Layout() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Navbar />
