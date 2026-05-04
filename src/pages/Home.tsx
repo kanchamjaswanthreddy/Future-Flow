@@ -585,7 +585,7 @@ export default function Home() {
           "@context": "https://schema.org",
           "@type": "SoftwareApplication",
           "name": "FutureFlow",
-          "url": "https://futureflow.app",
+          "url": "https://www.joinfutureflow.com",
           "applicationCategory": "FinanceApplication",
           "operatingSystem": "Web, iOS, Android",
           "description": "FutureFlow is an AI-powered personal finance platform that unifies bank accounts, predicts cash flow, automates subscription management, cancels unwanted subscriptions, and files taxes — all in one app.",
@@ -616,7 +616,7 @@ export default function Home() {
           ],
           "publisher": {
             "@type": "Organization",
-            "@id": "https://futureflow.app/#organization"
+            "@id": "https://www.joinfutureflow.com/#organization"
           }
         })}</script>
       </Helmet>

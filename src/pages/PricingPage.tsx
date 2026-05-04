@@ -117,7 +117,7 @@ export default function PricingPage() {
           "@context": "https://schema.org",
           "@type": "Product",
           "name": "FutureFlow",
-          "url": "https://futureflow.app",
+          "url": "https://www.joinfutureflow.com",
           "description": "AI-powered personal finance platform — budgeting, subscription management, tax filing, and cash flow forecasting.",
           "brand": {
             "@type": "Brand",
@@ -130,7 +130,7 @@ export default function PricingPage() {
               "price": "0",
               "priceCurrency": "USD",
               "availability": "https://schema.org/InStock",
-              "url": "https://futureflow.app/pricing",
+              "url": "https://www.joinfutureflow.com/pricing",
               "description": "Essential tools to get started. No credit card required."
             },
             {
@@ -139,7 +139,7 @@ export default function PricingPage() {
               "price": "9.99",
               "priceCurrency": "USD",
               "availability": "https://schema.org/PreOrder",
-              "url": "https://futureflow.app/pricing",
+              "url": "https://www.joinfutureflow.com/pricing",
               "description": "The complete FutureFlow experience with 30-day free trial."
             },
             {
@@ -148,7 +148,7 @@ export default function PricingPage() {
               "price": "14.99",
               "priceCurrency": "USD",
               "availability": "https://schema.org/PreOrder",
-              "url": "https://futureflow.app/pricing",
+              "url": "https://www.joinfutureflow.com/pricing",
               "description": "Pro features for two users — share access, goals, and insights."
             }
           ]

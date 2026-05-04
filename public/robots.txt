@@ -5,4 +5,4 @@ Allow: /
 Disallow: /terms
 Disallow: /privacy
 
-Sitemap: https://futureflow.app/sitemap.xml
+Sitemap: https://www.joinfutureflow.com/sitemap.xml

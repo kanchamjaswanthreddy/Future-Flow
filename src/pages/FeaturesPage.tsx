@@ -779,13 +779,13 @@ export default function FeaturesPage() {
           "@type": "ItemList",
           "name": "FutureFlow Features",
           "description": "The six core pillars of FutureFlow — AI-powered personal finance tools.",
-          "url": "https://futureflow.app/features",
+          "url": "https://www.joinfutureflow.com/features",
           "itemListElement": bento.map((pillar, index) => ({
             "@type": "ListItem",
             "position": index + 1,
             "name": pillar.title,
             "description": pillar.desc,
-            "url": `https://futureflow.app/features#${pillar.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`
+            "url": `https://www.joinfutureflow.com/features#${pillar.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`
           }))
         })}</script>
       </Helmet>

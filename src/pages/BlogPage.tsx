@@ -100,17 +100,17 @@ export default function BlogPage() {
           "@context": "https://schema.org",
           "@type": "Blog",
           "name": "FutureFlow Blog",
-          "url": "https://futureflow.app/blog",
+          "url": "https://www.joinfutureflow.com/blog",
           "description": "Personal finance tips, guides, and insights from FutureFlow — debt payoff, budgeting, subscriptions, investing, taxes, and credit.",
           "publisher": {
             "@type": "Organization",
-            "@id": "https://futureflow.app/#organization"
+            "@id": "https://www.joinfutureflow.com/#organization"
           },
           "blogPost": posts.map(post => ({
             "@type": "BlogPosting",
             "headline": post.title,
             "description": post.excerpt,
-            "url": `https://futureflow.app/blog/${post.slug}`,
+            "url": `https://www.joinfutureflow.com/blog/${post.slug}`,
             "datePublished": post.date,
             "author": {
               "@type": "Organization",

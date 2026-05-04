@@ -339,10 +339,10 @@ export default function BlogPostPage() {
     publisher: {
       '@type': 'Organization',
       name: 'FutureFlow',
-      logo: { '@type': 'ImageObject', url: 'https://futureflow.app/logo.jpeg' },
+      logo: { '@type': 'ImageObject', url: 'https://www.joinfutureflow.com/logo.jpeg' },
     },
     datePublished: post.date,
-    url: `https://futureflow.app/blog/${post.slug}`,
+    url: `https://www.joinfutureflow.com/blog/${post.slug}`,
     articleSection: post.tag,
   }
 

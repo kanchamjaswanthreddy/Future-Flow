@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async'
 
-const SITE_URL = 'https://futureflow.app'
+const SITE_URL = 'https://www.joinfutureflow.com'
 const DEFAULT_OG_IMAGE = `${SITE_URL}/logo.jpeg`
 const SITE_NAME = 'FutureFlow'
 

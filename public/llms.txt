@@ -6,7 +6,7 @@
 
 FutureFlow replaces the fragmented mess of multiple finance apps (Mint, YNAB, TurboTax, Rocket Money, etc.) with a single AI-powered platform that does everything automatically. The mission is to make financial wellness radically accessible.
 
-- **Website:** https://futureflow.app
+- **Website:** https://www.joinfutureflow.com
 - **Contact:** help@joinfutureflow.com
 - **Status:** Pre-launch — accepting waitlist signups for 2026 launch
 - **Founded:** Boston, MA
@@ -64,25 +64,25 @@ Competitors compared: Monarch Money, Rocket Money, Copilot Money, YNAB, PocketGu
 
 ## Pages
 
-- [Home](https://futureflow.app/): Platform overview, key features, waitlist signup
-- [Features](https://futureflow.app/features): Full 6-pillar feature breakdown, competitor comparison table
-- [Pricing](https://futureflow.app/pricing): Free, Pro ($9.99/mo), Household ($14.99/mo) plans with FAQ
-- [About](https://futureflow.app/about): Company story, mission, values, origin in Boston
-- [Advisors](https://futureflow.app/advisors): Advisory board of financial and technology experts
-- [Blog](https://futureflow.app/blog): Personal finance articles, guides, and data-backed insights
-- [Contact](https://futureflow.app/contact): Contact form, support email help@joinfutureflow.com
+- [Home](https://www.joinfutureflow.com/): Platform overview, key features, waitlist signup
+- [Features](https://www.joinfutureflow.com/features): Full 6-pillar feature breakdown, competitor comparison table
+- [Pricing](https://www.joinfutureflow.com/pricing): Free, Pro ($9.99/mo), Household ($14.99/mo) plans with FAQ
+- [About](https://www.joinfutureflow.com/about): Company story, mission, values, origin in Boston
+- [Advisors](https://www.joinfutureflow.com/advisors): Advisory board of financial and technology experts
+- [Blog](https://www.joinfutureflow.com/blog): Personal finance articles, guides, and data-backed insights
+- [Contact](https://www.joinfutureflow.com/contact): Contact form, support email help@joinfutureflow.com
 
 ---
 
 ## Blog Posts
 
-- [The $9,400 Problem](https://futureflow.app/blog/the-9400-problem): The average American loses $9,400/year to hidden subscriptions and financial inefficiencies — and doesn't know it.
-- [Avalanche vs. Snowball: Which Debt Payoff Method Saves You More?](https://futureflow.app/blog/avalanche-vs-snowball): Analysis of 50,000 real debt payoff plans. The results might surprise you.
-- [12 Subscriptions You're Probably Paying For Right Now (And Don't Know It)](https://futureflow.app/blog/12-subscriptions): The average American pays for 3.4 subscriptions they haven't used in over 6 months. Here are the most common ones.
-- [The 11 Most Missed Tax Deductions for Freelancers and Remote Workers](https://futureflow.app/blog/11-tax-deductions): If you work from home or freelance, you're likely leaving hundreds — maybe thousands — on the table.
-- [The 50/30/20 Rule Is Dead. Here's What Actually Works in 2026.](https://futureflow.app/blog/50-30-20-rule-dead): Rigid percentage-based budgets break down fast. Here's a modern, flexible system our data shows actually works.
-- [How to Start Investing With $100: A No-Hype Beginner's Guide](https://futureflow.app/blog/investing-with-100): You don't need thousands to start building wealth. A realistic, actionable plan for total beginners.
-- [Why Your Credit Score Went Down (Even If You Did Nothing Wrong)](https://futureflow.app/blog/credit-score-went-down): The 7 most common causes of credit score drops and exactly how to fix each one.
+- [The $9,400 Problem](https://www.joinfutureflow.com/blog/the-9400-problem): The average American loses $9,400/year to hidden subscriptions and financial inefficiencies — and doesn't know it.
+- [Avalanche vs. Snowball: Which Debt Payoff Method Saves You More?](https://www.joinfutureflow.com/blog/avalanche-vs-snowball): Analysis of 50,000 real debt payoff plans. The results might surprise you.
+- [12 Subscriptions You're Probably Paying For Right Now (And Don't Know It)](https://www.joinfutureflow.com/blog/12-subscriptions): The average American pays for 3.4 subscriptions they haven't used in over 6 months. Here are the most common ones.
+- [The 11 Most Missed Tax Deductions for Freelancers and Remote Workers](https://www.joinfutureflow.com/blog/11-tax-deductions): If you work from home or freelance, you're likely leaving hundreds — maybe thousands — on the table.
+- [The 50/30/20 Rule Is Dead. Here's What Actually Works in 2026.](https://www.joinfutureflow.com/blog/50-30-20-rule-dead): Rigid percentage-based budgets break down fast. Here's a modern, flexible system our data shows actually works.
+- [How to Start Investing With $100: A No-Hype Beginner's Guide](https://www.joinfutureflow.com/blog/investing-with-100): You don't need thousands to start building wealth. A realistic, actionable plan for total beginners.
+- [Why Your Credit Score Went Down (Even If You Did Nothing Wrong)](https://www.joinfutureflow.com/blog/credit-score-went-down): The 7 most common causes of credit score drops and exactly how to fix each one.
 
 ---
 

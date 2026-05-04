@@ -65,14 +65,14 @@ export default function ContactPage() {
           "@context": "https://schema.org",
           "@type": "ContactPage",
           "name": "Contact FutureFlow",
-          "url": "https://futureflow.app/contact",
+          "url": "https://www.joinfutureflow.com/contact",
           "description": "Get in touch with the FutureFlow team for product questions, partnerships, or press inquiries.",
           "publisher": {
             "@type": "Organization",
-            "@id": "https://futureflow.app/#organization",
+            "@id": "https://www.joinfutureflow.com/#organization",
             "name": "FutureFlow",
             "email": "help@joinfutureflow.com",
-            "url": "https://futureflow.app"
+            "url": "https://www.joinfutureflow.com"
           }
         })}</script>
       </Helmet>
