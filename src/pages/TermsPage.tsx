@@ -82,7 +82,7 @@ export default function TermsPage() {
               <p>To use the Service, you must:</p>
               <ul>
                 <li>Be at least 18 years of age (or the age of majority in your jurisdiction);</li>
-                <li>Be a resident of the United States;</li>
+                <li>Be a resident of the United States or Canada;</li>
                 <li>Provide accurate, complete, and current registration information;</li>
                 <li>Maintain the security of your account credentials;</li>
                 <li>Promptly notify us of any unauthorized access to your account.</li>

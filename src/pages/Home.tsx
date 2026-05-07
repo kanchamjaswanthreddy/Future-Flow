@@ -108,7 +108,7 @@ const bento = [
     bg: 'rgba(8,18,12,0.82)',
     title: 'Autonomous Tax Engine',
     heroStat: '$1,593', heroLabel: 'in tax savings found',
-    desc: 'Tracks every deductible expense year-round across all 50 states. Tax season becomes effortless.',
+    desc: 'Tracks every deductible expense year-round across the USA & Canada. Tax season becomes effortless.',
     visual: 'tax',
   },
   {

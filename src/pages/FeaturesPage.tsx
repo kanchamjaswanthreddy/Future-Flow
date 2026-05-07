@@ -64,8 +64,8 @@ const bento = [
     span: 1, color: '#fb7185',
     bg: 'linear-gradient(145deg, #fff0f0 0%, #fff5f5 100%)',
     tag: 'Pillar 5 · Exclusive', title: 'AI Tax Engine',
-    heroStat: 'All 50', heroLabel: 'US states covered',
-    desc: 'Proactive cash-flow predictions, anomaly detection + autonomous tax harvesting & filing across all 50 states.',
+    heroStat: 'USA & Canada', heroLabel: 'covered',
+    desc: 'Proactive cash-flow predictions, anomaly detection + autonomous tax harvesting & filing across the USA & Canada.',
     visual: 'taxengine',
   },
   {
@@ -1020,7 +1020,7 @@ export default function FeaturesPage() {
                 Tax season ends before it begins.
               </h2>
               <p style={{ fontFamily: 'Lato', fontSize: 17, color: 'var(--dark-2)', lineHeight: 1.8, marginBottom: 32 }}>
-                Our Autonomous Tax Engine silently tracks every deductible expense year-round across all 50 states. When April arrives, your return is practically already filed.
+                Our Autonomous Tax Engine silently tracks every deductible expense year-round across the USA & Canada. When April arrives, your return is practically already filed.
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginBottom: 40 }}>
                 {[
