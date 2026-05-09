@@ -175,15 +175,15 @@ function DarkSpendVisual() {
   return (
     <div style={{ marginTop: 'auto', paddingTop: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
-        <span style={{ fontFamily: 'Lato', fontSize: 11, color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', letterSpacing: '0.07em' }}>This Month</span>
-        <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.45)' }}>$2,962 total</span>
+        <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: '0.07em' }}>This Month</span>
+        <span style={{ fontFamily: 'Manrope', fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>$2,962 total</span>
       </div>
       <LiveScrollList rows={cats} rowHeight={38} visibleRows={3} speed={2.2}
         renderRow={(cat) => (
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <div style={{ width: 7, height: 7, borderRadius: '50%', background: cat.color, flexShrink: 0 }} />
-              <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.55)' }}>{cat.label}</span>
+              <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(255,255,255,0.78)' }}>{cat.label}</span>
             </div>
             <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: cat.color }}>{cat.amt}</span>
           </div>
@@ -209,11 +209,11 @@ function DarkSubsVisual() {
       <LiveScrollList rows={subs} rowHeight={44} visibleRows={3} speed={2.4}
         renderRow={(s) => (
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-            <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(255,255,255,0.7)' }}>{s.name}</span>
+            <span style={{ fontFamily: 'Lato', fontSize: 14, color: 'rgba(255,255,255,0.9)' }}>{s.name}</span>
             <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-              <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.35)' }}>{s.price}</span>
+              <span style={{ fontFamily: 'Manrope', fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,0.6)' }}>{s.price}</span>
               <span style={{
-                fontFamily: 'Lato', fontSize: 10, fontWeight: 700, padding: '3px 9px', borderRadius: 4,
+                fontFamily: 'Lato', fontSize: 11, fontWeight: 700, padding: '3px 9px', borderRadius: 4,
                 background: s.cancel ? 'rgba(251,113,133,0.18)' : 'rgba(16,185,129,0.18)',
                 color: s.cancel ? '#fb7185' : '#10b981',
               }}>{s.cancel ? 'Cancel' : 'Keep'}</span>
@@ -237,16 +237,16 @@ function DarkDebtVisual() {
   return (
     <div style={{ marginTop: 'auto', paddingTop: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
-        <span style={{ fontFamily: 'Lato', fontSize: 11, color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', letterSpacing: '0.07em' }}>Debt Accounts</span>
-        <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: '#10b981' }}>Debt-free Dec 2026</span>
+        <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: '0.07em' }}>Debt Accounts</span>
+        <span style={{ fontFamily: 'Manrope', fontSize: 13, fontWeight: 700, color: '#10b981' }}>Debt-free Dec 2026</span>
       </div>
       <LiveScrollList rows={debts} rowHeight={44} visibleRows={3} speed={2.5}
         renderRow={(d) => (
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-            <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.6)' }}>{d.label}</span>
+            <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(255,255,255,0.82)' }}>{d.label}</span>
             <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-              <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.35)' }}>{d.remaining}</span>
-              <span style={{ fontFamily: 'Lato', fontSize: 10, fontWeight: 700, color: '#10b981', background: 'rgba(16,185,129,0.14)', padding: '3px 8px', borderRadius: 4 }}>{d.pct}</span>
+              <span style={{ fontFamily: 'Manrope', fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,0.6)' }}>{d.remaining}</span>
+              <span style={{ fontFamily: 'Lato', fontSize: 11, fontWeight: 700, color: '#10b981', background: 'rgba(16,185,129,0.14)', padding: '3px 8px', borderRadius: 4 }}>{d.pct}</span>
             </div>
           </div>
         )}
@@ -273,13 +273,13 @@ function DarkTaxVisual() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%',
             padding: '0 12px', background: 'rgba(16,185,129,0.06)', borderRadius: 8, height: 36,
           }}>
-            <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>{item.label}</span>
+            <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(255,255,255,0.78)' }}>{item.label}</span>
             <span style={{ fontFamily: 'Manrope', fontSize: 13, fontWeight: 800, color: '#10b981' }}>{item.amt}</span>
           </div>
         )}
       />
       <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0 0', borderTop: '1px solid rgba(255,255,255,0.07)', marginTop: 6 }}>
-        <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.35)' }}>Est. tax savings</span>
+        <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(255,255,255,0.65)' }}>Est. tax savings</span>
         <span style={{ fontFamily: 'Manrope', fontSize: 15, fontWeight: 800, color: '#10b981' }}>$1,593</span>
       </div>
     </div>
@@ -301,12 +301,12 @@ function DarkBillVisual() {
         renderRow={(b) => (
           <div style={{ width: '100%', padding: '8px 12px', background: 'rgba(255,255,255,0.04)', borderRadius: 10, border: '1px solid rgba(255,255,255,0.07)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 5 }}>
-              <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.65)' }}>{b.provider}</span>
-              <span style={{ fontFamily: 'Lato', fontSize: 10, fontWeight: 700, color: '#10b981', background: 'rgba(16,185,129,0.14)', padding: '2px 7px', borderRadius: 4 }}>Saved {b.saved}</span>
+              <span style={{ fontFamily: 'Manrope', fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,0.88)' }}>{b.provider}</span>
+              <span style={{ fontFamily: 'Lato', fontSize: 11, fontWeight: 700, color: '#10b981', background: 'rgba(16,185,129,0.14)', padding: '2px 7px', borderRadius: 4 }}>Saved {b.saved}</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.25)', textDecoration: 'line-through' }}>{b.before}/mo</span>
-              <span style={{ color: 'rgba(255,255,255,0.22)', fontSize: 12 }}>→</span>
+              <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(255,255,255,0.5)', textDecoration: 'line-through' }}>{b.before}/mo</span>
+              <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 13 }}>→</span>
               <span style={{ fontFamily: 'Manrope', fontSize: 14, fontWeight: 800, color: '#10b981' }}>{b.after}/mo</span>
             </div>
           </div>
@@ -335,8 +335,8 @@ function DarkTrialVisual() {
             padding: '0 12px', background: 'rgba(255,255,255,0.03)', borderRadius: 8, height: 36,
             border: `1px solid ${t.color}22`,
           }}>
-            <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.6)' }}>{t.name}</span>
-            <span style={{ fontFamily: 'Manrope', fontSize: 11, fontWeight: 700, color: t.color, background: `${t.color}18`, padding: '3px 9px', borderRadius: 4 }}>
+            <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(255,255,255,0.82)' }}>{t.name}</span>
+            <span style={{ fontFamily: 'Manrope', fontSize: 12, fontWeight: 700, color: t.color, background: `${t.color}18`, padding: '3px 9px', borderRadius: 4 }}>
               {t.days}d left
             </span>
           </div>
@@ -485,21 +485,21 @@ function HeroScene3D() {
 
           {/* AI events */}
           <div style={{ padding: '13px 20px 12px', flex: 1 }}>
-            <p style={{ fontFamily: 'Lato', fontSize: 10, fontWeight: 700, color: 'rgba(255,255,255,0.22)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 9 }}>AI Working For You</p>
+            <p style={{ fontFamily: 'Lato', fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.55)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 9 }}>AI Working For You</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
               {syncing
                 ? [1,2,3].map(i => <div key={i} className="ff-skeleton" style={{ height: 44, borderRadius: 10 }} />)
                 : events.map((ev, i) => (
                   <motion.div key={i} initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.5 + i * 0.18, duration: 0.4 }}
-                    style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px', background: `${ev.color}0f`, borderRadius: 10, border: `1px solid ${ev.color}22` }}>
-                    <div style={{ width: 30, height: 30, borderRadius: 8, background: `${ev.color}1c`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px', background: `${ev.color}18`, borderRadius: 10, border: `1px solid ${ev.color}35` }}>
+                    <div style={{ width: 30, height: 30, borderRadius: 8, background: `${ev.color}28`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                       <ev.Icon size={13} color={ev.color} strokeWidth={2} />
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <p style={{ fontFamily: 'Lato', fontSize: 11.5, color: 'rgba(255,255,255,0.68)', lineHeight: 1.35, margin: 0 }}>{ev.msg}</p>
-                      <p style={{ fontFamily: 'Lato', fontSize: 10, color: 'rgba(255,255,255,0.22)', margin: '2px 0 0' }}>{ev.time}</p>
+                      <p style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(255,255,255,0.92)', lineHeight: 1.35, margin: 0 }}>{ev.msg}</p>
+                      <p style={{ fontFamily: 'Lato', fontSize: 11, color: 'rgba(255,255,255,0.5)', margin: '2px 0 0' }}>{ev.time}</p>
                     </div>
-                    <span style={{ fontFamily: 'Lato', fontSize: 10, fontWeight: 700, color: ev.color, background: `${ev.color}1c`, padding: '3px 8px', borderRadius: 5, whiteSpace: 'nowrap', flexShrink: 0 }}>{ev.action}</span>
+                    <span style={{ fontFamily: 'Lato', fontSize: 11, fontWeight: 700, color: ev.color, background: `${ev.color}28`, padding: '3px 8px', borderRadius: 5, whiteSpace: 'nowrap', flexShrink: 0 }}>{ev.action}</span>
                   </motion.div>
                 ))
               }
@@ -510,7 +510,7 @@ function HeroScene3D() {
           {!syncing && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.3 }}
               style={{ margin: '0 14px 14px', padding: '10px 16px', background: 'linear-gradient(135deg, rgba(16,185,129,0.12), rgba(67,83,255,0.07))', borderRadius: 12, border: '1px solid rgba(16,185,129,0.22)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontFamily: 'Lato', fontSize: 12, color: 'rgba(255,255,255,0.45)' }}>Total found by AI this month</span>
+              <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(255,255,255,0.7)' }}>Total found by AI this month</span>
               <span style={{ fontFamily: 'Manrope', fontSize: 16, fontWeight: 800, color: '#10b981', letterSpacing: '-0.5px' }}>+$456.97</span>
             </motion.div>
           )}
@@ -1212,7 +1212,7 @@ export default function Home() {
             {/* AI activity feed */}
             <FadeIn x={30} delay={0.15}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                <p style={{ fontFamily: 'Manrope', fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 8 }}>
+                <p style={{ fontFamily: 'Manrope', fontSize: 15, fontWeight: 700, color: 'rgba(255,255,255,0.65)', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 8 }}>
                   FutureFlow AI — Live Activity
                 </p>
                 {aiEvents.map((ev, i) => (
@@ -1223,26 +1223,26 @@ export default function Home() {
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.12, duration: 0.5 }}
                     style={{
-                      background: 'rgba(255,255,255,0.04)',
-                      border: '1px solid rgba(255,255,255,0.07)',
+                      background: 'rgba(255,255,255,0.06)',
+                      border: '1px solid rgba(255,255,255,0.12)',
                       borderRadius: 14, padding: '14px 18px',
                       display: 'flex', alignItems: 'center', gap: 14,
                     }}
                   >
-                    <div style={{ width: 38, height: 38, borderRadius: 10, background: `${ev.color}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <ev.Icon size={16} color={ev.color} strokeWidth={1.8} />
+                    <div style={{ width: 40, height: 40, borderRadius: 10, background: `${ev.color}25`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <ev.Icon size={18} color={ev.color} strokeWidth={1.8} />
                     </div>
                     <div style={{ flex: 1 }}>
-                      <p style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(255,255,255,0.78)', lineHeight: 1.5 }}>{ev.msg}</p>
-                      <p style={{ fontFamily: 'Lato', fontSize: 11, color: 'rgba(255,255,255,0.28)', marginTop: 3 }}>{ev.time}</p>
+                      <p style={{ fontFamily: 'Lato', fontSize: 15, color: 'rgba(255,255,255,0.95)', lineHeight: 1.5 }}>{ev.msg}</p>
+                      <p style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(255,255,255,0.55)', marginTop: 3 }}>{ev.time}</p>
                     </div>
-                    <span style={{ fontFamily: 'Lato', fontSize: 11, fontWeight: 700, padding: '4px 12px', borderRadius: 6, background: `${ev.color}18`, color: ev.color, whiteSpace: 'nowrap' }}>
+                    <span style={{ fontFamily: 'Lato', fontSize: 13, fontWeight: 700, padding: '5px 14px', borderRadius: 6, background: `${ev.color}25`, color: ev.color, whiteSpace: 'nowrap' }}>
                       {ev.action}
                     </span>
                   </motion.div>
                 ))}
-                <div style={{ marginTop: 8, padding: '12px 18px', background: 'rgba(67,83,255,0.08)', border: '1px solid rgba(67,83,255,0.15)', borderRadius: 12, textAlign: 'center' }}>
-                  <span style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(255,255,255,0.4)' }}>
+                <div style={{ marginTop: 8, padding: '12px 18px', background: 'rgba(67,83,255,0.10)', border: '1px solid rgba(67,83,255,0.22)', borderRadius: 12, textAlign: 'center' }}>
+                  <span style={{ fontFamily: 'Lato', fontSize: 14, fontWeight: 600, color: 'rgba(255,255,255,0.7)' }}>
                     + 8 more actions this week
                   </span>
                 </div>
