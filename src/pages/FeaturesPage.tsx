@@ -65,7 +65,7 @@ const bento = [
     bg: 'linear-gradient(145deg, #fff0f0 0%, #fff5f5 100%)',
     tag: 'Pillar 5 · Exclusive', title: 'AI Tax Engine',
     heroStat: 'USA & Canada', heroLabel: 'covered',
-    desc: 'Proactive cash-flow predictions, anomaly detection + autonomous tax harvesting & filing — fully supported.',
+    desc: 'Autonomous tax harvesting & filing for the USA & Canada. Tracks every deductible expense year-round so tax season is effortless.',
     visual: 'taxengine',
   },
   {
@@ -833,7 +833,7 @@ export default function FeaturesPage() {
                 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.25 }}
                 style={{ fontFamily: 'Lato', fontSize: 18, color: 'var(--dark-2)', lineHeight: 1.75, marginBottom: 40 }}
               >
-                Every tool a modern American needs to manage, protect, and grow their money — in one intelligent platform.
+                Every tool you need to manage, protect, and grow your money — in one intelligent platform.
               </motion.p>
               <motion.div
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}

@@ -335,7 +335,7 @@ export default function PricingPage() {
                   Save 20% with annual billing
                 </p>
                 <p style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(255,255,255,0.4)', marginTop: 3 }}>
-                  Pro for just $11.99/month billed annually — that's 2 months free.
+                  Pro for just $11.99/month billed annually. Household for just $15.99/month billed annually.
                 </p>
               </div>
             </motion.div>

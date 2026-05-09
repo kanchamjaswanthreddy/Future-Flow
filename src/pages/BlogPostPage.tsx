@@ -36,11 +36,11 @@ const posts: Post[] = [
   {
     slug: 'the-9400-problem',
     tag: 'Money Tips', color: '#4353ff',
-    title: 'The $9,400 Problem: How Hidden Fees Are Draining American Wallets',
-    excerpt: 'Most Americans don\'t know they\'re leaking thousands of dollars a year to forgotten subscriptions, bad debt payoff order, and high-interest traps.',
+    title: 'The $9,400 Problem: How Hidden Fees Are Draining Your Wallet',
+    excerpt: 'Most people don\'t know they\'re leaking thousands of dollars a year to forgotten subscriptions, bad debt payoff order, and high-interest traps.',
     date: 'April 14, 2026', readTime: '8 min read', author: 'FutureFlow Team',
     content: [
-      { type: 'intro', text: 'Most Americans know they\'re not perfect with money. What they don\'t know is exactly how much that costs — on average, $9,400 per person, per year. Not from big disasters. From slow, invisible leaks.' },
+      { type: 'intro', text: 'Most people know they\'re not perfect with money. What they don\'t know is exactly how much that costs — on average, $9,400 per person, per year. Not from big disasters. From slow, invisible leaks.' },
       { type: 'p', text: 'We analyzed thousands of connected financial accounts and found the same five patterns draining money from nearly every household. The good news: every single one is fixable once you know it\'s happening.' },
       { type: 'h2', text: 'Where the $9,400 goes' },
       { type: 'stats', items: [
@@ -57,9 +57,9 @@ const posts: Post[] = [
       { type: 'p', text: 'Most people pay off their smallest debt first because it feels good to eliminate an account. This is called the Snowball Method — and emotionally, it works. Mathematically, it costs you. Paying minimum payments on a 24% APR card while clearing a 9% APR card first means the high-interest balance is compounding at full speed while you feel productive.' },
       { type: 'p', text: 'The Avalanche Method — targeting highest APR first — saves an average of $2,800 in interest on a typical household debt load. No extra money required. Just a different order.' },
       { type: 'h2', text: 'The deductions sitting unclaimed on your tax return' },
-      { type: 'p', text: 'If you work from home even part-time, you likely qualify for the home office deduction, your internet bill, business software, and phone expenses. Freelancers and self-employed people often miss health insurance premiums, retirement contributions, and the full mileage deduction. The IRS doesn\'t send reminders. Most people leave $1,400 in their own money on the table every April.' },
+      { type: 'p', text: 'If you work from home even part-time, you likely qualify for the home office deduction, your internet bill, business software, and phone expenses. Freelancers and self-employed people often miss health insurance premiums, retirement contributions, and the full mileage deduction. The IRS and CRA don\'t send reminders. Most people leave $1,400 in their own money on the table every tax season.' },
       { type: 'h2', text: 'Overdraft fees are a tax on not paying attention' },
-      { type: 'p', text: 'The average overdraft fee is $34. The average American pays 25 of them per year — mostly on purchases under $25. A $4 coffee triggers a $34 fee because the paycheck cleared at 9 AM and the coffee charged at 8:58 AM. These are entirely preventable with real-time balance alerts and cash flow forecasting.' },
+      { type: 'p', text: 'The average overdraft fee is $34. The average person pays 25 of them per year — mostly on purchases under $25. A $4 coffee triggers a $34 fee because the paycheck cleared at 9 AM and the coffee charged at 8:58 AM. These are entirely preventable with real-time balance alerts and cash flow forecasting.' },
       { type: 'callout', text: 'The $9,400 leak isn\'t one big mistake — it\'s dozens of small, invisible ones. The only way to stop it is to see it. That\'s what FutureFlow was built to do.' },
     ],
   },
@@ -95,7 +95,7 @@ const posts: Post[] = [
     slug: '12-subscriptions',
     tag: 'Subscriptions', color: '#f69c20',
     title: '12 Subscriptions You\'re Probably Paying For Right Now (And Don\'t Know It)',
-    excerpt: 'Our data shows the average American pays for 3.4 subscriptions they haven\'t used in over 6 months.',
+    excerpt: 'Our data shows the average person pays for 3.4 subscriptions they haven\'t used in over 6 months.',
     date: 'April 7, 2026', readTime: '5 min read', author: 'FutureFlow Team',
     content: [
       { type: 'intro', text: 'When we analyze newly connected accounts, the pattern is always the same: people are shocked by what they\'re paying for. Not because they\'re irresponsible — because subscriptions are designed to be invisible after the sign-up dopamine wears off.' },
@@ -134,7 +134,7 @@ const posts: Post[] = [
     excerpt: 'If you work from home or freelance, you\'re likely leaving hundreds — maybe thousands — on the table.',
     date: 'April 2, 2026', readTime: '9 min read', author: 'FutureFlow Team',
     content: [
-      { type: 'intro', text: 'The IRS tax code contains over 70,000 pages. The deductions that benefit freelancers and remote workers are buried in there — and most people never claim them. Here are the 11 most commonly missed, with what you need to document each one.' },
+      { type: 'intro', text: 'The US tax code (IRS) and Canada\'s Income Tax Act (CRA) contain thousands of pages. The deductions that benefit freelancers and remote workers are buried in there — and most people never claim them. Here are the 11 most commonly missed, with what you need to document each one.' },
       { type: 'h2', text: '1. Home Office Deduction' },
       { type: 'p', text: 'If you use a dedicated space exclusively for work — a spare bedroom, a partitioned area, any space used solely as your office — you can deduct a portion of your rent or mortgage interest, utilities, and internet. The simplified method gives you $5 per square foot, up to 300 sq ft ($1,500 max). The regular method calculates your actual expenses proportional to the office\'s percentage of your home\'s square footage and typically yields more.' },
       { type: 'h2', text: '2. Internet Bill' },
@@ -154,10 +154,10 @@ const posts: Post[] = [
       { type: 'h2', text: '9. Retirement Contributions' },
       { type: 'p', text: 'A SEP-IRA lets self-employed people contribute up to 25% of net self-employment income (max $69,000 in 2026). Solo 401(k) has even more flexibility. These contributions are tax-deductible and reduce your taxable income dollar-for-dollar.' },
       { type: 'h2', text: '10. Vehicle Mileage' },
-      { type: 'p', text: 'For 2026, the standard mileage rate is $0.67 per mile for business use. Drive to a client meeting, the post office for business shipments, or an equipment pickup — log it. 1,000 business miles = $670 deduction. Use a mileage tracking app to document every trip.' },
+      { type: 'p', text: 'For 2026, the standard mileage rate is $0.67 per mile (USA) or $0.70 per km (Canada) for business use. Drive to a client meeting, the post office for business shipments, or an equipment pickup — log it. Use a mileage tracking app to document every trip.' },
       { type: 'h2', text: '11. Contractor & Professional Fees' },
       { type: 'p', text: 'Fees paid to your accountant, lawyer for business matters, freelancers you hired, or business consultants are fully deductible. Keep invoices and payment records.' },
-      { type: 'callout', text: 'FutureFlow\'s Tax Engine automatically flags transactions that qualify as deductions as they happen — so you stop scrambling in April and start capturing every dollar year-round.' },
+      { type: 'callout', text: 'FutureFlow\'s Tax Engine automatically flags transactions that qualify as deductions as they happen — so you stop scrambling at tax time and start capturing every dollar year-round.' },
     ],
   },
   {

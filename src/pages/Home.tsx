@@ -726,7 +726,7 @@ export default function Home() {
             <div style={{ textAlign: 'center', marginBottom: 56 }}>
               <span className="ff-badge" style={{ marginBottom: 20, display: 'inline-flex' }}>The Problem</span>
               <h2 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(30px, 3.8vw, 52px)', letterSpacing: '-1.5px', lineHeight: 1.1, color: 'var(--dark)', marginTop: 14, marginBottom: 16 }}>
-                Financial chaos costs Americans<br />
+                Financial chaos costs people<br />
                 <span style={{ color: '#fb7185' }}>$9,400 a year.</span>
               </h2>
               <p style={{ fontFamily: 'Lato', fontSize: 17, color: 'var(--dark-3)', lineHeight: 1.75, maxWidth: 500, margin: '0 auto' }}>
@@ -744,7 +744,7 @@ export default function Home() {
                 <Tilt3DCard intensity={9} style={{ height: '100%' }}>
                   <div className="ff-clay ff-gloss-on-hover" style={{ padding: '40px 36px', height: '100%', display: 'flex', flexDirection: 'column' }}>
                     <h3 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(20px, 2.2vw, 26px)', color: 'var(--dark)', lineHeight: 1.25, marginBottom: 20 }}>
-                      Money Is Americans'<br />#1 Stress
+                      Money Is Everyone's<br />#1 Stress
                     </h3>
                     <ScrollCounter value="52%" color="#fb7185" style={{ fontSize: 'clamp(48px, 16vw, 80px)', letterSpacing: '-5px', marginBottom: 10 }} />
                     <p style={{ fontFamily: 'Lato', fontSize: 16, fontWeight: 500, color: 'var(--dark-2)', lineHeight: 1.72, flex: 1 }}>
@@ -814,7 +814,7 @@ export default function Home() {
                     </h3>
                     <p style={{ fontFamily: 'Lato', fontSize: 16, fontWeight: 500, color: 'var(--dark-2)', lineHeight: 1.7, marginBottom: 20 }}>Not just a low-income problem. High earners with no visibility into their money face the same cycle.</p>
                     <ScrollCounter value="51%" color="#4353ff" style={{ fontSize: 'clamp(48px, 16vw, 88px)', letterSpacing: '-5px', marginBottom: 4 }} />
-                    <p style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(67,83,255,0.65)', fontWeight: 600, marginBottom: 12 }}>of Americans, regardless of income</p>
+                    <p style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(67,83,255,0.65)', fontWeight: 600, marginBottom: 12 }}>of people, regardless of income</p>
                     <div style={{ flex: 1, paddingTop: 16, borderTop: '1px solid rgba(0,0,0,0.06)', display: 'flex', gap: 8, alignItems: 'flex-end' }}>
                       {[
                         { label: 'Rent/Mortgage', pct: 35, color: '#4353ff' },
@@ -848,7 +848,7 @@ export default function Home() {
                     </h3>
                     <ScrollCounter value="4+" color="#10b981" style={{ fontSize: 'clamp(48px, 16vw, 80px)', letterSpacing: '-5px', marginBottom: 10 }} />
                     <p style={{ fontFamily: 'Lato', fontSize: 16, fontWeight: 500, color: 'var(--dark-2)', lineHeight: 1.72, flex: 1 }}>
-                      The average American juggles 4–6 separate apps and still can't see their full financial picture.
+                      The average person juggles 4–6 separate apps and still can't see their full financial picture.
                     </p>
                     <div style={{ marginTop: 28, paddingTop: 20, borderTop: '1px solid rgba(0,0,0,0.06)' }}>
                       {[

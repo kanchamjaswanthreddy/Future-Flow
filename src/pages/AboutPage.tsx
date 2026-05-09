@@ -225,7 +225,7 @@ export default function AboutPage() {
               <span className="ff-badge" style={{ marginBottom: 20, display: 'inline-flex' }}>Our Mission</span>
               <h2 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(28px, 4vw, 48px)', letterSpacing: '-1.5px', lineHeight: 1.1, color: 'var(--dark)', marginTop: 16, marginBottom: 20 }}>
                 Financial clarity for{' '}
-                <span style={{ color: 'var(--emerald)' }}>every American.</span>
+                <span style={{ color: 'var(--emerald)' }}>everyone in the USA & Canada.</span>
               </h2>
               <p style={{ fontFamily: 'Lato', fontSize: 18, color: 'var(--dark-2)', lineHeight: 1.8 }}>
                 Managing money shouldn't require a finance degree, a premium advisor, or five different apps. FutureFlow brings the intelligence of a private wealth manager into one place — and it pays for itself in the first week.
