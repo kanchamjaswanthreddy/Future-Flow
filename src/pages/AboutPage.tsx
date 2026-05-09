@@ -121,7 +121,7 @@ export default function AboutPage() {
               { label: 'Founded',          val: '2026',          Icon: Calendar, highlight: false },
               { label: 'Headquarters',     val: 'Boston, MA',    Icon: MapPin,   highlight: false },
               { label: 'Banks Supported',  val: '12,000+',       Icon: null,     highlight: false },
-              { label: 'States Covered',   val: 'All 50',        Icon: null,     highlight: false },
+              { label: 'Coverage',         val: 'USA & Canada',  Icon: null,     highlight: false },
               { label: 'Built by',         val: 'Indie Founders', Icon: null,     highlight: false },
               { label: 'Launch Status',    val: 'Coming Soon',   Icon: null,     highlight: true  },
             ].map((s, i) => (

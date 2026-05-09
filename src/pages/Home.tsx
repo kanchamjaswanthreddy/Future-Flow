@@ -362,8 +362,8 @@ function HeroScene3D() {
   const sX = useSpring(rotX, { stiffness: 65, damping: 20 })
   const sY = useSpring(rotY, { stiffness: 65, damping: 20 })
 
-  const [syncing, setSyncing] = useState(true)
-  useEffect(() => { const t = setTimeout(() => setSyncing(false), 2600); return () => clearTimeout(t) }, [])
+  const [syncing, setSyncing] = useState(false)
+  useEffect(() => { const t = setTimeout(() => setSyncing(false), 0); return () => clearTimeout(t) }, [])
 
   function onMouseMove(e: React.MouseEvent) {
     const rect = containerRef.current?.getBoundingClientRect()

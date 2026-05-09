@@ -65,7 +65,7 @@ const bento = [
     bg: 'linear-gradient(145deg, #fff0f0 0%, #fff5f5 100%)',
     tag: 'Pillar 5 · Exclusive', title: 'AI Tax Engine',
     heroStat: 'USA & Canada', heroLabel: 'covered',
-    desc: 'Proactive cash-flow predictions, anomaly detection + autonomous tax harvesting & filing across the USA & Canada.',
+    desc: 'Proactive cash-flow predictions, anomaly detection + autonomous tax harvesting & filing — fully supported.',
     visual: 'taxengine',
   },
   {
@@ -473,6 +473,13 @@ function ScrollCounter({ value, color, style = {} }: { value: string; color: str
       n.toString()
     )
   }), [spring, numeric])
+  if (isNaN(numeric)) {
+    return (
+      <div ref={ref} style={{ fontFamily: 'Manrope', fontWeight: 800, color, lineHeight: 1, ...style }}>
+        {value}
+      </div>
+    )
+  }
   return (
     <div ref={ref} style={{ fontFamily: 'Manrope', fontWeight: 800, color, lineHeight: 1, ...style }}>
       {prefix}{display}{suffix}
@@ -510,7 +517,7 @@ const drumFeatures = [
     tagline: 'Keep more of what you earn.',
     points: ['Auto-tracks deductible expenses year-round', 'Flags freelance & remote worker deductions', 'Exports clean data ready for filing'],
     stat: '$1,400', statLabel: 'avg in missed deductions found',
-    chips: [{ val: 'All 50', label: 'states covered' }, { val: '$1,400', label: 'deductions found' }],
+    chips: [{ val: 'USA & Canada', label: 'covered' }, { val: '$1,400', label: 'deductions found' }],
   },
   {
     name: 'Debt Payoff Planner', color: '#4353ff',
@@ -1025,7 +1032,7 @@ export default function FeaturesPage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginBottom: 40 }}>
                 {[
                   'Auto-detects deductible expenses from every transaction',
-                  'State-specific guidance for all 50 US states',
+                  'Tax guidance for USA & Canada',
                   'Year-round tracking means no scramble at tax time',
                 ].map((pt, i) => (
                   <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
@@ -1068,15 +1075,15 @@ export default function FeaturesPage() {
                 <thead>
                   <tr style={{ background: 'rgba(255,255,255,0.04)' }}>
                     <th style={{
-                      fontFamily: 'Manrope', fontSize: 15, fontWeight: 700,
-                      color: 'rgba(255,255,255,0.5)', textAlign: 'left',
+                      fontFamily: 'Manrope', fontSize: 17, fontWeight: 800,
+                      color: 'rgba(255,255,255,0.9)', textAlign: 'left',
                       padding: '18px 20px', borderBottom: '1px solid rgba(255,255,255,0.06)',
                     }}>Feature</th>
                     {competitors.map((c, i) => (
                       <th key={c} style={{
-                        fontFamily: 'Manrope', fontSize: 13, fontWeight: 700, textAlign: 'center',
+                        fontFamily: 'Manrope', fontSize: 15, fontWeight: 800, textAlign: 'center',
                         padding: '18px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)',
-                        color: i === 5 ? 'var(--emerald)' : 'rgba(255,255,255,0.35)',
+                        color: i === 5 ? 'var(--emerald)' : 'rgba(255,255,255,0.8)',
                         background: i === 5 ? 'rgba(67,83,255,0.14)' : 'transparent',
                         borderLeft: i === 5 ? '1px solid rgba(67,83,255,0.3)' : 'none',
                         borderRight: i === 5 ? '1px solid rgba(67,83,255,0.3)' : 'none',

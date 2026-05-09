@@ -37,7 +37,7 @@ const plans = [
   },
   {
     name: 'Pro',
-    price: '$9.99',
+    price: '$14.99',
     period: '/month',
     desc: 'The complete FutureFlow experience. Everything you need to win financially.',
     color: '#10b981',
@@ -66,7 +66,7 @@ const plans = [
   },
   {
     name: 'Household',
-    price: '$14.99',
+    price: '$19.99',
     period: '/month',
     desc: 'Same as Pro — built for two. Share access, goals, and insights as a family.',
     color: '#f69c20',
@@ -109,7 +109,7 @@ export default function PricingPage() {
     <div>
       <SEO
         title="Pricing — Free, Pro & Household Plans"
-        description="Start free or upgrade to Pro at $9.99/month. All plans include AI budgeting, subscription management, debt payoff planner, and net worth tracking. 30-day free trial on Pro and Household."
+        description="Start free or upgrade to Pro at $14.99/month. All plans include AI budgeting, subscription management, debt payoff planner, and net worth tracking. 30-day free trial on Pro and Household."
         canonical="/pricing"
       />
       <Helmet>
@@ -136,7 +136,7 @@ export default function PricingPage() {
             {
               "@type": "Offer",
               "name": "Pro Plan",
-              "price": "9.99",
+              "price": "14.99",
               "priceCurrency": "USD",
               "availability": "https://schema.org/PreOrder",
               "url": "https://www.joinfutureflow.com/pricing",
@@ -145,7 +145,7 @@ export default function PricingPage() {
             {
               "@type": "Offer",
               "name": "Household Plan",
-              "price": "14.99",
+              "price": "19.99",
               "priceCurrency": "USD",
               "availability": "https://schema.org/PreOrder",
               "url": "https://www.joinfutureflow.com/pricing",
@@ -191,7 +191,7 @@ export default function PricingPage() {
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.25 }}
             style={{ fontFamily: 'Lato', fontSize: 19, color: 'var(--dark-2)', maxWidth: 500, margin: '0 auto 32px', lineHeight: 1.75 }}
           >
-            Average Pro user saves over $1,200/year. At $9.99/month, the math writes itself.
+            Average Pro user saves over $1,200/year. At $14.99/month, the math writes itself.
           </motion.p>
           {/* ROI signal */}
           <motion.div
@@ -335,7 +335,7 @@ export default function PricingPage() {
                   Save 20% with annual billing
                 </p>
                 <p style={{ fontFamily: 'Lato', fontSize: 13, color: 'rgba(255,255,255,0.4)', marginTop: 3 }}>
-                  Pro for just $7.99/month billed annually — that's 2 months free.
+                  Pro for just $11.99/month billed annually — that's 2 months free.
                 </p>
               </div>
             </motion.div>
