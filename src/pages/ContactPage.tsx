@@ -5,7 +5,12 @@ import SEO from '../components/SEO'
 import { Mail, ArrowRight, Clock, CheckCircle } from 'lucide-react'
 
 const CONTACT_EMAIL = 'help@joinfutureflow.com'
-const FORMSPREE_ID = import.meta.env.VITE_FORMSPREE_ID?.trim()
+const FALLBACK_FORMSPREE_ENDPOINT = 'https://formspree.io/f/xgoqedqv'
+const FORMSPREE_ENDPOINT =
+  import.meta.env.VITE_FORMSPREE_ENDPOINT?.trim() ||
+  (import.meta.env.VITE_FORMSPREE_ID?.trim()
+    ? `https://formspree.io/f/${import.meta.env.VITE_FORMSPREE_ID.trim()}`
+    : FALLBACK_FORMSPREE_ENDPOINT)
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
@@ -24,18 +29,19 @@ export default function ContactPage() {
     e.preventDefault()
     setSubmitting(true)
     try {
-      if (FORMSPREE_ID) {
-        const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify(form),
-        })
-        if (!res.ok) throw new Error('Contact form submission failed')
-        setSentVia('form')
-        return
-      }
-      openEmailDraft()
-      setSentVia('email')
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          ...form,
+          _replyto: form.email,
+          _subject: form.subject
+            ? `FutureFlow contact: ${form.subject}`
+            : 'FutureFlow contact request',
+        }),
+      })
+      if (!res.ok) throw new Error('Contact form submission failed')
+      setSentVia('form')
     } catch {
       openEmailDraft()
       setSentVia('email')

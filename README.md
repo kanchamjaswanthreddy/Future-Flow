@@ -48,7 +48,7 @@ The live pricing page is the source of truth:
 
 ## Contact Form
 
-The contact form posts to Formspree only when `VITE_FORMSPREE_ID` is configured. Without that env var, it opens a prefilled email draft to `help@joinfutureflow.com` instead of submitting to a placeholder endpoint.
+The contact form posts to Formspree at `https://formspree.io/f/xgoqedqv`. It can be overridden with `VITE_FORMSPREE_ENDPOINT` or `VITE_FORMSPREE_ID` at build time. If the Formspree request fails, it opens a prefilled email draft to `help@joinfutureflow.com`.
 
 ## Deployment
 
