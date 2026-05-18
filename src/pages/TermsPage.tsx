@@ -100,7 +100,7 @@ export default function TermsPage() {
               <p>FutureFlow is not responsible for errors, omissions, or inaccuracies in data provided by third-party financial institutions or aggregation services.</p>
 
               <h2 id="tos-5">5. Subscription & Billing</h2>
-              <p>FutureFlow offers Free, Premium, and Premium+ subscription tiers. Paid plans are billed on a monthly or annual basis, depending on your selection.</p>
+              <p>FutureFlow offers Free, Pro, and Household subscription tiers. Paid plans are billed on a monthly or annual basis, depending on your selection.</p>
               <ul>
                 <li><strong>Automatic Renewal:</strong> Paid subscriptions automatically renew at the end of each billing period unless cancelled before the renewal date.</li>
                 <li><strong>Price Changes:</strong> We will provide at least 30 days' notice of any price changes before they take effect.</li>

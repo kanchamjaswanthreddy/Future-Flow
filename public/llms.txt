@@ -42,13 +42,13 @@ Portfolio Health Radar links investments to real cash flow. Fraud-proof Bill Spl
 No credit card required. No commitment.
 Includes: Spending analytics, auto categorisation, up to 2 connected accounts, monthly budget overview, basic savings goals, email support.
 
-### Pro Plan — $9.99/month (Most Popular)
+### Pro Plan — $14.99/month (Most Popular)
 30-day free trial. No charge until trial ends.
 Includes everything in Free, plus: Email + Expense Radar, free trial ending alerts, portfolio health radar, bill splitting, autonomous tax engine, US & Canada tax guidance, unlimited connected accounts, AI subscription manager, debt payoff planner, cash flow forecasting, bill & due date alerts, credit score monitor, net worth tracker, investment tracking, priority support.
 
-Average Pro user saves over $1,200/year. At $9.99/month, FutureFlow pays for itself many times over.
+Average Pro user saves over $1,200/year. At $14.99/month, FutureFlow pays for itself many times over.
 
-### Household Plan — $14.99/month
+### Household Plan — $19.99/month
 30-day free trial. Same as Pro — built for two users.
 Includes everything in Pro, plus: 2-user family access, shared goals and insights as a family.
 
@@ -66,7 +66,7 @@ Competitors compared: Monarch Money, Rocket Money, Copilot Money, YNAB, PocketGu
 
 - [Home](https://www.joinfutureflow.com/): Platform overview, key features, waitlist signup
 - [Features](https://www.joinfutureflow.com/features): Full 6-pillar feature breakdown, competitor comparison table
-- [Pricing](https://www.joinfutureflow.com/pricing): Free, Pro ($9.99/mo), Household ($14.99/mo) plans with FAQ
+- [Pricing](https://www.joinfutureflow.com/pricing): Free, Pro ($14.99/mo), Household ($19.99/mo) plans with FAQ
 - [About](https://www.joinfutureflow.com/about): Company story, mission, values, origin in Boston
 - [Advisors](https://www.joinfutureflow.com/advisors): Advisory board of financial and technology experts
 - [Blog](https://www.joinfutureflow.com/blog): Personal finance articles, guides, and data-backed insights

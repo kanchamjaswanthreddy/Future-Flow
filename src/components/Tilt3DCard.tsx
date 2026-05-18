@@ -31,6 +31,11 @@ export function Tilt3DCard({ children, className, style, intensity = 10, gloss =
   const scale = useSpring(1, { stiffness: 240, damping: 28 })
   const glossX = useMotionValue('50%')
   const glossY = useMotionValue('0%')
+  const glossBackground = useTransform(
+    [glossX, glossY],
+    ([gx, gy]) =>
+      `radial-gradient(circle at ${gx} ${gy}, rgba(255,255,255,0.18) 0%, transparent 60%)`,
+  )
 
   function onMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     const rect = ref.current?.getBoundingClientRect()
@@ -86,11 +91,7 @@ export function Tilt3DCard({ children, className, style, intensity = 10, gloss =
               borderRadius: radius,
               pointerEvents: 'none',
               zIndex: 10,
-              background: useTransform(
-                [glossX, glossY],
-                ([gx, gy]) =>
-                  `radial-gradient(circle at ${gx} ${gy}, rgba(255,255,255,0.18) 0%, transparent 60%)`,
-              ),
+              background: glossBackground,
             }}
           />
         )}

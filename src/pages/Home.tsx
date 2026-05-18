@@ -28,6 +28,29 @@ const marqueeItems = [
   'Portfolio Radar', 'Cash Flow Forecasting', 'Credit Score Monitor', 'Household Mode',
 ]
 
+const homeFaqs = [
+  {
+    q: 'What is FutureFlow?',
+    a: 'FutureFlow is an AI personal finance app that brings budgeting, subscription tracking, cash flow forecasting, debt payoff planning, net worth tracking, and tax guidance into one platform.',
+  },
+  {
+    q: 'What makes FutureFlow different from a traditional budgeting app?',
+    a: 'FutureFlow combines budgeting, subscription management, cash flow forecasting, debt payoff planning, net worth tracking, and AI-driven financial guidance in one place.',
+  },
+  {
+    q: 'Does FutureFlow replace budgeting apps and subscription trackers?',
+    a: 'FutureFlow is built to replace separate budgeting, subscription tracking, debt payoff, and net worth tools by connecting them in one dashboard.',
+  },
+  {
+    q: 'How much does FutureFlow cost?',
+    a: 'FutureFlow has a free plan, a Pro plan at $14.99 per month, and a Household plan at $19.99 per month. Pro and Household include a 30-day free trial.',
+  },
+  {
+    q: 'Is FutureFlow safe to connect to my bank?',
+    a: 'FutureFlow uses read-only bank connections, 256-bit AES encryption, and does not store banking credentials.',
+  },
+]
+
 // ─── Animated section wrapper ─────────────────────────────────────────────────
 function FadeIn({
   children, delay = 0, x = 0, style = {},
@@ -130,9 +153,9 @@ const bento = [
 ]
 
 // ─── Shared live-scroll ticker ────────────────────────────────────────────────
-function LiveScrollList({ rows, renderRow, rowHeight = 44, visibleRows = 3, speed = 2.3 }: {
-  rows: any[]
-  renderRow: (row: any) => React.ReactNode
+function LiveScrollList<T>({ rows, renderRow, rowHeight = 44, visibleRows = 3, speed = 2.3 }: {
+  rows: T[]
+  renderRow: (row: T) => React.ReactNode
   rowHeight?: number
   visibleRows?: number
   speed?: number
@@ -600,7 +623,7 @@ export default function Home() {
             {
               "@type": "Offer",
               "name": "Pro Plan",
-              "price": "9.99",
+              "price": "14.99",
               "priceCurrency": "USD",
               "billingIncrement": "P1M",
               "description": "The complete FutureFlow experience — AI budgeting, autonomous tax engine, subscription radar, and more."
@@ -608,7 +631,7 @@ export default function Home() {
             {
               "@type": "Offer",
               "name": "Household Plan",
-              "price": "14.99",
+              "price": "19.99",
               "priceCurrency": "USD",
               "billingIncrement": "P1M",
               "description": "Same as Pro — built for two. Share access, goals, and insights as a family."
@@ -618,6 +641,18 @@ export default function Home() {
             "@type": "Organization",
             "@id": "https://www.joinfutureflow.com/#organization"
           }
+        })}</script>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": homeFaqs.map((faq) => ({
+            "@type": "Question",
+            "name": faq.q,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": faq.a
+            }
+          }))
         })}</script>
       </Helmet>
 
@@ -648,8 +683,8 @@ export default function Home() {
                     transformOrigin: 'left center',
                   }}
                 >
-                  Moving Money.<br />
-                  <span style={{ color: 'var(--primary)' }}>Building Futures.</span>
+                  AI Personal Finance App<br />
+                  <span style={{ color: 'var(--primary)' }}>That Works For You.</span>
                 </motion.h1>
               </motion.div>
 
@@ -658,7 +693,7 @@ export default function Home() {
                 transition={{ duration: 0.55, delay: 0.25 }}
                 style={{ fontFamily: 'Lato', fontSize: 19, color: 'var(--dark-2)', lineHeight: 1.75, maxWidth: 460, marginBottom: 36 }}
               >
-                The intelligent personal finance platform that unifies your spending, saving, debt payoff, and wealth building — all in one place.
+                FutureFlow unifies budgeting, subscription tracking, cash flow forecasting, debt payoff, and wealth building in one automated personal finance app.
               </motion.p>
               <motion.div
                 initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
@@ -1249,6 +1284,38 @@ export default function Home() {
               </div>
             </FadeIn>
 
+          </div>
+        </div>
+      </section>
+
+      {/* ── HOMEPAGE FAQ ── */}
+      <section style={{ padding: 'var(--sp) 0', background: '#ffffff' }}>
+        <div className="ff-container">
+          <FadeIn>
+            <div style={{ maxWidth: 660, margin: '0 auto 44px', textAlign: 'center' }}>
+              <span className="ff-badge" style={{ marginBottom: 18, display: 'inline-flex' }}>FAQ</span>
+              <h2 style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 'clamp(28px, 4vw, 46px)', letterSpacing: '-1.5px', lineHeight: 1.12, color: 'var(--dark)', marginBottom: 14 }}>
+                Questions people ask before joining FutureFlow.
+              </h2>
+              <p style={{ fontFamily: 'Lato', fontSize: 16, color: 'var(--dark-3)', lineHeight: 1.75 }}>
+                Clear answers for people comparing budgeting apps, subscription trackers, and AI personal finance tools.
+              </p>
+            </div>
+          </FadeIn>
+
+          <div style={{ maxWidth: 820, margin: '0 auto', display: 'grid', gap: 12 }}>
+            {homeFaqs.map((faq, i) => (
+              <FadeIn key={faq.q} delay={i * 0.05}>
+                <div className="ff-card-clean" style={{ padding: '24px 28px' }}>
+                  <h3 style={{ fontFamily: 'Manrope', fontSize: 17, fontWeight: 800, color: 'var(--dark)', marginBottom: 8, lineHeight: 1.35 }}>
+                    {faq.q}
+                  </h3>
+                  <p style={{ fontFamily: 'Lato', fontSize: 15, color: 'var(--dark-3)', lineHeight: 1.78 }}>
+                    {faq.a}
+                  </p>
+                </div>
+              </FadeIn>
+            ))}
           </div>
         </div>
       </section>

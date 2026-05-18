@@ -22,6 +22,7 @@ const featured = {
   title: 'The $9,400 Problem: How Hidden Fees Are Draining Your Wallet',
   excerpt: 'Most people don\'t know they\'re leaking thousands of dollars a year to forgotten subscriptions, bad debt payoff order, and high-interest traps. Here\'s exactly how it happens — and how to stop it.',
   date: 'April 14, 2026',
+  isoDate: '2026-04-14',
   readTime: '8 min read',
   author: 'FutureFlow Team',
 }
@@ -33,6 +34,7 @@ const posts = [
     title: 'Avalanche vs. Snowball: Which Debt Payoff Method Saves You More?',
     excerpt: 'We ran the numbers on 50,000 real debt payoff plans. The results might surprise you.',
     date: 'April 10, 2026',
+    isoDate: '2026-04-10',
     readTime: '6 min read',
     color: '#4353ff',
   },
@@ -42,6 +44,7 @@ const posts = [
     title: '12 Subscriptions You\'re Probably Paying For Right Now (And Don\'t Know It)',
     excerpt: 'Our data shows the average person pays for 3.4 subscriptions they haven\'t used in over 6 months.',
     date: 'April 7, 2026',
+    isoDate: '2026-04-07',
     readTime: '5 min read',
     color: '#f69c20',
   },
@@ -51,6 +54,7 @@ const posts = [
     title: 'The 11 Most Missed Tax Deductions for Freelancers and Remote Workers',
     excerpt: 'If you work from home or freelance, you\'re likely leaving hundreds — maybe thousands — on the table.',
     date: 'April 2, 2026',
+    isoDate: '2026-04-02',
     readTime: '9 min read',
     color: '#10b981',
   },
@@ -60,6 +64,7 @@ const posts = [
     title: 'The 50/30/20 Rule Is Dead. Here\'s What Actually Works in 2026.',
     excerpt: 'Rigid percentage-based budgets break down fast. Here\'s a modern, flexible system our data shows actually works.',
     date: 'March 28, 2026',
+    isoDate: '2026-03-28',
     readTime: '7 min read',
     color: '#4353ff',
   },
@@ -69,6 +74,7 @@ const posts = [
     title: 'How to Start Investing With $100: A No-Hype Beginner\'s Guide',
     excerpt: 'You don\'t need thousands to start building wealth. Here\'s a realistic, actionable plan for total beginners.',
     date: 'March 22, 2026',
+    isoDate: '2026-03-22',
     readTime: '6 min read',
     color: '#fb7185',
   },
@@ -78,11 +84,13 @@ const posts = [
     title: 'Why Your Credit Score Went Down (Even If You Did Nothing Wrong)',
     excerpt: 'Credit score drops can feel mysterious. We break down the 7 most common causes and exactly how to fix each one.',
     date: 'March 17, 2026',
+    isoDate: '2026-03-17',
     readTime: '5 min read',
     color: '#4353ff',
   },
 ]
 
+const allPosts = [featured, ...posts]
 const categories = ['All', 'Personal Finance', 'Budgeting', 'Subscriptions', 'Investing', 'Taxes', 'Credit', 'Money Tips']
 
 export default function BlogPage() {
@@ -106,14 +114,22 @@ export default function BlogPage() {
             "@type": "Organization",
             "@id": "https://www.joinfutureflow.com/#organization"
           },
-          "blogPost": posts.map(post => ({
+          "blogPost": allPosts.map(post => ({
             "@type": "BlogPosting",
             "headline": post.title,
             "description": post.excerpt,
             "url": `https://www.joinfutureflow.com/blog/${post.slug}`,
-            "datePublished": post.date,
+            "mainEntityOfPage": `https://www.joinfutureflow.com/blog/${post.slug}`,
+            "datePublished": post.isoDate,
+            "dateModified": post.isoDate,
+            "image": "https://www.joinfutureflow.com/logo.jpeg",
             "author": {
               "@type": "Organization",
+              "name": "FutureFlow"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "@id": "https://www.joinfutureflow.com/#organization",
               "name": "FutureFlow"
             },
             "keywords": post.tag

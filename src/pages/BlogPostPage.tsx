@@ -28,7 +28,7 @@ type Block =
 interface Post {
   slug: string; tag: string; color: string
   title: string; excerpt: string
-  date: string; readTime: string; author: string
+  date: string; isoDate: string; readTime: string; author: string
   content: Block[]
 }
 
@@ -38,7 +38,7 @@ const posts: Post[] = [
     tag: 'Money Tips', color: '#4353ff',
     title: 'The $9,400 Problem: How Hidden Fees Are Draining Your Wallet',
     excerpt: 'Most people don\'t know they\'re leaking thousands of dollars a year to forgotten subscriptions, bad debt payoff order, and high-interest traps.',
-    date: 'April 14, 2026', readTime: '8 min read', author: 'FutureFlow Team',
+    date: 'April 14, 2026', isoDate: '2026-04-14', readTime: '8 min read', author: 'FutureFlow Team',
     content: [
       { type: 'intro', text: 'Most people know they\'re not perfect with money. What they don\'t know is exactly how much that costs — on average, $9,400 per person, per year. Not from big disasters. From slow, invisible leaks.' },
       { type: 'p', text: 'We analyzed thousands of connected financial accounts and found the same five patterns draining money from nearly every household. The good news: every single one is fixable once you know it\'s happening.' },
@@ -68,7 +68,7 @@ const posts: Post[] = [
     tag: 'Personal Finance', color: '#4353ff',
     title: 'Avalanche vs. Snowball: Which Debt Payoff Method Saves You More?',
     excerpt: 'We ran the numbers on 50,000 real debt payoff plans. The results might surprise you.',
-    date: 'April 10, 2026', readTime: '6 min read', author: 'FutureFlow Team',
+    date: 'April 10, 2026', isoDate: '2026-04-10', readTime: '6 min read', author: 'FutureFlow Team',
     content: [
       { type: 'intro', text: 'Two competing debt payoff strategies. One saves you more money. One feels better psychologically. We modeled both against 50,000 real household debt profiles — here\'s what we found.' },
       { type: 'h2', text: 'The Debt Avalanche Method' },
@@ -96,7 +96,7 @@ const posts: Post[] = [
     tag: 'Subscriptions', color: '#f69c20',
     title: '12 Subscriptions You\'re Probably Paying For Right Now (And Don\'t Know It)',
     excerpt: 'Our data shows the average person pays for 3.4 subscriptions they haven\'t used in over 6 months.',
-    date: 'April 7, 2026', readTime: '5 min read', author: 'FutureFlow Team',
+    date: 'April 7, 2026', isoDate: '2026-04-07', readTime: '5 min read', author: 'FutureFlow Team',
     content: [
       { type: 'intro', text: 'When we analyze newly connected accounts, the pattern is always the same: people are shocked by what they\'re paying for. Not because they\'re irresponsible — because subscriptions are designed to be invisible after the sign-up dopamine wears off.' },
       { type: 'p', text: 'The average user in our beta had 11 active subscriptions. Three of them hadn\'t been used in more than six months. Here are the 12 most common forgotten charges we find, and how to track them down.' },
@@ -132,7 +132,7 @@ const posts: Post[] = [
     tag: 'Taxes', color: '#2db37d',
     title: 'The 11 Most Missed Tax Deductions for Freelancers and Remote Workers',
     excerpt: 'If you work from home or freelance, you\'re likely leaving hundreds — maybe thousands — on the table.',
-    date: 'April 2, 2026', readTime: '9 min read', author: 'FutureFlow Team',
+    date: 'April 2, 2026', isoDate: '2026-04-02', readTime: '9 min read', author: 'FutureFlow Team',
     content: [
       { type: 'intro', text: 'The US tax code (IRS) and Canada\'s Income Tax Act (CRA) contain thousands of pages. The deductions that benefit freelancers and remote workers are buried in there — and most people never claim them. Here are the 11 most commonly missed, with what you need to document each one.' },
       { type: 'h2', text: '1. Home Office Deduction' },
@@ -165,7 +165,7 @@ const posts: Post[] = [
     tag: 'Budgeting', color: '#9b59b6',
     title: 'The 50/30/20 Rule Is Dead. Here\'s What Actually Works in 2026.',
     excerpt: 'Rigid percentage-based budgets break down fast. Here\'s a modern, flexible system our data shows actually works.',
-    date: 'March 28, 2026', readTime: '7 min read', author: 'FutureFlow Team',
+    date: 'March 28, 2026', isoDate: '2026-03-28', readTime: '7 min read', author: 'FutureFlow Team',
     content: [
       { type: 'intro', text: 'The 50/30/20 rule — 50% on needs, 30% on wants, 20% on savings — was developed in the 1990s when a median-income household could afford a median home. That\'s no longer true. The rule is broken, and anyone who\'s tried to apply it recently already knows it.' },
       { type: 'h2', text: 'Why 50/30/20 fails in 2026' },
@@ -195,7 +195,7 @@ const posts: Post[] = [
     tag: 'Investing', color: '#e74c3c',
     title: 'How to Start Investing With $100: A No-Hype Beginner\'s Guide',
     excerpt: 'You don\'t need thousands to start building wealth. Here\'s a realistic, actionable plan for total beginners.',
-    date: 'March 22, 2026', readTime: '6 min read', author: 'FutureFlow Team',
+    date: 'March 22, 2026', isoDate: '2026-03-22', readTime: '6 min read', author: 'FutureFlow Team',
     content: [
       { type: 'intro', text: '"I\'ll start investing when I have more money." This is the most expensive sentence in personal finance. Compound interest doesn\'t wait for you to feel ready — and starting with $100 today is genuinely better than starting with $10,000 in three years.' },
       { type: 'h2', text: 'Before you invest: two prerequisites' },
@@ -234,7 +234,7 @@ const posts: Post[] = [
     tag: 'Credit', color: '#4353ff',
     title: 'Why Your Credit Score Went Down (Even If You Did Nothing Wrong)',
     excerpt: 'Credit score drops can feel mysterious. We break down the 7 most common causes and exactly how to fix each one.',
-    date: 'March 17, 2026', readTime: '5 min read', author: 'FutureFlow Team',
+    date: 'March 17, 2026', isoDate: '2026-03-17', readTime: '5 min read', author: 'FutureFlow Team',
     content: [
       { type: 'intro', text: 'You checked your credit score and it dropped. You didn\'t miss a payment. You didn\'t apply for anything. You haven\'t touched your credit in months. So what happened? Here are the seven most common causes — most of which have nothing to do with something you did wrong.' },
       { type: 'h2', text: '1. Your credit utilization crept up' },
@@ -335,13 +335,17 @@ export default function BlogPostPage() {
     '@type': 'Article',
     headline: post.title,
     description: post.excerpt,
+    mainEntityOfPage: `https://www.joinfutureflow.com/blog/${post.slug}`,
+    image: 'https://www.joinfutureflow.com/logo.jpeg',
     author: { '@type': 'Organization', name: post.author },
     publisher: {
       '@type': 'Organization',
       name: 'FutureFlow',
       logo: { '@type': 'ImageObject', url: 'https://www.joinfutureflow.com/logo.jpeg' },
     },
-    datePublished: post.date,
+    datePublished: post.isoDate,
+    dateModified: post.isoDate,
+    inLanguage: 'en-US',
     url: `https://www.joinfutureflow.com/blog/${post.slug}`,
     articleSection: post.tag,
   }
@@ -353,7 +357,7 @@ export default function BlogPostPage() {
         description={post.excerpt}
         canonical={`/blog/${post.slug}`}
         ogType="article"
-        article={{ publishedTime: post.date, author: post.author, tag: post.tag }}
+        article={{ publishedTime: post.isoDate, modifiedTime: post.isoDate, author: post.author, tag: post.tag }}
       />
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(articleJsonLd)}</script>

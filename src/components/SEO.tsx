@@ -9,9 +9,11 @@ interface SEOProps {
   description: string
   canonical?: string
   ogImage?: string
+  ogImageAlt?: string
   ogType?: 'website' | 'article'
   article?: {
     publishedTime?: string
+    modifiedTime?: string
     author?: string
     tag?: string
   }
@@ -23,6 +25,7 @@ export default function SEO({
   description,
   canonical,
   ogImage = DEFAULT_OG_IMAGE,
+  ogImageAlt = 'FutureFlow personal finance platform',
   ogType = 'website',
   article,
   noindex = false,
@@ -47,14 +50,19 @@ export default function SEO({
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:type" content={ogType} />
+      <meta property="og:locale" content="en_US" />
       {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
       <meta property="og:image" content={ogImage} />
+      <meta property="og:image:alt" content={ogImageAlt} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
 
       {/* Article-specific OG */}
       {ogType === 'article' && article?.publishedTime && (
         <meta property="article:published_time" content={article.publishedTime} />
+      )}
+      {ogType === 'article' && article?.modifiedTime && (
+        <meta property="article:modified_time" content={article.modifiedTime} />
       )}
       {ogType === 'article' && article?.author && (
         <meta property="article:author" content={article.author} />
@@ -68,6 +76,7 @@ export default function SEO({
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />
+      <meta name="twitter:image:alt" content={ogImageAlt} />
       <meta name="twitter:site" content="@futureflowapp" />
     </Helmet>
   )

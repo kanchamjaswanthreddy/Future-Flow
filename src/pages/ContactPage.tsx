@@ -4,23 +4,41 @@ import { Helmet } from 'react-helmet-async'
 import SEO from '../components/SEO'
 import { Mail, ArrowRight, Clock, CheckCircle } from 'lucide-react'
 
-const FORMSPREE_ID = 'YOUR_FORM_ID' // Replace with your Formspree form ID
+const CONTACT_EMAIL = 'help@joinfutureflow.com'
+const FORMSPREE_ID = import.meta.env.VITE_FORMSPREE_ID?.trim()
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
-  const [sent, setSent] = useState(false)
+  const [sentVia, setSentVia] = useState<'form' | 'email' | null>(null)
   const [submitting, setSubmitting] = useState(false)
+
+  const openEmailDraft = () => {
+    const subject = encodeURIComponent(form.subject || 'FutureFlow contact request')
+    const body = encodeURIComponent(
+      `Name: ${form.name}\nEmail: ${form.email}\nSubject: ${form.subject}\n\n${form.message}`
+    )
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSubmitting(true)
     try {
-      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(form),
-      })
-      if (res.ok) setSent(true)
+      if (FORMSPREE_ID) {
+        const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(form),
+        })
+        if (!res.ok) throw new Error('Contact form submission failed')
+        setSentVia('form')
+        return
+      }
+      openEmailDraft()
+      setSentVia('email')
+    } catch {
+      openEmailDraft()
+      setSentVia('email')
     } finally {
       setSubmitting(false)
     }
@@ -44,7 +62,7 @@ export default function ContactPage() {
   }
 
   const contacts = [
-    { Icon: Mail, title: 'Email Us', desc: 'For product questions, billing, partnerships, or general help.', contact: 'help@joinfutureflow.com', color: '#4353ff' },
+    { Icon: Mail, title: 'Email Us', desc: 'For product questions, billing, partnerships, or general help.', contact: CONTACT_EMAIL, color: '#4353ff' },
   ]
 
   const responseTimes = [
@@ -170,14 +188,18 @@ export default function ContactPage() {
             className="ff-glass"
             style={{ borderRadius: 24, padding: '40px 36px' }}
           >
-            {sent ? (
+            {sentVia ? (
               <div style={{ textAlign: 'center', padding: '40px 0' }}>
                 <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(16,185,129,0.12)', boxShadow: '0 0 24px rgba(16,185,129,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
                   <CheckCircle size={30} color="var(--emerald)" strokeWidth={1.8} />
                 </div>
-                <h3 style={{ fontFamily: 'Manrope', fontSize: 24, fontWeight: 800, color: 'var(--dark)', marginBottom: 12 }}>Message Sent!</h3>
+                <h3 style={{ fontFamily: 'Manrope', fontSize: 24, fontWeight: 800, color: 'var(--dark)', marginBottom: 12 }}>
+                  {sentVia === 'form' ? 'Message Sent!' : 'Email Draft Opened'}
+                </h3>
                 <p style={{ fontFamily: 'Lato', fontSize: 16, color: 'var(--dark-3)', lineHeight: 1.7 }}>
-                  Thanks for reaching out. We'll get back to you within 24–48 hours.
+                  {sentVia === 'form'
+                    ? "Thanks for reaching out. We'll get back to you within 24-48 hours."
+                    : `Your email client should have opened a message to ${CONTACT_EMAIL}. Send it from there and we'll get back to you within 24-48 hours.`}
                 </p>
               </div>
             ) : (

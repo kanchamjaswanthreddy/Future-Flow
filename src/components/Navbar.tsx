@@ -23,11 +23,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', fn)
   }, [])
 
-  useEffect(() => {
-    setScrolled(window.scrollY > 40)
-    setOpen(false)
-  }, [location.pathname])
-
   // Prevent body scroll when menu open
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''

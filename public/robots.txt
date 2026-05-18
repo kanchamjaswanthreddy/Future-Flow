@@ -1,8 +1,6 @@
 User-agent: *
 Allow: /
 
-# Block legal pages from indexing (noindex also set in page meta)
-Disallow: /terms
-Disallow: /privacy
+# Legal pages are crawlable so search engines can see their noindex meta tags.
 
 Sitemap: https://www.joinfutureflow.com/sitemap.xml

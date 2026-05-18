@@ -574,12 +574,12 @@ function FeatureDrumScene() {
   const [dir, setDir] = useState(1)
 
   useEffect(() => {
-    setProgress(0)
     const start = Date.now()
     const tick = setInterval(() => {
       const pct = Math.min((Date.now() - start) / DRUM_INTERVAL, 1)
       setProgress(pct)
       if (pct >= 1) {
+        setProgress(0)
         setDir(1)
         setActive(i => (i + 1) % drumFeatures.length)
         clearInterval(tick)
@@ -589,7 +589,7 @@ function FeatureDrumScene() {
   }, [active])
 
   const f = drumFeatures[active]
-  const handleSelect = (i: number) => { setDir(i > active ? 1 : -1); setActive(i) }
+  const handleSelect = (i: number) => { setProgress(0); setDir(i > active ? 1 : -1); setActive(i) }
 
   return (
     <div style={{ position: 'relative', padding: '52px 36px' }}>
